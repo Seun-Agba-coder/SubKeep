@@ -1,22 +1,45 @@
 {
   "expo": {
-    "name": "Subscription.ai",
-    "slug": "Subscription.ai",
+    "name": "SubKeep",
+    "slug": "Subscription-ai",
     "version": "1.0.0",
     "orientation": "portrait",
-    "icon": "./assets/images/icon.png",
-    "scheme": "subscriptionai",
+    "icon": "./assets/icons/ios-dark.png",
+    "scheme": "subkeep",
     "userInterfaceStyle": "automatic",
     "newArchEnabled": true,
     "ios": {
-      "supportsTablet": true
+      "supportsTablet": true,
+      "googleServicesFile": "./GoogleService-Info.plist",
+      "bundleIdentifier": "com.agbacoder.subkeep",
+      "usesAppleSignIn": true,
+      "infoPlist": {
+        "ITSAppUsesNonExemptEncryption": false,
+        "UIBackgroundModes": ["remote-notification", "processing"],
+        "BGTaskSchedulerPermittedIdentifiers": [
+          "BACKGROUND-NOTIFICATION-TASK"
+        ]
+      },
+      "icon": {
+        "dark": "./assets/icons/ios-dark.png",
+        "light": "./assets/icons/ios-light.png",
+        "tinted": "./assets/icons/ios-tinted.png"
+      }
     },
     "android": {
       "adaptiveIcon": {
-        "foregroundImage": "./assets/images/adaptive-icon.png",
-        "backgroundColor": "#ffffff"
+        "foregroundImage": "./assets/icons/adaptive-icon.png",
+        "monochromeImage": "./assets/icons/adaptive-icon.png",
+        "backgroundColor": "#ffffff",
+        "googleServicesFile": "./google-services.json",
+       "permissions": [
+        "RECEIVE_BOOT_COMPLETED",
+        "SCHEDULE_EXACT_ALARM"
+      ]
+     
       },
-      "edgeToEdgeEnabled": true
+      "edgeToEdgeEnabled": true,
+      "package": "com.agbacoder.subkeep"
     },
     "web": {
       "bundler": "metro",
@@ -28,15 +51,31 @@
       [
         "expo-splash-screen",
         {
-          "image": "./assets/images/splash-icon.png",
+          "image": "./assets/icons/splash-icon-light.png",
           "imageWidth": 200,
           "resizeMode": "contain",
-          "backgroundColor": "#ffffff"
+          "backgroundColor": "#ffffff",
+          "dark": {
+            "image": "./assets/icons/splash-icon-dark.png",
+            "backgroundColor": "#000000"
+          }
         }
-      ]
+      ],
+      "expo-secure-store",
+      "expo-localization",
+      "@react-native-google-signin/google-signin",
+      "expo-sqlite",
+      "expo-task-manager"
     ],
     "experiments": {
       "typedRoutes": true
-    }
+    },
+    "extra": {
+      "router": {},
+      "eas": {
+        "projectId": "20243795-a90c-40ec-9289-45b4d0cce93d"
+      }
+    },
+    "owner": "agbacoder"
   }
 }

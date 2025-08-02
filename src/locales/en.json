@@ -1,0 +1,290 @@
+{
+  "onboarding": {
+    "title1": "Stay Ahead and Take Contol of your fiacnce",
+    "description1": "All your subscriptions in one place. Stay on top of what you’re paying for.",
+    "title2": "Never Miss a Payment",
+    "description2": "Your subscriptions, on schedule — no surprises.",
+    "title3": "Let Our App Do the Work",
+    "description3": "Smart detection saves you time. We find your subscriptions for you."
+  },
+  "signin": {
+    "skip": "Skip",
+    "androidSignin": "Sign in securely with your Google account:",
+    "iosSignin": "Sign in securely with your Apple account:"
+  },
+  "terms": {
+    "title": "Terms & Privacy Policy",
+    "description": "By continuing, you agree to our Terms & Privacy Policy",
+    "policy": "Policy"
+  },
+  "currencyPicker": {
+    "title": "Choose a Currency to Continue with: ",
+    "next": "Next",
+    "update": "Update"
+  },
+  "index": {
+    "monthlytotal": "Monthly Total",
+    "welcome": "Welcome", 
+    "greeting": "All your subscriptions in one place", 
+    "type": {
+      "monthly": "Monthly",
+      "yearly": "Yearly",
+      "onetime": "One Time",
+      "inactive": "Inactive",
+      "freetrial": "Free Trial"
+    },
+    "title": "Upcoming Payment",
+    "subTitle": "Add your First Subscription",
+    "weekdays": {
+      "mon": "Mon",
+      "tue": "Tue",
+      "wed": "Wed",
+      "thu": "Thu",
+      "fri": "Fri",
+      "sat": "Sat",
+      "sun": "Sun"
+    },
+    "emptyTitle": "Add Your First Subscription",
+    "buttonText": "Add Subscription"
+  },
+  "AllSubscription": {
+    "title": "My Subscriptions",
+    "acitveplan": "Active Plan",
+    "inactiveplan": "Inactive Plan",
+    "viewall": "View All",
+    "filterOptions": {
+      "1": "Hightest  to Lowest Price",
+      "2": "Lowest to Heigest Price",
+      "3": "Alphabetically"
+    },
+    "active": "No Active Subscriptions yet",
+    "inactive": "No Inactive Subscriptions",
+    "expireson": "Expires on",
+    "freetrial": "Still on free trail"
+  },
+  "addsub": {
+    "leftText": "Back",
+    "RightText": "AddSubscription",
+    "error": "fill in the required feild",
+    "update": "update",
+    "info": "Icon is generated automatically", 
+    "subquestion": {
+      "icon": "Icon* ",
+      "name": {
+        "text": "Name*",
+        "placeholder": "Name of service you are subscribed too"
+      },
+      "price": {
+        "text": "Price",
+        "placeholder": "10.00"
+      },
+      "firstpayment": {
+        "text": "First Payment*",
+        "placeholder": "First Payment"
+      },
+      "category": {
+        "text": "Category*",
+        "placeholder": "Choose a Category"
+      },
+      "description": {
+        "text": "Description",
+        "placeholder": "e.g Subscribed to this service for work"
+      },
+      "paymentmethod": {
+        "text": "Payment Method",
+        "placeholder": "e.g Credit Card"
+      },
+      "note": {
+        "text": "Note",
+        "placeholder": "e.g Any additional information"
+      }
+    },
+    "continue": "Continue",
+    "category": {
+      "Entertainment & Streaming": "Entertainment & Streaming",
+      "Productivity & Tools": "Productivity & Tools",
+      "Shopping & Delivery": "Shopping & Delivery",
+      "Internet & Cloud": "Internet & Cloud",
+      "Health & Wellness": "Health & Wellness",
+      "Business & Marketing": "Business & Marketing",
+      "Gaming & Virtual Goods": "Gaming & Virtual Goods",
+      "Privacy & Security": "Privacy & Security",
+      "AI & Developer Tools": "AI & Developer Tools",
+      "Other": "Other"
+    }, 
+    "notificationscreen": {
+      "header": {
+        "title": "Add a subscription"
+      },
+      "every": "Every", 
+      "dropdown": {
+        "week": "Week",
+        "month": "Month", 
+        "year": "Yearly",
+        "onetime": "One Time"
+      }, 
+      "billingtype": {
+        "recurring": "recurring"
+     
+      },
+      "edittext": {
+        "subscriptionfor": "Subscription for",
+        "ofprice": "of price", 
+        "startingon": "starting on ", 
+        "intheyear": "in the year "
+      },
+      "freetrial": {
+        "label": "is subscription free trial",
+        "notify1": "You'll be reminded about this free trial on", 
+        "notify2": "before it ends"
+      }, 
+      "enablenotification": {
+        "label": "Enable Notification", 
+        "notify1": "You'll be notified", 
+        "notify2": "a day before your payment expires every"
+      },
+      "updatesubscription": "Update Subscription", 
+      "addsubscription":  "Add Subscription",
+      "cancel": "Cancel",
+      "save": "Save", 
+      "modal": {
+        "freetrialsetup": "Free Trial Setup", 
+        "startdate": "Start Date", 
+        "trialduration": "Trial Duration", 
+        "trialending": "Trial Ending"
+      }
+    }
+  },
+
+   "description": {
+      "header": {
+        "text": "Details"
+      }, 
+      "data": {
+        "name": "Name",
+        "price": "Price",
+        "occurence": "Occurence",
+        "firstpayment": "First Payment",
+        "nextpayment": "Next Payment",
+        "category": "Category",
+        "freetrial": "FreeTrial",
+        "remindme": "Remind me(notification)",
+        "paymentmethod": "Payment Method",
+        "description": "Description",
+        "note": "Note"
+      },
+      "datadefault": {
+        "freetrialfalse": "False",
+        "freetrialtrue": "True", 
+        "remindme": "1 day Before",
+        "description": "No Description",
+        "note": "No Note",
+        "paymentmethod": "not specified",
+        "category": "N/A"
+
+        
+      },
+      "modal": {
+        "delete": {
+          "title": "Delete Subscription",
+          "body": "Are you sure you want to delete this subcription? we suggest you deactivate,  if you know you wil continue with the service",
+          "actionHandler": "DeleteSubcriptionHandler",
+          "actionText": "Delete"
+        },
+        "inactive": {
+          "title": "Deactivate Subscription",
+          "body": "Are you sure you want to deactivate this subscription",
+          "actionHandler": "SetSubscriptionInactive",
+          "actionText": "Deactivate"
+        }
+      }
+
+    }, 
+
+
+  "setting": {
+      "title": "Settings",
+      "login": "Login",
+      "logout": "Logout", 
+      "upgradepremium": "Upgrade to Premium", 
+      "settingitem": {
+        "item1": "Language",
+        "item2": "Default Currency",
+        "item3": "System Mode",
+        "item4": "Feed Back"
+      },
+      "language": {
+        "english": "English",
+        "french": "French",
+        "spanish": "Spanish", 
+        "italian": "italian",
+        "turkish": "Turkish"
+      }, 
+      "systemmode": {
+      "light": "light", 
+      "dark": "dark"
+      }
+  },
+    "currencyPickerCurrencies": {
+      "usd": "United States Dollar",
+      "eur": "Euro",
+      "gbp": "British Pound Sterling",
+      "ngn": "Nigerian Naira",
+      "jpy": "Japanese Yen",
+      "aud": "Australian Dollar",
+      "cad": "Canadian Dollar",
+      "chf": "Swiss Franc",
+      "cny": "Chinese Yuan",
+      "inr": "Indian Rupee",
+      "aed": "United Arab Emirates Dirham",
+      "sar": "Saudi Riyal",
+      "ars": "Argentine Peso",
+      "clp": "Chilean Peso",
+      "cop": "Colombian Peso",
+      "pen": "Peruvian Sol",
+      "uah": "Ukrainian Hryvnia",
+      "zar": "South African Rand",
+      "kes": "Kenyan Shilling",
+      "ghs": "Ghanaian Cedi",
+      "brl": "Brazilian Real",
+      "mxn": "Mexican Peso",
+      "krw": "South Korean Won",
+      "try": "Turkish Lira",
+      "sek": "Swedish Krona",
+      "nok": "Norwegian Krone",
+      "dkk": "Danish Krone",
+      "rub": "Russian Ruble",
+      "pln": "Polish Złoty"
+    }, 
+    "analytics": {
+      "thismonth": "This month", 
+  
+      "card": {
+        "monthlyexpense": "Estimated to be spent",
+        "activesub": "Active Sub",
+        "trails": "Trails Expiring/Expired",
+        "upcomingbills": "Upcoming Bills"
+      },
+      "timeoptions": {
+        "3months": "3 months",
+        "6months": "6 months", 
+        "1year": "1 year"
+      },
+      "timerange": "Time Range",
+      "monthlyspending": "Monthly Spending"
+    }, 
+    "category": {
+      "title": "Spending By Category", 
+      "emptyText": "Start recording your transactions to see your spending analytics!"
+    },
+    "upcomingpayment": {
+      "daysremain": "Days Remain"
+    },
+    "Description": {
+      "actionbutton": {
+        "edit": "Edit",
+        "deactivate": "Deactivate",
+        "delete": "Delete"
+      }
+    }
+}

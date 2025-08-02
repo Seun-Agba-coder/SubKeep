@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "1026944721971",
+    "project_id": "subkeep-28aaa",
+    "storage_bucket": "subkeep-28aaa.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1026944721971:android:7c3a51724ac8fba490af46",
+        "android_client_info": {
+          "package_name": "com.agbacoder.subkeep"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "1026944721971-gfgkr20cdhmmu3vqch4se6tbcm2849e8.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.agbacoder.subkeep",
+            "certificate_hash": "d22cfcb02b7f67c4491ed1f496ebfaaa323d857c"
+          }
+        },
+        {
+          "client_id": "1026944721971-mc9mhvfuvijgmc2j1oa1tt14vqt7jsn1.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDt78gY4rK6JUgN4zsCXQp53R1lVYNC2h4"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "1026944721971-mc9mhvfuvijgmc2j1oa1tt14vqt7jsn1.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

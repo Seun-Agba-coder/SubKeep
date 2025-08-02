@@ -1,0 +1,260 @@
+{
+  "onboarding": {
+    "title1": "Mantente al día y toma el control de tus finanzas",
+    "description1": "Todas tus suscripciones en un solo lugar. Controla por qué estás pagando.",
+    "title2": "Nunca pierdas un pago",
+    "description2": "Tus suscripciones, programadas - sin sorpresas.",
+    "title3": "Deja que nuestra app haga el trabajo",
+    "description3": "La detección inteligente te ahorra tiempo. Encontramos tus suscripciones por ti."
+  },
+  "signin": {
+    "skip": "Saltar",
+    "androidSignin": "Inicia sesión de forma segura con tu cuenta de Google:",
+    "iosSignin": "Inicia sesión de forma segura con tu cuenta de Apple:"
+  },
+  "terms": {
+    "title": "Términos y Política de Privacidad",
+    "description": "Al continuar, aceptas nuestros Términos y Política de Privacidad",
+    "policy": "Política"
+  },
+  "currencyPicker": {
+    "title": "Elige una moneda para continuar:",
+    "next": "Siguiente",
+    "update": "Actualizar"
+  },
+  "index": {
+    "monthlytotal": "Total Mensual",
+    "type": {
+      "monthly": "Mensual",
+      "yearly": "Anual",
+      "onetime": "Única vez",
+      "inactive": "Inactiva",
+      "freetrial": "Prueba Gratuita"
+    },
+    "title": "Próximo Pago",
+    "subTitle": "Añade tu Primera Suscripción",
+    "weekdays": {
+      "mon": "Lun",
+      "tue": "Mar",
+      "wed": "Mié",
+      "thu": "Jue",
+      "fri": "Vie",
+      "sat": "Sáb",
+      "sun": "Dom"
+    },
+    "emptyTitle": "Añade tu Primera Suscripción",
+    "buttonText": "Añadir Suscripción"
+  },
+  "AllSubscription": {
+    "title": "Mis Suscripciones",
+    "acitveplan": "Plan Activo",
+    "inactiveplan": "Plan Inactivo",
+    "viewall": "Ver Todo",
+    "filterOptions": {
+      "1": "Precio: Mayor a Menor",
+      "2": "Precio: Menor a Mayor",
+      "3": "Alfabéticamente"
+    },
+    "active": "Aún no hay suscripciones activas",
+    "inactive": "No hay suscripciones inactivas",
+    "expireson": "Caduca el",
+    "freetrial": "Aún en prueba gratuita"
+  },
+  "addsub": {
+    "leftText": "Atrás",
+    "RightText": "Añadir Suscripción",
+    "error": "Completa los campos obligatorios",
+    "update": "Actualizar",
+    "subquestion": {
+      "icon": "Icono*",
+      "name": {
+        "text": "Nombre*",
+        "placeholder": "Nombre del servicio al que estás suscrito"
+      },
+      "price": {
+        "text": "Precio",
+        "placeholder": "$10.00"
+      },
+      "firstpayment": {
+        "text": "Primer Pago*",
+        "placeholder": "Primer Pago"
+      },
+      "category": "Categoría*",
+      "description": {
+        "text": "Descripción",
+        "placeholder": "ej. Suscrito a este servicio para trabajo"
+      },
+      "paymentmethod": {
+        "text": "Método de Pago",
+        "placeholder": "ej. Tarjeta de Crédito"
+      },
+      "note": {
+        "text": "Nota",
+        "placeholder": "ej. Cualquier información adicional"
+      }
+    },
+    "continue": "Continuar",
+    "category": {
+      "label1": "Entretenimiento y Streaming",
+      "label2": "Productividad y Herramientas",
+      "label3": "Compras y Entregas",
+      "label4": "Internet y Nube",
+      "label5": "Salud y Bienestar",
+      "label6": "Negocios y Marketing",
+      "label7": "Juegos y Bienes Virtuales",
+      "label8": "Privacidad y Seguridad",
+      "label9": "IA y Herramientas de Desarrollo",
+      "label10": "Otros"
+    },
+    "notificationscreen": {
+      "header": {
+        "title": "Añadir una suscripción"
+      },
+      "dropdown": {
+        "week": "Semana",
+        "month": "Mes",
+        "yearly": "Anual",
+        "onetime": "Única vez"
+      },
+      "billingtype": {
+        "recurring": "recurrente",
+        "onetime": "única vez"
+      },
+      "edittext": {
+        "subscriptionfor": "Suscripción para",
+        "ofprice": "de precio",
+        "startingon": "comenzando el",
+        "intheyear": "en el año"
+      },
+      "freetrial": {
+        "label": "¿Es una prueba gratuita?",
+        "notify1": "Te recordaremos sobre esta prueba gratuita el",
+        "notify2": "antes de que termine"
+      },
+      "enablenotification": {
+        "label": "Activar Notificaciones",
+        "notify1": "Serás notificado cada",
+        "notify2": "un día antes de que expire tu pago"
+      },
+      "updatesubscription": "Actualizar Suscripción",
+      "addsubscription": "Añadir Suscripción",
+      "cancel": "Cancelar",
+      "save": "Guardar"
+    }
+  },
+  "description": {
+    "header": {
+      "text": "Detalles"
+    },
+    "data": {
+      "name": "Nombre",
+      "price": "Precio",
+      "occurence": "Frecuencia",
+      "firstpayment": "Primer Pago",
+      "nextpayment": "Próximo Pago",
+      "category": "Categoría",
+      "freetrial": "Prueba Gratuita",
+      "remindme": "Recordarme (notificación)",
+      "paymentmethod": "Método de Pago",
+      "description": "Descripción",
+      "note": "Nota"
+    },
+    "datadefault": {
+      "freetrialfalse": "No",
+      "freetrialtrue": "Sí",
+      "remindme": "1 día antes",
+      "description": "Sin Descripción",
+      "note": "Sin Notas",
+      "paymentmethod": "no especificado",
+      "category": "N/A"
+    },
+    "modal": {
+      "delete": {
+        "title": "Eliminar Suscripción",
+        "body": "¿Seguro que quieres eliminar esta suscripción? Sugerimos desactivarla si piensas continuar con el servicio",
+        "actionHandler": "DeleteSubcriptionHandler",
+        "actionText": "Eliminar"
+      },
+      "inactive": {
+        "title": "Desactivar Suscripción",
+        "body": "¿Seguro que quieres desactivar esta suscripción?",
+        "actionHandler": "SetSubscriptionInactive",
+        "actionText": "Desactivar"
+      }
+    }
+  },
+  "setting": {
+    "title": "Ajustes",
+    "login": "Iniciar Sesión",
+    "logout": "Cerrar Sesión",
+    "upgradepremium": "Actualizar a Premium",
+    "settingitem": {
+      "item1": "Idioma",
+      "item2": "Moneda Predeterminada",
+      "item3": "Modo del Sistema",
+      "item4": "Comentarios"
+    },
+    "language": {
+      "english": "Inglés",
+      "french": "Francés",
+      "spanish": "Español",
+      "italian": "Italiano", 
+      "turkish": "Turco"
+    },
+    "systemmode": {
+      "light": "Claro",
+      "dark": "Oscuro"
+    }
+  },
+  "currencyPickerCurrencies": {
+    "usd": "Dólar Estadounidense",
+    "eur": "Euro",
+    "gbp": "Libra Esterlina",
+    "ngn": "Naira Nigeriana",
+    "jpy": "Yen Japonés",
+    "aud": "Dólar Australiano",
+    "cad": "Dólar Canadiense",
+    "chf": "Franco Suizo",
+    "cny": "Yuan Chino",
+    "inr": "Rupia India",
+    "aed": "Dirham de los Emiratos Árabes Unidos",
+    "sar": "Riyal Saudí",
+    "ars": "Peso Argentino",
+    "clp": "Peso Chileno",
+    "cop": "Peso Colombiano",
+    "pen": "Sol Peruano",
+    "uah": "Grivna Ucraniana",
+    "zar": "Rand Sudafricano",
+    "kes": "Chelín Keniano",
+    "ghs": "Cedi Ganés",
+    "brl": "Real Brasileño",
+    "mxn": "Peso Mexicano",
+    "krw": "Won Surcoreano",
+    "try": "Lira Turca",
+    "sek": "Corona Sueca",
+    "nok": "Corona Noruega",
+    "dkk": "Corona Danesa",
+    "rub": "Rublo Ruso",
+    "pln": "Złoty Polaco"
+  },
+  "analytics": {
+    "thismonth": "Este mes",
+    "card": {
+      "monthlyexpense": "Estimado a gastar",
+      "activesub": "Subs Activas",
+      "trails": "Pruebas por Caducar",
+      "upcomingbills": "Próximas Facturas"
+    },
+    "timeoptions": {
+      "3months": "3 meses",
+      "6months": "6 meses",
+      "1year": "1 año"
+    },
+    "timerange": "Rango de Tiempo",
+    "monthlyspending": "Gasto Mensual"
+  },
+  "category": {
+    "title": "Gastos por Categoría",
+    "emptyText": "¡Comienza a registrar tus transacciones para ver tus análisis de gastos!"
+  }
+}
