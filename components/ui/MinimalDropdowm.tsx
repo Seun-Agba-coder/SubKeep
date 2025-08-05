@@ -56,6 +56,7 @@ const MinimalDropdown = ({ list, theme, label, selected, setSelected, visible, s
                         setVisible(false)
                     }
                     if (systemChange) {
+                        console.log(item.code, ": : item pressed code ")
                         await saveTheme(item.code)
                         dispatch(setMode({ mode: item.code }));
                         router.replace("/(tab)/Setting")

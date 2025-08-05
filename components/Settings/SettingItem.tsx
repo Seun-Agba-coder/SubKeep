@@ -28,14 +28,14 @@ const SettingItem = ({icon, label, list, theme, selected, setSelected, visible, 
         <View style={[styles.rowContainer, border && styles.borderBottom,  {justifyContent: 'space-between', padding: 10 }]}>
             <View style={styles.rowContainer}>
                 <IconButton name={icon} size={20}/>
-                <Text>{label}</Text>
+                <Text style={{fontSize: 12}}>{label}</Text>
             </View>
              {
                 dropdown ?
                 <MinimalDropdown list={list} label="language"theme={theme} selected={selected} setSelected={setSelected} visible={visible} setVisible={setVisible} systemChange={systemChange}/>
                 :
                 <View style={styles.rowContainer}>
-                    <Text>{currency}</Text>
+                    <Text style ={{fontSize: 10}}>{currency}</Text>
                     <IconButton name="chevron-forward-outline" size={20} color={theme.primaryColor} onPress={onPress}/>
                 </View>
              }

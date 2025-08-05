@@ -11,6 +11,7 @@ interface Data {
 const Category = ({ data, theme }: Data) => {
   const { width } = useWindowDimensions();
   const { t} = useAppTranslation()
+  console.log("Category component received data:", JSON.stringify(data));
 
   return (
     <View style={{
@@ -64,7 +65,7 @@ const Category = ({ data, theme }: Data) => {
                   borderRadius: 6,
                   marginRight: 8,
                 }}
-              />
+              ></View>
             
 
               <Text style={{ color: theme.primaryText, fontSize: 10 }}>

@@ -17,7 +17,7 @@ interface ThemeProps {
 const GmailTracker = ({theme, setSnackVisible, setSnackMessage}: ThemeProps) => {
 
   
-    const [modalVisibleSuccess, setModalVisibleSuccess] = useState(true)
+    const [modalVisibleSuccess, setModalVisibleSuccess] = useState(false)
     const [userinfo, setUser] = useState<any>(null)
     const [isAuthenticated, setIsAuthenticated] = useState(false)
     const [signedUp, setSignedUp] = useState(false)
@@ -52,7 +52,7 @@ const GmailTracker = ({theme, setSnackVisible, setSnackMessage}: ThemeProps) => 
         } catch (error) {
             console.log(error)
             setSnackVisible(true)
-            setSnackMessage({message: "Something went wrong, try again later", color: "green"})
+            setSnackMessage({message: "Something went wrong, try again later or check your connection", color: "green"})
         }
 
 

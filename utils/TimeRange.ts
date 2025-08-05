@@ -3,6 +3,7 @@ import advancedFormat from 'dayjs/plugin/advancedFormat';
 import isSameOrAfter from 'dayjs/plugin/isSameOrAfter';
 import isSameOrBefore from 'dayjs/plugin/isSameOrBefore';
 import isBetween from 'dayjs/plugin/isBetween';
+import { connectFirestoreEmulator } from 'firebase/firestore';
 
 
 
@@ -37,29 +38,9 @@ async function ChartDataViaRange(db: any, timeRange: string = '6 months') {
     monthLabels.forEach(label => {
         monthlyTotals[label] = 0;
     });
-     
-
-    console.log("Is this working : ")
-    // Fetch relevant subscriptions from DB
-    const subscriptions = await db.getAllAsync(
-        `SELECT us.*, ph.pausedAt AS latestPausedAt, ph.resumedAt AS latestResumedAt
-    FROM userSubscriptions us
-    LEFT JOIN (
-      SELECT *
-      FROM pauseHistory
-      WHERE id IN (
-        SELECT MAX(id)
-        FROM pauseHistory
-        GROUP BY subscriptionId
-      )
-    ) ph ON us.id = ph.subscriptionId
-  ` 
-    );
-
-    console.log("Chart sub: ", subscriptions)
-
     
-   
+    // Fetch relevant subscriptions from DB
+    const subscriptions = await db.getAllAsync(`SELECT * FROM userSubscriptions`);
 
     
     // Iterate through each subscription
@@ -72,18 +53,19 @@ async function ChartDataViaRange(db: any, timeRange: string = '6 months') {
             billingperiodnumber,
             billingperiodtime,
             canceldate, 
-            isactive,
-            latestPausedAt,
-            latestResumedAt
         } = sub;
+
+        const pauseHistory = await db.getAllAsync(
+            `SELECT pausedAt, resumedAt FROM pauseHistory WHERE subscriptionId = ? ORDER BY pausedAt ASC`,
+            sub.id
+        );
+
         
-        // Parse pause and resume dates if they exist
-        const pausedAt = latestPausedAt ? dayjs(latestPausedAt) : null;
-        const resumedAt = latestResumedAt ? dayjs(latestResumedAt) : null;
+      
 
 
 
-        const first = !freetrialendday ? dayjs(firstpayment) : dayjs(freetrialendday);
+        const first = dayjs(firstpayment) 
         console.log("First : ", first)
         const cancel = canceldate ? dayjs(canceldate) : null;
 
@@ -95,21 +77,38 @@ async function ChartDataViaRange(db: any, timeRange: string = '6 months') {
         } else if (billingtype === 'Recurring') {
             console.log("Recurring: ", billingtype)
             let billingCursor = first.clone();
+            console.log("Billing Cursor: ", firstpayment)
+            console.log("End Date: ", endDate)
+  
 
             while (billingCursor.isSameOrBefore(endDate)) {
                 const label = billingCursor.format('MMM YYYY');
+                console.log("LABEL : : ", label)
+                console.log(" meant to be running")
 
-                const isPaused = pausedAt && (!resumedAt || billingCursor.isBetween(pausedAt, resumedAt, null , '[]'));
+                // NEW: Check if the billing cursor falls within ANY paused period
+                let isPaused = false;
+                for (const pause of pauseHistory) {
+                    const pausedAt = pause.pausedAt ? dayjs(pause.pausedAt) : null;
+                    const resumedAt = pause.resumedAt ? dayjs(pause.resumedAt) : null;
+                    
+                    if (pausedAt && (!resumedAt || billingCursor.isBetween(pausedAt, resumedAt, null, '[]'))) {
+                        isPaused = true;
+                        break; // Found a paused period, no need to check others
+                    }
+                }
 
-                // Only add if this billing date falls within the desired range
+
                 if (
                     billingCursor.isSameOrAfter(startDate) &&
                     (!cancel || billingCursor.isSameOrBefore(cancel)) &&
                     monthlyTotals.hasOwnProperty(label) &&
                     !isPaused
                 ) {
-                    monthlyTotals[label] += price;
+                    console.log("price")
+                    monthlyTotals[label] += 20;
                 }
+                console.log(" meant to be running")
 
                 // Move to the next billing period
                 billingCursor = billingCursor.add(billingperiodnumber, billingperiodtime.toLowerCase());

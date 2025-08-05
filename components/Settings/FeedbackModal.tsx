@@ -61,9 +61,9 @@ const FeedbackModal = ({ isVisible, onClose, theme, setSnackVisible, setSnackMes
     }
     
     try {
-      await submitFeedbackToFirestore(feedbackType, subject, message)
+      await submitFeedbackToFirestore(feedbackType, subject, message, userinfo)
           // In a real app, you would send this data to your backend
-        console.log('Feedback Submitted:', { feedbackType, subject, message });
+        console.log('Feedback Submitted:', { feedbackType, subject, message, userinfo });
 
         // Close the modal and reset the form
         onClose();

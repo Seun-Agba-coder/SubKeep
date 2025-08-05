@@ -3,7 +3,7 @@
 import dayjs from 'dayjs';
 
 type BillingType = 'Month' | 'Year' | 'Week';
-type Color = 'green' | 'gray' | 'blue' | 'orange' | 'red' | 'black' | 'yellow' | 'white';
+type Color = 'green' | 'gray' | 'blue' | 'orange' | 'red' | 'black' | 'yellow' | 'white' | '#FAEBD7';
 type EntryType = 'trial' | 'billing' | 'inactive';
 
 interface BillingEntry {
@@ -67,7 +67,7 @@ function generateBillingDates({
       date: trialStart.toDate(),
       type: 'trial',
       label: 'Free trial ends',
-      color: "white"
+      color: "#FAEBD7"
     });
 
     current = trialEnd;

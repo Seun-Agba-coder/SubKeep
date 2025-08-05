@@ -16,6 +16,7 @@ export const saveUserToWaitlist = async (userinfo: any) => {
       feature: 'gmail_tracking'
     });
     await SecureStore.setItemAsync("gmail_tracking", "true")
+    console.log("stored")
    
     return true
   } catch (error) {
@@ -23,7 +24,7 @@ export const saveUserToWaitlist = async (userinfo: any) => {
   }
 };
 
-export const submitFeedbackToFirestore = async (feedbackType: string, subject: string, message: string) => {
+export const submitFeedbackToFirestore = async (feedbackType: string, subject: string, message: string, userinfo: any) => {
 
   try {
     await addDoc(collection(firestore, 'feedback'), {
@@ -31,6 +32,9 @@ export const submitFeedbackToFirestore = async (feedbackType: string, subject: s
       subject: subject,
       message: message,
       createdAt: serverTimestamp(),
+      uid: userinfo.uid,
+      email: userinfo.email,
+      displayName: userinfo.displayName || '',
     });
     return true;
   } catch (error) {

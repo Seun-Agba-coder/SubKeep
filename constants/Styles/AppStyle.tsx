@@ -31,7 +31,7 @@ export const billingType = {
   yearly: 'yellow', 
   onetime:'gray', 
   inactive: 'red',
-  freetrial: 'white'
+  freetrial: '#FAEBD7'
 
 }
 
@@ -40,7 +40,7 @@ export const billingType2: any= {
   Year: 'yellow', 
   OneTime:'gray', 
   inactive: 'red',
-  freetrial: 'white'
+  freetrial: '#FAEBD7'
 
 }
 

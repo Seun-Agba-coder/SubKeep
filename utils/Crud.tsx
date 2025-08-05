@@ -371,7 +371,7 @@ const setActive = async (db: any, id: string, data: PropUpdate, activate: boolea
     // 1. Set subscription to active
     await db.runAsync(
       `UPDATE userSubscriptions 
-      SET isactive = ? 
+      SET isactive = ?, canceldate = null
       WHERE id = ?`,
       [0, id]
     );

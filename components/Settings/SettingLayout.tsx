@@ -4,7 +4,7 @@ import { logOut } from '@/utils/auth';
 import { Ionicons } from '@expo/vector-icons';
 import { router } from 'expo-router';
 import { onAuthStateChanged } from 'firebase/auth';
-import { useEffect, useState } from 'react';
+import { useEffect, useState, useCallback } from 'react';
 import { Platform, Pressable, StyleSheet, Text, View } from 'react-native';
 import { handleAppleSignIn } from '../SignIn/AppleSignInButton';
 import signInWithGoogleAndFirebase from '../SignIn/GoogleSignInButton';
@@ -17,20 +17,17 @@ import GmailTracker from './GmailTrackingCard';
 import * as SecureStore  from 'expo-secure-store';
 import Purchases from 'react-native-purchases';
 import FeedbackModal from './FeedbackModal';
+import { useFocusEffect } from 'expo-router';
 
 
 
 
 const SettingLayout = ({ theme, lang, defCurrency, mode, paywall, snackVisible, setSnackVisible, snackMessage, setSnackMessage }: any) => {
     const [isAuthenticated, setIsAuthenticated ] = useState(false)
-
-    const { t, i18n } = useAppTranslation()
-    
-
+    const { t} = useAppTranslation()
 
     console.log('Translation test:', t('setting.title'))
     const [selectedLanguage, setSelectedLanguage] = useState<string>(lang)
-    
 
     const [selectedSystemMode, setSelectedSystemMode] = useState<string>(mode)
 
@@ -38,7 +35,7 @@ const SettingLayout = ({ theme, lang, defCurrency, mode, paywall, snackVisible, 
     const [systemListVisibility, setSystemListVisibility] = useState<boolean>(false)
     const { LanguageList, SystemList} = useSettingHook()
     const [gmailTracker, setGmailTraker] = useState(false)
-    const [joinWaitlist, setJoinWaitlist] = useState(false)
+    const [joinedWaitlist, setJoinedWaitlist] = useState(false)
     const [feedbackVisible, setFeedbackVisible] = useState(false)
    
 
@@ -66,32 +63,41 @@ const SettingLayout = ({ theme, lang, defCurrency, mode, paywall, snackVisible, 
           // Cleanup subscription on unmount
           return () => unsubscribe();
         }, []);
-        
-        useEffect(() => {
-            async function showGmailTracker() {
-                const showGmailTracker = await SecureStore.getItemAsync('gmail_tracking')
 
-                if (showGmailTracker != undefined) {
-                    setJoinWaitlist(true)
-                }
-              
-             
-                
+        async function showGmailTracker() {
+            const showGmailTracker = await SecureStore.getItemAsync('gmail_tracking')
+            console.log("should I show gmail tracker, yes or no",  showGmailTracker)
 
-                if (!isAuthenticated) {
-                   setGmailTraker(false)
-                   return;
-                }
-         
-                if (!showGmailTracker) {
-                    console.log("Should I show Gamil Tracker: ", showGmailTracker)
-                  
-                    setGmailTraker(true)
-                    return;
-                }
+            if (showGmailTracker) {
+                setJoinedWaitlist(true)
             }
-            showGmailTracker()
-        },[isAuthenticated])
+          
+         
+            
+
+            if (!isAuthenticated) {
+               setGmailTraker(false)
+               return;
+            }
+     
+            if (!showGmailTracker) {
+                console.log("Should I show Gamil Tracker: ", showGmailTracker)
+              
+                setGmailTraker(true)
+                return;
+            }
+        }
+        showGmailTracker()
+        
+
+   useFocusEffect(useCallback(() => {
+    showGmailTracker()
+   }, []))
+
+
+        
+          
+        
 
 
         function goToCurrencyPicker() {
@@ -169,7 +175,7 @@ try {
                         }
                     }
                      : handleAppleSignIn} style={{ backgroundColor: theme.primaryText, borderRadius: 10, paddingVertical: 10 }} textStyle={{ color: theme.background, alignSelf: 'flex-start' }} src={"yes"}/>}
-                     {!isAuthenticated && !joinWaitlist && <Text style={{fontSize: 6, color: 'gray', marginVertical: 2, textAlign: 'left'}}>login to be one of the first to signup to our automatic gmail tracker </Text>}
+                     {!isAuthenticated && !joinedWaitlist && <Text style={{fontSize: 6, color: 'gray', marginVertical: 2, textAlign: 'left'}}>login to be one of the first to signup to our automatic gmail tracker </Text>}
 
             </View>
             <View style={{ backgroundColor: theme.secondaryColor, paddingLeft: '4%', marginBottom: 30, padding: 10, borderRadius: 15, marginTop: 20 }}>
@@ -185,7 +191,7 @@ try {
 
             </View>
             <View>
-                {isAuthenticated && !joinWaitlist  && <GmailTracker theme={theme} setSnackVisible={setSnackVisible} setSnackMessage={snackMessage} /> }
+                {isAuthenticated && !joinedWaitlist  && <GmailTracker theme={theme} setSnackVisible={setSnackVisible} setSnackMessage={snackMessage} /> }
             </View>
 
 
@@ -200,7 +206,7 @@ try {
 
                 </View>
 
-                 { joinWaitlist && <View style={{marginVertical: 10, }}>
+                 { joinedWaitlist && <View style={{marginVertical: 10, }}>
                     <Text style={{color: 'green', fontSize: 10, }}>
                         Gamil Feature coming soon
                     </Text>

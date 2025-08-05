@@ -249,8 +249,7 @@ useEffect(() => {
 
       const CustomDay = ({ date, marking }: any) => {
         const hasSubscriptions = marking && marking.subscriptions;
-      
-       
+     
         const dayNumber = date.day;
         
         return (
@@ -258,19 +257,22 @@ useEffect(() => {
            style={styles.dayContainer}
            android_ripple={{color: '#FAFAFA'}}
             onPress={() => {
+             if (!hasSubscriptions) {
+              return
+             }
                 if (hasSubscriptions) {
-                    if (marking?.subscriptions.length > 1) {
+                    if (marking?.subscriptions.length >= 2) {
                         setSelectedDate(formatDate(new Date(date.dateString)));
+                        setSelectedDayMarkers(marking.subscriptions);
+                        setModalVisible(true);
                     }
-                    setSelectedDayMarkers(marking.subscriptions);
-                    setModalVisible(true);
+                   
                 }
             }}
-
             >
           
              {hasSubscriptions && (
-              <View style={styles.logoContainer}>
+              <View style={[styles.logoContainer,, {marginBottom: -3}]}>
                 {marking.subscriptions.slice(0, 1).map((sub: any, index: any) => (
                   <Image
                     key={index}
@@ -279,6 +281,9 @@ useEffect(() => {
                       {
                         width: 14,
                         height: 14,
+                        padding: 0, 
+                        margin: 0, 
+                        
                       }, 
                     
                     ]}
@@ -291,9 +296,9 @@ useEffect(() => {
                         <View
                       style={{
                         backgroundColor: marking.subscriptions[0].status,
-                        height: 8,
-                        width: 8,
-                        borderRadius: 4
+                        height: 6,
+                        width: 6,
+                        borderRadius: 3
                       }}
                     />
                      {marking.subscriptions.length >= 2 && (
@@ -306,7 +311,7 @@ useEffect(() => {
             )}
          
            
-            <Text style={{color:'black', marginTop: 5, }}>{dayNumber}</Text>
+            <Text style={{color:theme.primaryText, marginTop: 0, }}>{dayNumber}</Text>
            
           </Pressable>
         );
@@ -316,7 +321,7 @@ useEffect(() => {
    
 
   
-
+      const dayTextColor = mode === 'light' ? theme.primaryText : '#ffffff';
 
     return (
         <ScrollView showsVerticalScrollIndicator={false} contentContainerStyle={{ paddingBottom: 100 }} style={[styles.container, { backgroundColor: theme.background }]}>
@@ -362,6 +367,7 @@ useEffect(() => {
                 <View  style={{marginBottom: '5%'}}>
                     {/* <CustomCalender theme={theme} changeMonth={handleMonthChange} billingMarkers={billingMarkers} /> */}
                     <Calendar
+                    key={theme.background}
                    current={new Date().toISOString().split('T')[0]}
                    hideArrows={false}
                    hideExtraDays={true}
@@ -375,8 +381,8 @@ useEffect(() => {
                    theme={
                     {
                       calendarBackground: theme.background,
-                       dayTextColor: theme.primaryText, 
-                       monthTextColor: theme.secondaryColor
+                       dayTextColor: 'green', 
+                       monthTextColor: 'green'
 
                     }
                     
