@@ -23,7 +23,7 @@ const Category = ({ data, theme }: Data) => {
         fontWeight: 'bold',
         marginBottom: 16,
         color: theme.primaryText,
-      }}>{t("analytics.category.title")}</Text>
+      }}>{t("category.title")}</Text>
 
     {data.length > 0 ? (
       <View style={{

@@ -1,91 +1,101 @@
-// import dayjs from "dayjs";
-// import * as Notifications from 'expo-notifications';
-// const scheduleRecurringNotifications = async ({subscriptionData }: any) => {
-//     const notificationIds = [];
-
-//     if (subscriptionData.freetrial === 'true') {
-//         const notifId = await Notifications.scheduleNotificationAsync({
-//             content: {
-//               title: `Your subscription renews tomorrow - ${subscriptionData.name}`,
-//               body: `Your subscription renews tomorrow - ${subscriptionData.symbol}${subscriptionData.price}`,
-//               data: { 
-//                 subscriptionId: subscriptionData.id,
-//                 type: 'billing_reminder'
-//               }
-//             },
-//             trigger: { type: 'date', date: dayjs(subscriptionData.freetrialendDate).subtract(1, 'day').toDate() }
-//           });
-          
-//           notificationIds.push(notifId);
-    
-//     }
-    
-//     // Schedule next 12 notifications (1 year worth)
-//     for (let i = 1; i <= 12; i++) {
-//       const nextBillingDate = dayjs(subscriptionData.firstpayment)
-//         .add(i * subscriptionData.billingperiodnumber, subscriptionData.billingperiodtime)
-//         .subtract(1, 'day'); // Notify 1 day before billing
-      
-//       const notifId = await Notifications.scheduleNotificationAsync({
-//         content: {
-//           title: `Your subscription renews tomorrow - ${subscriptionData.name}`,
-//           body: `Your subscription renews tomorrow - ${subscriptionData.symbol}${subscriptionData.price}`,
-//           data: { 
-//             subscriptionId: subscriptionData.id,
-//             type: 'billing_reminder'
-//           }
-//         },
-//         trigger: { date: nextBillingDate.toDate() }
-//       });
-      
-//       notificationIds.push(notifId);
-//     }
-    
-//     // Save notification IDs to database for later management
-//     await saveNotificationIds(subscriptionData.id, notificationIds);
-    
-//     return notificationIds;
-//   };
+import dayjs from "dayjs";
+import { scheduleReminder, scheduleTrialNotification } from "./utils/EnableNotification";
 
 
 
-//   // In your main screen
-// useFocusEffect(
-//     useCallback(() => {
-//       const refreshNotifications = async () => {
-//         const subscriptions = await getActiveSubscriptions(db);
-        
-//         for (const sub of subscriptions) {
-//           // Check if subscription needs fresh notifications
-//           const scheduled = await Notifications.getAllScheduledNotificationsAsync();
-//           const hasUpcomingNotifications = scheduled.some(notif => 
-//             notif.content.data?.subscriptionId === sub.id
-//           );
-          
-//           if (!hasUpcomingNotifications) {
-//             // Cancel old notifications if any
-//             if (sub.notificationIds) {
-//               for (const id of sub.notificationIds) {
-//                 await Notifications.cancelScheduledNotificationAsync(id);
-//               }
-//             }
+export const scheduleRecurringNotifications = async (subscriptionData: any, firsttime: boolean) => {
+    const notificationIds = [];
+
+    if (subscriptionData.freetrialEnabled === true && firsttime === true) {
+
+        const freeid = await scheduleTrialNotification(subscriptionData.freetrialendday, subscriptionData.platformname)
+        console.log(freeid, ": : free id")
+        notificationIds.push({ billingrecurringtime: "", notificationIds: freeid })
+
+
+    }
+
+    // Schedule next 12 notifications (1 year worth)
+    for (let i = 1; i <= 6; i++) {
+        const nextBillingDate = dayjs(!subscriptionData.freetrialendday ? subscriptionData.firstpayment : subscriptionData.freetrialendday)
+            .add(i * subscriptionData.billingperiodnumber, subscriptionData.billingperiodtime)
+            // .subtract(1, 'day');
+
             
-//             // Schedule fresh notifications
-//             await scheduleRecurringNotifications(sub);
-//           }
-//         }
-//       };
-      
-//       refreshNotifications();
-//     }, [])
-//   );
+
+        const notificationId = await scheduleReminder(
+            dayjs(nextBillingDate).toDate(),
+            `Your ${subscriptionData.platformname} will soon renew`,
+            `Your ${subscriptionData.platformname} will renew tomorrow, a reminder so you do not forget`,
+            subscriptionData.platformname,
+            subscriptionData.id,
+            subscriptionData.billingperiodtime,
+            subscriptionData.billingperiodnumber,
+            !subscriptionData.freetrialendday ? subscriptionData.firstpayment : subscriptionData.freetrialendday
+        );
+
+
+        notificationIds.push({ billingrecurringtime: nextBillingDate, notificationIds: notificationId });
+    }
+
+
+
+    return notificationIds;
+};
+
+
+
+export const scheduleRecurringNotificationsUpdate = async (subscriptionData: any, billingRecurringLastItem: any) => {
+    const notificationIds = [];
+
+
+    for (let i = 1; i <= 6; i++) {
+        const nextBillingDate = dayjs(billingRecurringLastItem)
+            .add(i * subscriptionData.billingperiodnumber, subscriptionData.billingperiodtime)
+            .subtract(1, 'day');
+
+        const notificationId = await scheduleReminder(
+            dayjs(nextBillingDate).toDate(),
+            `Your ${subscriptionData.platformname.trim()}will soon renew`,
+            `Your ${subscriptionData.platformname.trim()}will renew tomorrow, a reminder so you do not forget`,
+            subscriptionData.platformname,
+            subscriptionData.id,
+            subscriptionData.billingperiodtime,
+            subscriptionData.billingperiodnumber,
+            !subscriptionData.freetrialendday ? subscriptionData.firstpayment : subscriptionData.freetrialendday
+        );
+
+
+        notificationIds.push({ billingrecurringtime: nextBillingDate, notificationIds: notificationId });
+    }
+
+
+
+    return notificationIds;
+};
 
 
 
 
 
-//       // 5. SAVE NOTIFICATION IDs TO DATABASE
-//       await updateSubscription(db, subscriptionId, {
-//         notificationIds: JSON.stringify(notificationIds),
-//         billingrecurringtime: billingRecurringTime
-//       });
+export const shouldRefreshNotifications = async (billingList: any) => {
+    console.log("should Refresh NOtification", shouldRefreshNotifications)
+    const LastNot = billingList[billingList.length - 1]
+    console.log("Last NOt", LastNot)
+
+    const lastgottennotification = dayjs(LastNot.billingrecurringtime)
+
+    console.log("last notification : ", lastgottennotification)
+    const today = dayjs()
+
+    if (today.isBefore(lastgottennotification)) {
+        return false
+    }
+    return true
+
+
+
+}
+
+
+

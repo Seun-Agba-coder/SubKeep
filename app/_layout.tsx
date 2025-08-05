@@ -62,12 +62,9 @@ const createDbIfNeeded = async (db: any) => {
           symbol  TEXT DEFAULT '$',
           currencyname TEXT DEFAULT 'United States Dollar',
           firstpayment TEXT NOT NULL,
-          billingrecurringtime TEXT ,
+          billingrecurringlist TEXT ,
           price TEXT NOT NULL,
           category TEXT NOT NULL, 
-          notificationid TEXT, 
-          trialnotificationid TEXT, 
-          billingnotificationid TEXT, 
           paymentmethod TEXT, 
           note TEXT,
           description TEXT, 
@@ -131,84 +128,7 @@ export default function RootLayout() {
     //   console.log(JSON.stringify(customerInfo), null, 2)
   
     // }
-  
-    useEffect(() => {
-      // --- Permissions Request ---
-      // Request notification permissions when the app loads. This is required for local notifications to work.
-      (async () => {
-        if (Platform.OS === 'android') {
-          await Notifications.setNotificationChannelAsync('default', {
-            name: 'default',
-            importance: Notifications.AndroidImportance.MAX,
-            vibrationPattern: [0, 250, 250, 250],
-            lightColor: '#FF231F7C',
-          });
-        }
-         const isGranted = await requestNotificationPermissions()
-         if (isGranted) {
-          await registerBackgroundNotificationTask();
-         } else {
-          const isGranted = await requestNotificationPermissions()
-          if (isGranted) {
-            await registerBackgroundNotificationTask();
-          }
-          return
-         }
-        
-      })();
-  
-   
-     
-     
-  
-      notificationListener.current = Notifications.addNotificationReceivedListener(async (notification) => {
-        const data: any = notification.request.content.data;
-        
-  
-        let maxRetries = 3;
-        for (let trys = 0; trys < maxRetries; trys++) { 
-        if (
-          data?.type === 'recurring' &&
-          data?.subscriptionId &&
-          data?.billingCycle &&
-          data?.billingStartDate &&
-          data?.billingperiod &&
-          data?.name
-        ) {
-          try {
-            // 1. Get full subscription info from SQLite
-      
-            // 2. Try to reschedule
-            const newNotifId = await handleRecurringReminderFired(data, db);
-      
-      
-      
-            console.log(`🔁 Rescheduled billing reminder for: ${data.name} (New Notif ID: ${newNotifId})`);
-            break
-          } catch (error) {
-             console.log("what is the error in the hanble subscription function: ", error)
-            if (trys === maxRetries) {
-              throw error; // Final failure
-            }
-            const delay = Math.pow(2, trys) * 60000; 
-            await new Promise(resolve => setTimeout(resolve, delay));
-          }
-        }
-      
-        }
-      
-      
-      });
-   
-  
-  
-      // --- Cleanup ---
-      // Remove the listeners when the component is unmounted to prevent memory leaks.
-      return () => {
-      
-      notificationListener.current?.remove()
-      };
-    }, []);
+
   
     useEffect(() => {
       const initializeTheme = async () => {
@@ -254,7 +174,7 @@ export default function RootLayout() {
             <StatusBar 
               style={'dark'} 
         backgroundColor='#ffffff'/>
-            <SQLiteProvider databaseName="subTrackers19.db" onInit={createDbIfNeeded}>
+            <SQLiteProvider databaseName="subTrackers41.db" onInit={createDbIfNeeded}>
               <SlotContainer/>
             </SQLiteProvider>
             

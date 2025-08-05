@@ -88,6 +88,7 @@ const NotificationScreen = () => {
   const [selectedPeriod, setSelectedPeriod] = useState<{ value: string, label: string }>({ value: 'Month', label: 'Month' })
   const [trialDuration, setTrialDuration] = useState<string>('')
   const [modalVisible, setModalVisible] = useState<boolean>(false)
+  const [billingList,  setBillingList] = useState<any>('')
 
 
 
@@ -201,24 +202,29 @@ const notifScreenParams = {
 
 console.log("notifScreenParams: ", notifScreenParams)
 
-function saveSubcription() {
-  console.log({ ...notifScreenParams, ...params })
+async function saveSubcription () {
+
 
   try {
     
   if (id && activate) {
-    setActive(db, id, { ...notifScreenParams, ...params}, activate)
+    console.log( "restart subscription; ")
+    console.log({ ...notifScreenParams, ...params})
+   await setActive(db, id, { ...notifScreenParams, ...params}, activate)
     router.replace({pathname: "/(tab)/Index", params: {refresh: Date.now().toString()}})
     return ;
  }
 
   if (id) {
-   updateUserSubscription(db, id, { ...notifScreenParams, ...params })
+  console.log("Update subscriptions: update sub")
+ 
+
+   await updateUserSubscription(db, id, { ...notifScreenParams, ...params, freetrial: String(freeTrial),reminderenabled: String(notificationsEnabled) }, billingList)
    router.replace({pathname: "/(tab)/Index", params: {refresh: Date.now().toString()}})
    return ;
   }
         console.log("going to the  save subscription in device")
-    saveSubcriptionLocally(db, { ...notifScreenParams, ...params }, trialEndFormatted)
+    await saveSubcriptionLocally(db, { ...notifScreenParams, ...params }, trialEndFormatted)
     router.replace({pathname: "/(tab)/Index", params: {refresh: Date.now().toString()}})
   } catch (error) {
     console.log(error)
@@ -230,21 +236,25 @@ useEffect(() => {
     if (!id) return;
     try {
       const sub: any = await db.getFirstAsync(`SELECT * FROM userSubscriptions WHERE id = ?`, [id]);
-      console.log("Billing Period Time: ", sub.billingperiodtime)
+      console.log("Billing Period Time: ", sub)
 
       console.log('freetrail: ', sub.freetrial)
       console.log('reminderenabled: ', sub.reminderenabled)
       /// convert them into their boolean form
       const bolfreetrial: boolean = toBoolean(sub.freetrial)
+      
       const bolnotenabled: boolean = toBoolean(sub.reminderenabled)
+    
 
-      if (sub) {
+      if (sub) {        
         setPeriod(sub.billingperiodnumber)
-        setSelectedPeriod(sub.billingperiodtime)
+        setSelectedPeriod({ value: sub.billingperiodtime, label: sub.billingperiodtime })
         setTrialDuration(sub.freetrialduration)
         setFreeTrial(bolfreetrial)
         setShowTrialMessage(bolfreetrial && true)
         setNotificationsEnabled(bolnotenabled)
+        setBillingList(JSON.parse(sub.billingrecurringlist))
+        
       }
     } catch (error) {
       console.log(error)
@@ -252,6 +262,17 @@ useEffect(() => {
   }
   EditValue()
 }, [id])
+
+let customButtonText 
+if (!id)  {
+  customButtonText = t('addsub.notificationscreen.addsubscription')
+} else {
+  if (activate) {
+    customButtonText= "Activate"
+  } else {
+    customButtonText = t('addsub.notificationscreen.updatesubscription')
+  }
+}
 
 return (
   <View style={[styles.container, { backgroundColor: theme.background }]}>
@@ -298,7 +319,7 @@ return (
     </View>
 
     <View style={{ marginTop: 20 }}>
-      <CustomButton title={id ? t('addsub.notificationscreen.updatesubscription') : t('addsub.notificationscreen.addsubscription')} onPress={() => (!id ? saveSubcription() : updateUserSubscription(db, id, { ...notifScreenParams, ...params }))} style={{ backgroundColor: theme.primaryText }} textColor={theme.secondaryText} />
+      <CustomButton title={customButtonText} onPress={() => (saveSubcription())} style={{ backgroundColor: theme.primaryText }} textColor={theme.secondaryText} />
     </View>
     {/* MODAL */}
 

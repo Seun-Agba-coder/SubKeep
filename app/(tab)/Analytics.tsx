@@ -11,7 +11,7 @@ const Analytics = () => {
     return (
         <View style={[ styles.container, {backgroundColor: theme.background} ]}>
             <Text style={[styles.title, {color: theme.primaryText}]}>Analytics</Text>
-            <AnalyticLayout theme={theme} />
+            <AnalyticLayout theme={theme} mode={mode} />
         </View>
     )
 }

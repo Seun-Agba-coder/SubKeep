@@ -21,6 +21,7 @@ import { useFocusEffect } from '@react-navigation/native';
 import { Calendar,  CalendarList} from 'react-native-calendars';
 import { useLocalSearchParams } from 'expo-router'
 import dayjs from 'dayjs'
+import { useNotificationRefresh } from '@/hooks/useNotificationRefresh'
 
 function formatDate(date: Date) {
   return dayjs(date).format('YYYY-MM-DD'); // returns "YYYY-MM-DD"
@@ -52,35 +53,37 @@ const Home = () => {
 
    const { refresh } = useLocalSearchParams();
 
-   console.log("Refresh parameter: ", refresh)
+
+
 
    const userSubscription = async () => {
-    console.log("Activate Screen ")
     const subscriptions = await getActiveAndInactiveSubscription(db)
    
-    
+    console.log("Sub: ", subscriptions)
+      const billingMarkers: any = {}
+      subscriptions.forEach((sub: any) => {
+          const dates = generateBillingDates({ firstPayment: sub.firstpayment,
+             billingType: sub.billingperiodtime,
+              interval: parseInt(sub.billingperiodnumber),
+               freeTrialDays: sub.freetrialduration ? parseInt(sub.freetrialduration) : 0,
+                isactive: parseInt(sub.isactive), 
+                canceldate: sub.canceldate, latestResumedAt: sub.latestResumedAt });
+          
+     
+  
+          dates.forEach((date: any) => {
+              const key = date.date.toISOString().split("T")[0]; // format: "YYYY-MM-DD"
+  
+              if (!billingMarkers[key]) billingMarkers[key] = [];
+              billingMarkers[key].push({ iconurl: sub.iconurl, status: date.color });
+          });
+  
+  
+      });
+  
+
    
    
-    const currencyItem = await SecureStore.getItemAsync('defaultCurrency')
-    const currencyItemJson = currencyItem ? JSON.parse(currencyItem) : null;
-
-    const billingMarkers: any = {}
-    subscriptions.forEach((sub: any) => {
-        const dates = generateBillingDates({ firstPayment: sub.firstpayment, billingType: sub.billingperiodtime, interval: parseInt(sub.billingperiodnumber), freeTrialDays: sub.freetrialduration ? parseInt(sub.freetrialduration) : 0, isactive: parseInt(sub.isactive), canceldate: sub.canceldate });
-        
-   
-
-        dates.forEach((date: any) => {
-            const key = date.date.toISOString().split("T")[0]; // format: "YYYY-MM-DD"
-
-            if (!billingMarkers[key]) billingMarkers[key] = [];
-            billingMarkers[key].push({ iconurl: sub.iconurl, status: date.color });
-        });
-
-
-    });
-
-
 
  
 
@@ -111,22 +114,38 @@ const Home = () => {
     const customBillingMarkers: any = createMarkedDates();
     
  
-
+    const currencyItem = await SecureStore.getItemAsync('defaultCurrency');
+    const currencyItemJson = currencyItem ? JSON.parse(currencyItem) : null;
+    setDefualtSymbol(currencyItemJson?.symbol);
 
     setSavedSubscritption(subscriptions)
     setBillingMarkers(customBillingMarkers)
-    setDefualtSymbol(currencyItemJson?.symbol)
+    
+  
 
 }
 
 
     useFocusEffect(
         useCallback(() => {
-       
-            userSubscription()
-          
 
-        }, [refresh])
+          const fetchUserSubscriptions = async () => {
+            try {
+                  await userSubscription()
+
+            } catch(error: any) {
+              throw error
+            }
+
+          }
+     
+          fetchUserSubscriptions()
+        
+        return;
+          
+         
+
+        }, [])
     )
 
   //Runs when refresh parameter changes (for same-screen refreshes)
@@ -163,6 +182,7 @@ useEffect(() => {
     useEffect(() => {
         const currencyChecker = async () => {
             const defaultCurrency = await SecureStore.getItemAsync('defaultCurrency')
+          
             
             if (!defaultCurrency) {
                 router.push("/(stack)/CurrencyPicker")
@@ -172,7 +192,7 @@ useEffect(() => {
     
 
         currencyChecker()
-    }, [refresh])
+    }, [])
 
 
 
@@ -296,7 +316,6 @@ useEffect(() => {
    
 
   
-  
 
 
     return (
@@ -353,6 +372,16 @@ useEffect(() => {
                    markingType={'multi-dot'}
                    markedDates={billingMarkers}
                    dayComponent={CustomDay}
+                   theme={
+                    {
+                      calendarBackground: theme.background,
+                       dayTextColor: theme.primaryText, 
+                       monthTextColor: theme.secondaryColor
+
+                    }
+                    
+                    
+                   }
                  
                     />
                 </View>

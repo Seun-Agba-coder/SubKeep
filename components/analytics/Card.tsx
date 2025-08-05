@@ -19,9 +19,11 @@ const Card = ({icon, title, num, background, textColor}: Prop) => {
             <Text style={{color: textColor}}>{title}</Text>
 
             </View>
-            <View>
-                <Text style={{color: textColor}}>{num}</Text>
-            </View>
+            {num ? (
+                <View>
+                    <Text style={{color: textColor}}>{num}</Text>
+                </View>
+            ) : null}
             
         </View>
     )

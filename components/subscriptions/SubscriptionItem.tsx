@@ -50,6 +50,25 @@ const SubscriptionItem = ({ data, theme, active }: any) => {
 
     const isFreeTrialActive = !!freeTrialExpiryDate()
 
+    
+    let showThis 
+    let showThisUnder
+    if  (!active) {
+        showThis =  <Text style={{ color: "red", fontSize: 10 }}>
+        Made inactive on {dayjs(data.latestPausedAt).locale(i18n.language).format('MMMM D YYYY')}
+        
+    </Text>
+    showThisUnder = ""
+    } else {
+        if (!freeTrialExpired(data)) {
+            showThis = <Text style={[{ color: billingType2['freetrial'] }]} >{freeTrialExpiryDate()}</Text>
+            showThisUnder = <Text style={{ fontSize: 10, color: billingType2['freetrial'] }}>{t("AllSubscription.freetrial")}</Text>
+        } else {
+            showThis = <Text style={[{ color: billingType2[data.billingperiodtime] }]} >{data.billingrecurringtime ? `Expires on the, ${dayjs(data.billingrecurringtime).locale(i18n.language).format('MMMM D')}` : normalExpiryDate()}</Text>
+             showThisUnder = ""
+        }
+    }
+
     return (
         <Pressable style={[styles.container, { backgroundColor: theme.secondaryColor }]} onPress={() => {
             if (!active) {
@@ -70,15 +89,7 @@ const SubscriptionItem = ({ data, theme, active }: any) => {
                     <Text style={[{ color: theme.secondaryText }]}>{data.platformname}</Text>
 
 
-                    {
-                       active  ? freeTrialExpired(data)? 
-                            <Text style={[{ color: billingType2['freetrial'] }]} >{freeTrialExpiryDate()}</Text> :
-                            <Text style={[{ color: billingType2[data.billingperiodtime] }]} >{data.billingrecurringtime ? `Expires on the, ${dayjs(data.billingrecurringtime).locale(i18n.language).format('MMMM D')}` : normalExpiryDate()}</Text> : null
-                    }  {
-                        !active && <Text style={{ color: "red", fontSize: 10 }}>
-                            Made inactive on {dayjs(data.latestPausedAt).locale(i18n.language).format('MMMM D YYYY')}
-                        </Text>
-                    }
+                   {showThis}
 
 
                 </View>
@@ -91,9 +102,7 @@ const SubscriptionItem = ({ data, theme, active }: any) => {
                     <Text style={[{ color: theme.secondaryText, }]}>{data.billingperiodtime}</Text>
                 </View>
 
-                {(!freeTrialExpired(data) && active) &&
-                    <Text style={{ fontSize: 10, color: billingType2['freetrial'] }}>{t("AllSubscription.freetrial")}</Text>
-                }
+                {showThisUnder}
 
 
             </View>

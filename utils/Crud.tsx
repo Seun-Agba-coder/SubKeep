@@ -3,6 +3,8 @@ import { calculateNextBilling } from "./Billiigfunctions";
 import { cancelNotification, scheduleReminder, scheduleTrialNotification } from "./EnableNotification";
 import dayjs from 'dayjs';
 import saveImageToDevice from './imagesaver';
+import { scheduleRecurringNotifications, scheduleRecurringNotificationsUpdate} from '@/Extra';
+
 
 interface Prop {
   platformname: string;
@@ -162,10 +164,10 @@ const saveSubcriptionLocally = async (db: any, data: Prop, trialend: string) => 
     ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`,
       [platformname, currency, reminderenabled.toString(), icondeviceurl , note, category, description, billingtype, firstpayment, freetrial.toString(), price, freetrialduration, paymentmethod, billingperiodnumber, billingperiodtime, symbol, currencyname, freetrialendday]
     );
-    console.log("result", result)
+  
     const subscriptionId = result.lastInsertRowId;
 
-    const dataPassed = {
+    const subscriptonData = {
       db,
       platformname,
       billingperiodtime,
@@ -178,7 +180,26 @@ const saveSubcriptionLocally = async (db: any, data: Prop, trialend: string) => 
     }
     // console.log("dataPassed", dataPassed)
 
-    updateandschedulefreetrialandenabledNot(dataPassed, subscriptionId)
+
+    const billingNotificationList = await scheduleRecurringNotifications(subscriptonData, true)
+    console.log("billingNotificationList", billingNotificationList)
+    console.log(`
+      
+      
+      
+      
+      
+      
+      
+      `)
+    await db.runAsync(
+      `UPDATE userSubscriptions 
+       SET billingrecurringlist=? 
+       WHERE id = ?`,
+      [JSON.stringify(billingNotificationList), subscriptionId]
+    );
+
+
   } catch (error) {
     console.log("Error: ", error)
   }
@@ -193,29 +214,18 @@ const saveSubcriptionLocally = async (db: any, data: Prop, trialend: string) => 
 
 
 
-const updateUserSubscription = async (db: any, id: string, updatedData: Partial<Record<string, any>>) => {
+const updateUserSubscription = async (db: any, id: string, updatedData: Partial<Record<string, any>>, billingList?: any, setactive?: boolean) => {
+  
 
-
-
- 
-
+  console.log("updatedData: ", updatedData)
  
 
   try {
-    const fields = Object.keys(updatedData);
-    const values = Object.values(updatedData);
-
-    if (fields.length === 0) return;
-
-    const setClause = fields.map(field => `${field} = ?`).join(', ');
-    values.push(String(id)); // for the WHERE clause
-
-    await db.runAsync(
-      `UPDATE userSubscriptions SET ${setClause}, updatedAt = datetime('now') WHERE id = ?`,
-      [...values, id]
-    );
-    updateNotificationIds(db, id, updatedData);
-    const dataPassed = {
+    if (!setactive) {
+      updateNotificationIds(billingList);
+    }
+    
+    const subscriptionData = {
       db,
       platformname: updatedData.platformname,
       billingperiodtime: updatedData.billingperiodtime,
@@ -226,9 +236,37 @@ const updateUserSubscription = async (db: any, id: string, updatedData: Partial<
       freetrialEnabled: Boolean(updatedData.freetrial),
       reminderEnabled: Boolean(updatedData.reminderenabled)
     }
-    updateandschedulefreetrialandenabledNot(dataPassed, id)
+
+    const billingNotificationList = await scheduleRecurringNotifications(subscriptionData, true)
+    console.log("Billing Notification: ", billingNotificationList)
 
 
+
+    const fields = Object.keys(updatedData);
+    const values = Object.values(updatedData);
+
+    if (fields.length === 0) return;
+
+    const setClause = fields.map(field => `${field} = ?`).join(', ');
+    console.log("setClause: ", setClause)
+    
+
+    await db.runAsync(
+      `UPDATE userSubscriptions SET ${setClause}, updatedAt = datetime('now'), billingrecurringlist=? WHERE id = ?`,
+      [...values, JSON.stringify(billingNotificationList), id]
+    );
+   
+    console.log(`✅ Subscription ${id} updated successfully within a transaction.`);
+
+    
+
+
+   
+    
+  
+    
+    return;
+  
   } catch (error) {
     console.error(`❌ Error updating subscription:`, error);
 
@@ -237,27 +275,33 @@ const updateUserSubscription = async (db: any, id: string, updatedData: Partial<
 
 };
 
-const updateNotificationIds = async (db: any, id: string, updatedData: Partial<Record<string, any>>) => {
+export const updateNotification  = async (db: any, id:string, subscriptionData:any)  => {
 
-  // helps cancel notifcation  so that I can update them back in the updateUserSubscription function.
-  const sub = await db.getAllAsync(
-    `SELECT * FROM userSubscriptions WHERE id = ?`,
-    [id]
+  // This is for the  useNotificationRefresh
+
+  const billingNotificationList = scheduleRecurringNotificationsUpdate(subscriptionData, subscriptionData.billingrecurringlist[subscriptionData.billingrecurringlist.length - 1])
+  await db.runAsync(
+    `UPDATE userSubscriptions 
+     SET billingrecurringlist=? 
+     WHERE id = ?`,
+    [JSON.stringify(billingNotificationList), id]
   );
 
-  const trialNotificationId = sub.trialnotificationid;
-  const billingNotificationId = sub.billingnotificationid;
 
-  if (!!trialNotificationId) {
-    await cancelNotification(trialNotificationId);
-  }
+}
 
-  if (!!billingNotificationId) {
-    await cancelNotification(billingNotificationId);
-  }
+const updateNotificationIds = async ( billList: any) => {
+
+   
+    for (const bill of  billList) {
+
+      await cancelNotification(bill.notificationIds)
+    }
 
 
 };
+
+
 
 
 
@@ -280,26 +324,21 @@ const getSubscriptions = async (db: any): Promise<any[]> => {
 
 const setInactive = async (db: any, id: string, data: any) => {
 
-  console.log("Id: ", id)
-  const { trialnotificationid, billingnotificationid } = data
+  const { billingrecurringlist } = data
 
   try {
-    if (!!trialnotificationid) {
-      await cancelNotification(trialnotificationid);
-      console.log("done")
-    }
+    const subscriptonrecuringNotificationList = JSON.parse(billingrecurringlist)
+   
+    for (const bill of subscriptonrecuringNotificationList) {
 
-    if (!!billingnotificationid) {
-      await cancelNotification(billingnotificationid);
-      console.log("done")
+      await cancelNotification(bill.notificationIds)
     }
-
-  const now = new Date().toISOString();
+    const now = new Date().toISOString();
 
   // 1. Mark subscription as inactive
   await db.runAsync(
     `UPDATE userSubscriptions 
-     SET isactive = ?, canceldate = ?, trialnotificationid = NULL, notificationid = NULL
+     SET isactive = ?, canceldate = ?, billingrecurringlist = null
      WHERE id = ?`,
     [1, now, id]
   );
@@ -319,9 +358,6 @@ const setInactive = async (db: any, id: string, data: any) => {
 
 
 
-// const setActive = async (db: any, id: string) => {
-//   await db.runAsync(`UPDATE userSubscriptions SET isactive = ? WHERE id = ?`, [0, id]);
-// }
 
 const setActive = async (db: any, id: string, data: PropUpdate, activate: boolean) => {
 
@@ -344,14 +380,16 @@ const setActive = async (db: any, id: string, data: PropUpdate, activate: boolea
     await db.runAsync(
       `UPDATE pauseHistory 
       SET resumedAt = ? 
-      WHERE subscriptionId = ? 
-      AND resumedAt IS NULL 
-      ORDER BY pausedAt DESC 
-      LIMIT 1`,
+      WHERE id = (
+        SELECT id FROM pauseHistory 
+        WHERE subscriptionId = ? AND resumedAt IS NULL 
+        ORDER BY pausedAt DESC 
+        LIMIT 1
+      )`,
       [firstpayment, id]
-    );
+       );
 
-    updateUserSubscription(db, id, ActiveData)
+    await updateUserSubscription(db, id, ActiveData, true)
 
   } catch (error) {
     console.error('Error setting subscription to active:', error);
@@ -364,18 +402,27 @@ const setActive = async (db: any, id: string, data: PropUpdate, activate: boolea
 const getActiveAndInactiveSubscription = async (db: any) => {
   /// get both the Active and Inactive Subscription inorder to show it on the calender
   try {
-    const results = await db.getAllAsync(
-      `SELECT * FROM userSubscriptions WHERE isdeleted = ?`,
-      [0]  // Changed from "false" to "true" since we want active subscriptions
-    );
-    console.log("Results: ", results)
-    return results;
-  } catch (error) {
-    console.error('Error fetching user subscriptions:', error);
-    return [];
+    const results = await db.getAllAsync(`
+    SELECT us.*, ph.pausedAt AS latestPausedAt, ph.resumedAt AS latestResumedAt
+    FROM userSubscriptions us
+    LEFT JOIN (
+      SELECT *
+        FROM pauseHistory
+         WHERE id IN (
+          SELECT MAX(id)
+          FROM pauseHistory
+          GROUP BY subscriptionId
+   )
+   ) ph ON us.id = ph.subscriptionId
+   WHERE us.isdeleted = ?
+   `, [0]);
+   
+   return results;
+   } catch (error) {
+  console.error('Error fetching user subscriptions:', error);
+  return [];
   }
-}
-
+  };
 const getActiveSubscription = async (db: any) => {
   try {
     const results = await db.getAllAsync(`
@@ -402,18 +449,7 @@ const getActiveSubscription = async (db: any) => {
 
 
 
-// const getInactiveSubscription = async (db: any) => {
-//   try {
-//     const results = await db.getAllAsync(
-//       `SELECT * FROM userSubscriptions WHERE isactive = ? and isdeleted = ?`,
-//       [1, 0]
-//     );
-//     return results;
-//   } catch (error) {
-//     console.error('Error fetching user addictions:', error);
-//     return [];
-//   }
-// }
+
 
 const getInactiveSubscription = async (db: any) => {
   try {
@@ -603,6 +639,8 @@ async function getSubscriptionsAlphabetically(db: any) {
   }
 
 }
+
+
 
 
 

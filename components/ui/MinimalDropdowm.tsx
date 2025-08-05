@@ -1,9 +1,9 @@
-import React from 'react';
-import { StyleSheet, Text, View } from 'react-native';
-import { saveTheme } from '@/utils/SavedTheme';
 import { setMode } from '@/redux/AppSlice';
 import { useAppDispatch } from '@/redux/hooks';
+import { saveTheme } from '@/utils/SavedTheme';
 import { router } from 'expo-router';
+import React from 'react';
+import { StyleSheet, Text, View } from 'react-native';
 import { Menu } from 'react-native-paper';
 import IconButton from './IconButton';
 
@@ -44,12 +44,13 @@ const MinimalDropdown = ({ list, theme, label, selected, setSelected, visible, s
                 return <Menu.Item onPress={async (e) => {
                     e.preventDefault();
                     if (setSelected) {
+                   
+
+                        // const name = await item.onPress()
 
 
-                        const name = await item.onPress()
-
-
-                        // setSelected(name)
+                        // // setSelected(name)
+                        setSelected(item.name)
                     }
                     if (setVisible) {
                         setVisible(false)

@@ -9,6 +9,7 @@ interface SubscriptionBilling {
   freetrial: string; // 'true' or 'false'
   freetrialendday: string;
   billingrecurringtime: string;
+  latestResumedAt?: string;
 }
 
 interface BillingResult {
@@ -24,96 +25,62 @@ interface BillingResult {
  * @returns Object with days until next billing, next billing date, and overdue status
  */
 function calculateDaysUntilNextBilling(subscription: SubscriptionBilling): number {
-  const { firstpayment:firstPaymentDate, billingperiodnumber: billingPeriod, billingperiodtime: billingType, freetrial, freetrialendday, billingrecurringtime} = subscription;
-
-
+  const { firstpayment:firstPaymentDate, billingperiodnumber: billingPeriod, billingperiodtime: billingType, freetrial, freetrialendday} = subscription;
   
-  console.log("Free trial type: ", typeof(freetrial))
-  console.log("Free trail: ", freetrial)
-  // Get current date normalized to start of day
-  const today = dayjs()
-   
-  console.log("firstPaymentDate", firstPaymentDate)
-  // Parse first payment date
+  const today = dayjs();
+  
   const firstPayment = dayjs(firstPaymentDate);
-  if (freetrial === 'true') {
-     console.log("freetrialendday: ", freetrialendday)
+  
+  if (freetrial === "true") {
     const freetrialending = dayjs(freetrialendday)
-
-  /// checks if today is before the freetrial ending
-  if (today.isBefore(freetrialending)) {
-    const diffTime =freetrialending.startOf('day').diff(today.startOf('day'), 'day');
-    // console.log("diffTime: ", diffTime)
-    const daysUntil = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
-    // console.log(daysUntil)
+    if (today.isBefore(freetrialending)) {
+    const diffTime = freetrialending.startOf('day').diff(today, 'day');
     return diffTime
+    }
   }
-}
 
-  // // If first payment is in the future, that's the next billing date
-  // if (firstPayment.isAfter(today)) {
-  //   const diffTime = firstPayment.diff(today, 'day');
-  //   const daysUntil = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
-    
-
-  //   console.log(daysUntil)
-  //   return diffTime
-  // }
-  
-  // Calculate next billing date
-  
-  let nextBillingDate = dayjs(firstPayment);
-  
-  // Keep adding billing periods until we find a future date
-  while (nextBillingDate.isBefore(today)) {
-    addBillingPeriod(nextBillingDate, billingPeriod, billingType);
-  }
-  
-  // Calculate days difference
-  const diffTime = nextBillingDate.diff(today, 'day');
-  const daysUntil = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
-  
-
-  console.log(daysUntil)
-  return daysUntil
-}
-
-/**
- * Adds billing period to a date
- * @param date - Date to modify
- * @param period - Number of periods to add
- * @param type - Type of billing period
- */
-function addBillingPeriod(date: dayjs.Dayjs, period: string, type: string): void {
- switch (type) {
-  
-     
+  // This function should return the new date object
+function addBillingPeriod(date: dayjs.Dayjs, period: string, type: string): dayjs.Dayjs {
+  switch (type) {
    case 'Week':
-     date.add(7 * parseInt(period), 'day');
-     break;
-     
-   case 'Month':
-     // Handle month-end dates properly
-     const originalDay = date.date();
-     date.add(parseInt(period), 'month');
-     
-     // If day changed due to month overflow (e.g., Jan 31 -> Mar 3)
-     // Set to last day of intended month
-     if (date.date() !== originalDay) {
-       date.date(0); // Go to last day of previous month
-     }
-     break;
-     
-   case 'Year':
-     date.add(parseInt(period), 'year');
-     break;
-     
-   default:
-     throw new Error(`Invalid billing type: ${type}`);
- }
-}
+   // Return the new date from the add method
+   return date.add(7 * parseInt(period), 'day');
   
+   case 'Month':
+   // Return the new date from the add method
+   const newDate = date.add(parseInt(period), 'month');
+  // If the day changed due to month overflow, set it to the last day of the new month
+  if (newDate.date() !== date.date()) {
+    return newDate.endOf('month');
+  }
+  return newDate;
+  
+  case 'Year':
+  // Return the new date from the add method
+  return date.add(parseInt(period), 'year');
+  
+  default:
+  throw new Error(`Invalid billing type: ${type}`);
+}
+  }
+  
+  let nextBillingDate = !freetrialendday? dayjs(firstPayment): dayjs(freetrialendday);
 
+
+
+  
+   // Keep adding billing periods until we find a future date
+   while (nextBillingDate.isBefore(today)) {
+  // Reassign the nextBillingDate to the new date returned by the function
+   nextBillingDate = addBillingPeriod(nextBillingDate, billingPeriod, billingType);
+   }
+   
+   // Calculate days difference
+   // The 'diff' method returns a number, so no need to divide by milliseconds
+   const daysUntil = nextBillingDate.diff(dayjs(today).startOf('day'), 'day');
+  
+   return daysUntil
+  }
 
 function calculateNextBilling(date: any, billingPeriod: any, billingType: any) {
   let billingDate = dayjs(date); // use let, not const

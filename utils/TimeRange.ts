@@ -2,7 +2,11 @@ import dayjs from 'dayjs';
 import advancedFormat from 'dayjs/plugin/advancedFormat';
 import isSameOrAfter from 'dayjs/plugin/isSameOrAfter';
 import isSameOrBefore from 'dayjs/plugin/isSameOrBefore';
+import isBetween from 'dayjs/plugin/isBetween';
 
+
+
+dayjs.extend(isBetween);
 dayjs.extend(advancedFormat);
 dayjs.extend(isSameOrBefore);
 dayjs.extend(isSameOrAfter);
@@ -33,13 +37,26 @@ async function ChartDataViaRange(db: any, timeRange: string = '6 months') {
     monthLabels.forEach(label => {
         monthlyTotals[label] = 0;
     });
+     
 
+    console.log("Is this working : ")
     // Fetch relevant subscriptions from DB
     const subscriptions = await db.getAllAsync(
-        `SELECT * FROM userSubscriptions
-
-     `
+        `SELECT us.*, ph.pausedAt AS latestPausedAt, ph.resumedAt AS latestResumedAt
+    FROM userSubscriptions us
+    LEFT JOIN (
+      SELECT *
+      FROM pauseHistory
+      WHERE id IN (
+        SELECT MAX(id)
+        FROM pauseHistory
+        GROUP BY subscriptionId
+      )
+    ) ph ON us.id = ph.subscriptionId
+  ` 
     );
+
+    console.log("Chart sub: ", subscriptions)
 
     
    
@@ -55,9 +72,15 @@ async function ChartDataViaRange(db: any, timeRange: string = '6 months') {
             billingperiodnumber,
             billingperiodtime,
             canceldate, 
-            isactive
+            isactive,
+            latestPausedAt,
+            latestResumedAt
         } = sub;
-        console.log("Is Active", isactive)
+        
+        // Parse pause and resume dates if they exist
+        const pausedAt = latestPausedAt ? dayjs(latestPausedAt) : null;
+        const resumedAt = latestResumedAt ? dayjs(latestResumedAt) : null;
+
 
 
         const first = !freetrialendday ? dayjs(firstpayment) : dayjs(freetrialendday);
@@ -76,11 +99,14 @@ async function ChartDataViaRange(db: any, timeRange: string = '6 months') {
             while (billingCursor.isSameOrBefore(endDate)) {
                 const label = billingCursor.format('MMM YYYY');
 
+                const isPaused = pausedAt && (!resumedAt || billingCursor.isBetween(pausedAt, resumedAt, null , '[]'));
+
                 // Only add if this billing date falls within the desired range
                 if (
                     billingCursor.isSameOrAfter(startDate) &&
                     (!cancel || billingCursor.isSameOrBefore(cancel)) &&
-                    monthlyTotals.hasOwnProperty(label)
+                    monthlyTotals.hasOwnProperty(label) &&
+                    !isPaused
                 ) {
                     monthlyTotals[label] += price;
                 }

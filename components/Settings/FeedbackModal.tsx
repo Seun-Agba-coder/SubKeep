@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect} from 'react';
 import {
   Modal,
   View,
@@ -12,6 +12,9 @@ import {
 } from 'react-native';
 import FeedbackDropdown from './FeedbackDropdown';
 import {submitFeedbackToFirestore} from '@/Firebase/FirebaseBackend';
+import {  onAuthStateChanged } from 'firebase/auth';
+import { auth } from '@/firebaseConfig'; 
+
 
 
 const FeedbackModal = ({ isVisible, onClose, theme, setSnackVisible, setSnackMessage }: { isVisible: boolean; onClose: () => void, theme: any, setSnackVisible: (visible: boolean) => void, setSnackMessage: (message: {message: string, color: string}) => void }) => {
@@ -26,11 +29,32 @@ const FeedbackModal = ({ isVisible, onClose, theme, setSnackVisible, setSnackMes
     { label: 'Bug Report', value: 'bug' },
     { label: 'Feature Request', value: 'feature' },
   ]);
-
+  
+    const [userinfo, setUser] = useState<any>(null)
+    const [isAuthenticated, setIsAuthenticated] = useState(false)
+   
+  
+     useEffect(() => {
+      onAuthStateChanged(auth, (user) => {
+          if (user) {
+  
+              setIsAuthenticated(true)
+              setUser(user)
+          } else {
+           
+              setIsAuthenticated(false)
+          }
+          });
+  
+     } ,[])
 
   // Dummy function for submitting feedback
   const handleSubmit = async () => {
     // Check if essential fields are filled
+    if (!userinfo) {
+      Alert.alert("Please sign in to submit feedback");
+      return;
+    }
     if (!subject || !message) {
       Alert.alert("Please fill in the subject and message before submitting.");
       return;
@@ -49,7 +73,7 @@ const FeedbackModal = ({ isVisible, onClose, theme, setSnackVisible, setSnackMes
         setSnackVisible(true)
         setSnackMessage({message: "Successfully submitted feedback", color: "#16A34A"})
     } catch (error) {
-      console.log(error)
+      console.log("Error submitting feedback:", error)
       setSnackVisible(true)
       setSnackMessage({message: "Something went wrong, try again later, check connection", color: "#DC2626"})
     }

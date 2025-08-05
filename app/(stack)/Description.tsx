@@ -135,14 +135,14 @@ const Description = () => {
    }
 
 
-    function DeleteSubcriptionHandler() {
+    async function DeleteSubcriptionHandler() {
        
-        deleteSubscription(db, data.id, data)
-        router.replace({pathname: "/(tab)/Index", params    : {refresh: new Date().toString()}})
+        await deleteSubscription(db, data.id, data)
+        router.replace({pathname: "/(tab)/Index", params : {refresh: new Date().toString()}})
     }
 
-    function SetSubscriptionInactive() {
-        setInactive(db, data.id, data)
+    async function SetSubscriptionInactive() {
+        await setInactive(db, data.id, data)
         router.replace({pathname: "/(tab)/Index", params: {refresh : new Date().toString()}})
     }
 

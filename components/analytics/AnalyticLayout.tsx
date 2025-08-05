@@ -9,6 +9,7 @@ import { ScrollView, StyleSheet, Text, View } from 'react-native';
 import Card from './Card';
 import Category from './Category';
 import Chart from './Chart';
+import { useAppSelector } from '@/redux/hooks';
 
 
 // const total = await getTotal(visibleMonth.getFullYear(), visibleMonth.getMonth() + 1);
@@ -17,12 +18,14 @@ import Chart from './Chart';
 
 
 interface Prop {
-    theme: any
+    theme: any;
+    mode: string;
 
 }
 
-const AnalyticLayout = ({ theme }: Prop) => {
+const AnalyticLayout = ({ theme, mode}: Prop) => {
     const db = useSQLiteContext()
+ 
 
     const { t } = useAppTranslation()
 
@@ -78,13 +81,13 @@ const AnalyticLayout = ({ theme }: Prop) => {
         <ScrollView showsVerticalScrollIndicator={false}>
             <Text style={{ color: theme.primaryText }}>{t("analytics.thismonth")}</Text>
 
-            <View >
+            <View>
                 <View style={styles.rowContainer}>
                     <View style={styles.cardContainer}>
-                        <Card title={`${currencySymbol}${montalTotal} ${t("analytics.card.monthlyexpense")}`} num="" background={theme.primaryText} textColor="white" />
+                        <Card title={`${currencySymbol}${montalTotal} ${t("analytics.card.monthlyexpense")}`} num="" background={theme.primaryText} textColor={mode === 'light' ? 'white' : 'black'} />
                     </View>
                     <View style={styles.cardContainer}>
-                        <Card icon="menu" title={t("analytics.card.activesub")} num={activeSubscriptions.length.toString()} background={theme.primaryText} textColor="white" />
+                        <Card icon="menu" title={t("analytics.card.activesub")} num={activeSubscriptions.length.toString()} background={theme.primaryText} textColor={mode === 'light' ? 'white' : 'black'} />
                     </View>
 
 
@@ -92,10 +95,10 @@ const AnalyticLayout = ({ theme }: Prop) => {
                 </View>
                 <View style={styles.rowContainer}>
                     <View style={styles.cardContainer}>
-                        <Card icon="time-outline" title={t("analytics.card.trails")} num={freeTrialPerMonth.toString()} background={theme.primaryText} textColor='white' />
+                        <Card icon="time-outline" title={t("analytics.card.trails")} num={freeTrialPerMonth.toString()} background={theme.primaryText} textColor={mode === 'light' ? 'white' : 'black'} />
                     </View>
                     <View style={styles.cardContainer}>
-                        <Card icon="calendar-outline" title={t("analytics.card.upcomingbills")} num={noOfBillingThisMonth.toString()} background={theme.primaryText} textColor='white' />
+                        <Card icon="calendar-outline" title={t("analytics.card.upcomingbills")} num={noOfBillingThisMonth.toString()} background={theme.primaryText} textColor={mode === 'light' ? 'white' : 'black'} />
                     </View>
                 </View>
             </View>

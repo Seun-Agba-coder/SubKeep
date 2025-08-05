@@ -1,14 +1,4 @@
-import { billingType } from "@/constants/Styles/AppStyle";
-import { createIconSetFromFontello } from "@expo/vector-icons";
-import {
-  parseISO,
-  addMonths,
-  addWeeks,
-  addYears,
-  isSameMonth,
-  isSameYear,
-  interval,
-} from 'date-fns';
+
 
 import dayjs from 'dayjs';
 
@@ -31,20 +21,22 @@ interface BillingDatesParams {
   freeTrialDays?: number;
   isactive: number;
   canceldate?: string;
+  latestResumedAt?: string;
 }
 
 function generateBillingDates({
   firstPayment,
   billingType,
-  numberOfPeriods = 10,
+  numberOfPeriods = 3,
   interval = 1,
   freeTrialDays = 0, 
   isactive = 0,
   canceldate, 
+  latestResumedAt, 
 }: BillingDatesParams): BillingEntry[] {
   const result: BillingEntry[] = [];
  
-  let current = dayjs(firstPayment); // use dayjs here
+  let current = !latestResumedAt ? dayjs(firstPayment) : dayjs(latestResumedAt); // use dayjs here
   
   const typeColors: Record<BillingType, Color> = {
     Month: 'green',

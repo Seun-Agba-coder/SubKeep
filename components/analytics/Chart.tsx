@@ -26,7 +26,7 @@ const Chart = ({ theme, db, symbol }: ChartProps) => {
   const [trend, setTrend] = useState<any>([]);
  
 
-  const timeOptions = [t("analytics.timeoptions.3months"), t("analytics.timeoptions.6months"), t("analytics.timeoptions.1year")];
+  const timeOptions = [{value: t("analytics.timeoptions.3months"), name: '3 months'}, {value: t("analytics.timeoptions.6months"), name: '6 months'}, {value: t("analytics.timeoptions.1year"), name: '1 year'}];
 
   useEffect(() => {
     const getFilteredData = async () => {
@@ -93,7 +93,7 @@ const Chart = ({ theme, db, symbol }: ChartProps) => {
           {t("analytics.monthlyspending")}
         </Text>
         <MinimalDropdown 
-          list={timeOptions.map((item: string) => ({ name: item, value: item }))} 
+          list={timeOptions} 
           theme={theme} 
           label={t('analytics.timerange')}
           selected={selectedRange} 
@@ -108,7 +108,7 @@ const Chart = ({ theme, db, symbol }: ChartProps) => {
           data={getChartData()}
           width={chartWidth}
           height={250}
-          yAxisLabel={symbol}
+          yAxisLabel={symbol || ''} 
           chartConfig={{
             backgroundGradientFrom: '#f2f2f2',
             backgroundGradientTo: '#f2f2f2',

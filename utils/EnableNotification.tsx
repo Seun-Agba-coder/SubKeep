@@ -63,7 +63,10 @@ export async function scheduleReminder(
    
 
     const notifyDate = getDateWithCurrentTime(triggerDate.toDateString());
-    console.log("notifyDate: with the proper timing", notifyDate)
+    console.log("NOTIFY DATE WITH PROPER TIMING: ", notifyDate)
+
+
+    
     const today = dayjs().startOf('day');
     console.log("today: ", today)
 
@@ -88,11 +91,11 @@ export async function scheduleReminder(
           },
           trigger: {
             type: 'date',
-            date: dayjs().add(1, 'minute').toDate()
+            date: notifyDate.subtract(1, 'day').toDate()
           } as Notifications.NotificationTriggerInput,
         });
     
-        console.log("THE NOTIFICATION WILL SOUND ONE MINUTES FROM NOW LEAVE THE APP");
+    
         return id;
       } catch (error) {
         console.warn('Failed to schedule notification:', error);
@@ -111,6 +114,7 @@ export async function scheduleTrialNotification(
 ): Promise<string | null> {
     if (!trialEndOn) return null;
    try{
+    console.log("tried ")
     return await scheduleReminder(
         new Date(trialEndOn),
         '⏳ Free Trial Ending Soon',

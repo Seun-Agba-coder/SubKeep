@@ -31,6 +31,10 @@ export default function useMonthlyBillTotal(db: any) {
         `SELECT * FROM userSubscriptions WHERE isactive = ? AND isdeleted = ?`,
         [0, 0]
       );
+
+      if (subscriptions.length  === 0) {
+        return "0"
+      }
      
 
       let total: number = 0;
