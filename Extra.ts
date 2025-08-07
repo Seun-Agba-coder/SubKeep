@@ -10,7 +10,7 @@ export const scheduleRecurringNotifications = async (subscriptionData: any, firs
 
         const freeid = await scheduleTrialNotification(subscriptionData.freetrialendday, subscriptionData.platformname)
         console.log(freeid, ": : free id")
-        notificationIds.push({ billingrecurringtime: "", notificationIds: freeid })
+        notificationIds.push({ expirydate: "", notificationIds: freeid })
 
 
     }
@@ -35,7 +35,7 @@ export const scheduleRecurringNotifications = async (subscriptionData: any, firs
         );
 
 
-        notificationIds.push({ billingrecurringtime: nextBillingDate, notificationIds: notificationId });
+        notificationIds.push({ expirydate: nextBillingDate, notificationIds: notificationId });
     }
 
 
@@ -56,8 +56,8 @@ export const scheduleRecurringNotificationsUpdate = async (subscriptionData: any
 
         const notificationId = await scheduleReminder(
             dayjs(nextBillingDate).toDate(),
-            `Your ${subscriptionData.platformname.trim()}will soon renew`,
-            `Your ${subscriptionData.platformname.trim()}will renew tomorrow, a reminder so you do not forget`,
+            `Your ${subscriptionData.platformname.trim()} will soon renew`,
+            `Your ${subscriptionData.platformname.trim()} will renew tomorrow, a reminder so you do not forget`,
             subscriptionData.platformname,
             subscriptionData.id,
             subscriptionData.billingperiodtime,
@@ -66,7 +66,7 @@ export const scheduleRecurringNotificationsUpdate = async (subscriptionData: any
         );
 
 
-        notificationIds.push({ billingrecurringtime: nextBillingDate, notificationIds: notificationId });
+        notificationIds.push({ expirydate: nextBillingDate, notificationIds: notificationId });
     }
 
 

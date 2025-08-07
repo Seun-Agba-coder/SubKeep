@@ -34,13 +34,16 @@ const styles = StyleSheet.create({
     container: {
         padding: 10,
         borderRadius: 10,
-    
+        width: '90%',
+        height: 60, 
         marginVertical: 10,
         marginHorizontal: 10,
     }, 
     rowContainer: {
         flexDirection: 'row', 
         gap: 5,
+        marginHorizontal: 2, 
+        paddingRight: 1, 
         alignItems: 'center',
         
     }

@@ -1,6 +1,6 @@
 import React from 'react';
 import { StyleSheet, Text, TextInput, TextInputProps, View } from "react-native";
-
+import { useAppTranslation } from '@/hooks/useAppTranslator';
 interface InputTextProps extends TextInputProps {
     inputTitle?: string;
     inputTitleColor?: string;
@@ -11,12 +11,14 @@ interface InputTextProps extends TextInputProps {
 
 const InputText = ({ inputTitle, inputTitleColor, optional, extraInputStyle, optionalTextColor, ...props }: InputTextProps) => {
 
+    const {t} = useAppTranslation()
+
     return (
         <View style={{marginVertical: 5}}>
             {inputTitle &&
                 <View style={{ flexDirection: 'row', gap: 1 }}>
                     <Text style={[styles.textTitle, { marginBottom: 6, color: inputTitleColor }]}>{inputTitle} </Text>
-                    {optional && <Text style={{ color: optionalTextColor }}> - optional</Text>}
+                    {optional && <Text style={{ color: optionalTextColor }}> - {t("addsub.subquestion.optional.text")}</Text>}
                 </View>
             }
 

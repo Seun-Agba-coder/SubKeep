@@ -2,6 +2,7 @@ import {Text, View, Modal, StyleSheet } from 'react-native'
 import PressableText from './PressableText'
 import { cancelNotification } from '@/utils/EnableNotification'
 import { ThemeContext } from '@react-navigation/native';
+import { useAppTranslation } from '@/hooks/useAppTranslator';
 
 interface ModalContainerProps {
     visible: boolean,
@@ -15,6 +16,7 @@ interface ModalContainerProps {
 
 const ModalContainer = ({visible, setVisible, actionText, body, theme, actionHandler, title}: ModalContainerProps) => {
 
+    const {t} = useAppTranslation()
     function cancelModalHandler() {
         setVisible(false)
     }
@@ -36,7 +38,7 @@ const ModalContainer = ({visible, setVisible, actionText, body, theme, actionHan
             <Text style={[styles.body, {color: theme.primaryText}]}>{body}</Text>
             <View style={{justifyContent: 'flex-end', alignItems: 'flex-end'}}>
                 <View style={{flexDirection: 'row', gap: 10}}>
-                    <PressableText extraTextStyle={{marginRight: 10, color: theme.primaryText}} onPress={() => cancelModalHandler()}>Cancel</PressableText>
+                    <PressableText extraTextStyle={{marginRight: 10, color: theme.primaryText}} onPress={() => cancelModalHandler()}>{t('common.cancel')}</PressableText>
                     <PressableText extraTextStyle={{marginRight: 10, color: theme.secondaryColor, fontWeight: '700'}} onPress={() => actionInsideHandler()}>{actionText}</PressableText>
                 </View>
 

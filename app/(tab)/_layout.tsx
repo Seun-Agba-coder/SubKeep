@@ -5,11 +5,13 @@ import { router, Tabs } from "expo-router";
 import { StyleSheet, TouchableOpacity, View } from "react-native";
 import { SafeAreaProvider, SafeAreaView } from "react-native-safe-area-context";
 import MaterialIcons from '@expo/vector-icons/MaterialIcons';
+import { useAppTranslation } from "@/hooks/useAppTranslator";
 
 
 
 const TabLayout = () => {
     const mode = useAppSelector((selector) => selector.appmode.mode)
+    const {t } = useAppTranslation()
 
     const theme = mode === 'light' ? LightTheme : DarkTheme;
 
@@ -52,7 +54,7 @@ const TabLayout = () => {
                                 paddingHorizontal: 10,
 
                             },
-                            tabBarLabel: 'subscriptions',
+                            tabBarLabel: t('bottomtablabels.subscriptions'),
                             tabBarIcon: ({ size, color}) => (
                                          <IconButton name="home" size={size} color={color} onPress={() => router.push("./Index")} />
                             )
@@ -64,7 +66,7 @@ const TabLayout = () => {
                                 <IconButton name="card-outline" size={size} color={color} onPress={() => router.push("./AllSubscription")} />
                            
                         ),
-                        tabBarLabel: "All Subscriptions"
+                        tabBarLabel: t('bottomtablabels.AllSubscription')
 
 
                     }} />
@@ -89,7 +91,7 @@ const TabLayout = () => {
                                 paddingHorizontal: 10,
 
                             },
-                            tabBarLabel: 'Analytics',
+                            tabBarLabel: t('bottomtablabels.Analytics'),
                             tabBarIcon: ({ size, color}) => (
                                  <TouchableOpacity
                                  hitSlop={{ top: 0, bottom: 0, left: 0, right: 0 }}
@@ -106,7 +108,7 @@ const TabLayout = () => {
                                 <IconButton name="settings" size={size} color={color} onPress={() => router.push("./Setting")}/>
                             </TouchableOpacity>
                         ),
-
+                        tabBarLabel: t('bottomtablabels.Setting')
                     }} />
 
                 </Tabs>

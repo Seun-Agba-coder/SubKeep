@@ -22,9 +22,13 @@ import { Calendar,  CalendarList} from 'react-native-calendars';
 import { useLocalSearchParams } from 'expo-router'
 import dayjs from 'dayjs'
 import { useNotificationRefresh } from '@/hooks/useNotificationRefresh'
+import { LocaleConfig } from 'react-native-calendars';
 
-function formatDate(date: Date) {
-  return dayjs(date).format('YYYY-MM-DD'); // returns "YYYY-MM-DD"
+
+
+
+function formatDate(date: Date, i18n: any) {
+  return dayjs(date).locale(i18n.language).format('YYYY-MM-DD'); // returns "YYYY-MM-DD"
 }
 
 
@@ -38,7 +42,8 @@ const Home = () => {
    
     const mode = useAppSelector((selector) => selector.appmode.mode)
     const theme = mode === 'light' ? LightTheme : DarkTheme;
-    const { t } = useAppTranslation()
+    const { t, i18n } = useAppTranslation()
+    console.log("i18n: ", typeof(i18n.language))
 
     const [visibleMonth, setVisibleMonth] = useState(new Date());
     const [defualtSymbol, setDefualtSymbol] = useState<string>("")
@@ -50,6 +55,7 @@ const Home = () => {
     const [updatedSubscription, setUpdatedSubscription] = useState<any>([])
     const [billingMarkers, setBillingMarkers] = useState<any>([])
     const [getMontlyTotal, setGetMonthlyTotal] = useState<string>("0.00")
+    const [calendarKey, setCalendarKey] = useState(0);
 
    const { refresh } = useLocalSearchParams();
 
@@ -262,7 +268,7 @@ useEffect(() => {
              }
                 if (hasSubscriptions) {
                     if (marking?.subscriptions.length >= 2) {
-                        setSelectedDate(formatDate(new Date(date.dateString)));
+                        setSelectedDate(formatDate(new Date(date.dateString), i18n));
                         setSelectedDayMarkers(marking.subscriptions);
                         setModalVisible(true);
                     }
@@ -303,7 +309,7 @@ useEffect(() => {
                     />
                      {marking.subscriptions.length >= 2 && (
 
-                  <Text style={{color: 'black', fontSize: 10, fontWeight: 'bold'}}>+{marking.subscriptions.length }</Text>
+                  <Text style={{color: theme.primaryText, fontSize: 10, fontWeight: 'bold'}}>+{marking.subscriptions.length }</Text>
                   )}
                   </View>
                
@@ -319,9 +325,43 @@ useEffect(() => {
 
 
    
-
+ 
   
-      const dayTextColor = mode === 'light' ? theme.primaryText : '#ffffff';
+      const setupLocaleConfig = (language: string) => {
+        const weekdayNames: any = {
+          "en": ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'],
+          "fr": ['Dim', 'Lun', 'Mar', 'Mer', 'Jeu', 'Ven', 'Sam'],  
+          "it": ['Dom', 'Lun', 'Mar', 'Mer', 'Gio', 'Ven', 'Sab']
+        };
+      
+        // Set up complete locale config with all required properties
+        LocaleConfig.locales[language] = {
+          monthNames: [
+            'January', 'February', 'March', 'April', 'May', 'June',
+            'July', 'August', 'September', 'October', 'November', 'December'
+          ],
+          monthNamesShort: [
+            'Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun',
+            'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'
+          ],
+          dayNames: [
+            'Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'
+          ],
+          dayNamesShort: weekdayNames[language] || weekdayNames['en'],
+          today: 'Today'
+        };
+        
+        LocaleConfig.defaultLocale = language;
+        setCalendarKey(prev => prev + 1);
+      };
+      
+      // Add this useEffect in your Home component (replace your current LocaleConfig setup):
+  
+      useEffect(() => {
+        setupLocaleConfig(i18n.language);
+      }, [i18n.language]);
+
+
 
     return (
         <ScrollView showsVerticalScrollIndicator={false} contentContainerStyle={{ paddingBottom: 100 }} style={[styles.container, { backgroundColor: theme.background }]}>
@@ -367,7 +407,8 @@ useEffect(() => {
                 <View  style={{marginBottom: '5%'}}>
                     {/* <CustomCalender theme={theme} changeMonth={handleMonthChange} billingMarkers={billingMarkers} /> */}
                     <Calendar
-                    key={theme.background}
+                     
+                    key={`${theme.background}-${i18n.language}-${calendarKey}`}
                    current={new Date().toISOString().split('T')[0]}
                    hideArrows={false}
                    hideExtraDays={true}
@@ -388,6 +429,7 @@ useEffect(() => {
                     
                     
                    }
+                 
                  
                     />
                 </View>
@@ -413,7 +455,7 @@ useEffect(() => {
                           </Text>
                           <ScrollView contentContainerStyle={{ flexDirection: 'row', flexWrap: 'wrap', gap: 10 }}>
                             {selectedDayMarkers.map((sub: any, index: any) => (
-                              <View style={{flexDirection: 'row', gap:2}}>
+                              <View style={{flexDirection: 'row', gap:2}} key={index}>
                               <Image
                                 key={`${sub.iconurl}-${index}`}
                                 source={{ uri: sub.iconurl }}

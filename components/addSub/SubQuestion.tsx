@@ -232,7 +232,7 @@ const SubQuestion = ({ theme, id, activate }: { theme: any, id?: string, activat
                                 <InputText inputTitle={t("addsub.subquestion.price.text")} maxLength={5} inputTitleColor={theme.primaryText} placeholder={`${symbol}${t("addsub.subquestion.price.placeholder")}`} placeholderTextColor={theme.placeholdertext} extraInputStyle={[styles.generalinput, { color: theme.primaryText, backgroundColor: theme.secondaryColor }]} value={price} onChangeText={setPriceHandler} keyboardType='numeric' />
                             </View>
                             <View style={{ flex: 0.6 }}>
-                                <Text style={[styles.title, { color: theme.primaryText, marginBottom: 4, marginTop: 10 }]}>{activate ? "Date of Activation*" : t("addsub.subquestion.firstpayment.text")}</Text>
+                                <Text style={[styles.title, { color: theme.primaryText, marginBottom: 4, marginTop: 10 }]}>{activate ? t("addsub.subquestion.dateofActivation.text") : t("addsub.subquestion.firstpayment.text")}</Text>
                                 <DatePicker theme={theme} date={date} setDate={setDate} validDate={validDate} label={dayjs(date).locale(i18n.language).format('MMMM D, YYYY')} dateSelected={dateSelected} />
                             </View>
                         </View>

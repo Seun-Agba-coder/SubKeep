@@ -155,11 +155,11 @@ try {
                     try {
                         await logOut()
                         setSnackVisible(true)
-                        setSnackMessage({message: "Successfully logged out", color: "#16A34A"})
+                        setSnackMessage({message:  `${t('setting.success.logout')}}`, color: "#16A34A"})
                     } catch (error) {
                         console.log(error)
                         setSnackVisible(true)
-                        setSnackMessage({message: "Something went wrong, check your connnection", color: "#DC2626"})
+                        setSnackMessage({message: `${t('setting.success.error')}}`, color: "#DC2626"})
                     }
                 }} style={{ backgroundColor: theme.primaryText, borderRadius: 10, paddingVertical: 10 }} textStyle={{ color: theme.background, alignSelf: 'flex-start' }} src={"yes"} /> :
                     <CustomButton title={t('setting.login')} onPress={Platform.OS === 'android' ? 
@@ -167,15 +167,15 @@ try {
                         try {
                             await signInWithGoogleAndFirebase()
                             setSnackVisible(true)
-                            setSnackMessage({message: "Successfully logged in", color: "#16A34A"})
+                            setSnackMessage({message: `${t('setting.success.login')}}`, color: "#16A34A"})
                         } catch (error) {
                             console.log(error)
                             setSnackVisible(true)
-                            setSnackMessage({message: "Something went wrong, check your connnection", color: "#DC2626"})
+                            setSnackMessage({message: `${t('setting.success.error')}}`, color: "#DC2626"})
                         }
                     }
                      : handleAppleSignIn} style={{ backgroundColor: theme.primaryText, borderRadius: 10, paddingVertical: 10 }} textStyle={{ color: theme.background, alignSelf: 'flex-start' }} src={"yes"}/>}
-                     {!isAuthenticated && !joinedWaitlist && <Text style={{fontSize: 6, color: 'gray', marginVertical: 2, textAlign: 'left'}}>login to be one of the first to signup to our automatic gmail tracker </Text>}
+                     {!isAuthenticated && !joinedWaitlist && <Text style={{fontSize: 6, color: 'gray', marginVertical: 2, textAlign: 'left'}}>{t('setting.info')} </Text>}
 
             </View>
             <View style={{ backgroundColor: theme.secondaryColor, paddingLeft: '4%', marginBottom: 30, padding: 10, borderRadius: 15, marginTop: 20 }}>
@@ -199,7 +199,7 @@ try {
 
 
                 <View style={{ backgroundColor: theme.secondaryColor, paddingHorizontal: 10, borderRadius: 20, paddingVertical: 10 }}>
-                    <SettingItem icon="globe-outline" label={t('setting.settingitem.item1')} list={LanguageList} theme={theme} selected={selectedLanguage} setSelected={setSelectedLanguage} visible={languageListVisible} setVisible={setLanguageListVisible} />
+                    <SettingItem icon="globe-outline" label={t('setting.settingitem.item1')} list={LanguageList} theme={theme} selected={selectedLanguage} setSelected={setSelectedLanguage} visible={languageListVisible} setVisible={setLanguageListVisible} lang={true} />
                     <SettingItem icon="logo-usd" label={t('setting.settingitem.item2')} currency={defCurrency} theme={theme} dropdown={false} onPress={goToCurrencyPicker} />
                     <SettingItem icon="sunny" label={t('setting.settingitem.item3')} list={SystemList} theme={theme} selected={selectedSystemMode} setSelected={setSelectedSystemMode} visible={systemListVisibility} setVisible={setSystemListVisibility} systemChange={true} />
                     <SettingItem icon="chatbox-outline" label={t('setting.settingitem.item4')} theme={theme} dropdown={false} onPress={showFeedBackModal} border={false} />
@@ -208,7 +208,7 @@ try {
 
                  { joinedWaitlist && <View style={{marginVertical: 10, }}>
                     <Text style={{color: 'green', fontSize: 10, }}>
-                        Gamil Feature coming soon
+                    {t('setting.gmailfeature')}
                     </Text>
 
                 </View>}

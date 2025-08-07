@@ -69,7 +69,7 @@ const Category = ({ data, theme }: Data) => {
             
 
               <Text style={{ color: theme.primaryText, fontSize: 10 }}>
-                {item.name}
+                {t(`addsub.category.${item.name}`)}
               </Text>
             </View>
           ))}

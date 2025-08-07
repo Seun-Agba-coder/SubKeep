@@ -14,20 +14,21 @@ import FeedbackDropdown from './FeedbackDropdown';
 import {submitFeedbackToFirestore} from '@/Firebase/FirebaseBackend';
 import {  onAuthStateChanged } from 'firebase/auth';
 import { auth } from '@/firebaseConfig'; 
-
+import { useAppTranslation } from '@/hooks/useAppTranslator';
 
 
 const FeedbackModal = ({ isVisible, onClose, theme, setSnackVisible, setSnackMessage }: { isVisible: boolean; onClose: () => void, theme: any, setSnackVisible: (visible: boolean) => void, setSnackMessage: (message: {message: string, color: string}) => void }) => {
-  // State for form fields
+    // State for form fields
+    const {t} = useAppTranslation()
   const [feedbackType, setFeedbackType] = useState('General Feedback');
   const [subject, setSubject] = useState('');
   const [message, setMessage] = useState('');
   const [open, setOpen] = useState(false);
   const [value, setValue] = useState(null);
   const [items, setItems] = useState([
-    { label: 'General Feedback', value: 'general' },
-    { label: 'Bug Report', value: 'bug' },
-    { label: 'Feature Request', value: 'feature' },
+    { label: `${t("setting.feedback.General Feedback")}`, value: 'general' },
+    { label: `${t("setting.feedback.Bug Report")}`, value: 'bug' },
+    { label: `${t("setting.feedback.Feature Request")}`, value: 'feature' },
   ]);
   
     const [userinfo, setUser] = useState<any>(null)
@@ -52,11 +53,11 @@ const FeedbackModal = ({ isVisible, onClose, theme, setSnackVisible, setSnackMes
   const handleSubmit = async () => {
     // Check if essential fields are filled
     if (!userinfo) {
-      Alert.alert("Please sign in to submit feedback");
+      Alert.alert(`${t("setting.feedback.error1")}`);
       return;
     }
     if (!subject || !message) {
-      Alert.alert("Please fill in the subject and message before submitting.");
+      Alert.alert(`${t("setting.feedback.error2")}`);
       return;
     }
     
@@ -111,24 +112,24 @@ const FeedbackModal = ({ isVisible, onClose, theme, setSnackVisible, setSnackMes
 
             {/* Subject Input */}
             <View style={styles.inputContainer}>
-              <Text style={[styles.label, { color: theme.text} ]}>Subject</Text>
+              <Text style={[styles.label, { color: theme.text} ]}>{t("setting.feedback.subject.title")}</Text>
               <TextInput
                 style={styles.textInput}
                 onChangeText={setSubject}
                 value={subject}
-                placeholder="e.g., App crashes when I..."
+                placeholder={t("setting.feedback.subject.placeholder")}
                 placeholderTextColor="#A0A0A0"
               />
             </View>
 
             {/* Message Textarea */}
             <View style={styles.inputContainer}>
-              <Text style={[styles.label, { color: theme.text} ]}>Your Message</Text>
+              <Text style={[styles.label, { color: theme.text} ]}>{t("setting.feedback.message.title")}</Text>
               <TextInput
                 style={[styles.textInput, styles.textarea]}
                 onChangeText={setMessage}
                 value={message}
-                placeholder="Tell us what you think..."
+                placeholder={t("setting.feedback.message.placeholder")}
                 placeholderTextColor="#A0A0A0"
                 multiline
               />
@@ -140,13 +141,13 @@ const FeedbackModal = ({ isVisible, onClose, theme, setSnackVisible, setSnackMes
                 style={[styles.button, styles.cancelButton, { backgroundColor: theme.background} ]}
                 onPress={onClose}
               >
-                <Text style={[styles.buttonText, styles.cancelButtonText]}>Cancel</Text>
+                <Text style={[styles.buttonText, styles.cancelButtonText]}>{t('setting.feedback.cancel')}</Text>
               </Pressable>
               <Pressable
                 style={[styles.button, styles.submitButton, { backgroundColor: theme.primaryText} ]}
                 onPress={handleSubmit}
               >
-                <Text style={[styles.buttonText, styles.submitButtonText, { color: theme.background} ]}>Send Feedback</Text>
+                <Text style={[styles.buttonText, styles.submitButtonText, { color: theme.background} ]}>{t('setting.feedback.sendFeedback')}</Text>
               </Pressable>
             </View>
           </View>

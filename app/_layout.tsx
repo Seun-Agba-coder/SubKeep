@@ -1,6 +1,6 @@
 import { store } from '@/redux/store';
 // import * as NavigationBar from 'expo-navigation-bar'; // use during development
-import { useAppDispatch } from '@/redux/hooks';
+import { useAppDispatch, useAppSelector } from '@/redux/hooks';
 import { setMode } from '@/redux/AppSlice';
 import { Provider as PaperProvider } from 'react-native-paper';
 // App.js
@@ -10,21 +10,18 @@ import { StatusBar } from 'expo-status-bar';
 import React from 'react';
 import { GestureHandlerRootView } from 'react-native-gesture-handler';
 import { SafeAreaProvider, SafeAreaView } from 'react-native-safe-area-context';
-import { Provider, useDispatch } from 'react-redux';
+import { Provider} from 'react-redux';
 import { Slot } from 'expo-router';
-import { Platform } from 'react-native';
-import { useEffect, useState, useRef} from 'react';
+import { Platform, View } from 'react-native';
+import { useEffect, useState, useRef, useCallback } from 'react';
 import Purchases, { LOG_LEVEL } from 'react-native-purchases';
 import '../src/locales/index';
-import { registerBackgroundNotificationTask, requestNotificationPermissions} from '@/utils/NotificationBackgroundTask'; 
-import { handleRecurringReminderFired } from '@/utils/EnableNotification';
 import { loadTheme } from '@/utils/SavedTheme';
-
-
-
-
-registerBackgroundNotificationTask();
-
+import * as SplashScreen from 'expo-splash-screen';
+import { getActiveSubscription, updateNotification } from '@/utils/Crud';
+import dayjs from 'dayjs';
+import { scheduleRecurringNotificationsUpdate } from '@/Extra';
+import FlashMessage from "react-native-flash-message";
 
 interface SubscriptionData {
   name: string;
@@ -33,9 +30,6 @@ interface SubscriptionData {
   billingCycle: string;
   billingperiod: string;
 }
-
-
-
 
 Notifications.setNotificationHandler({
   handleNotification: async () => ({
@@ -46,8 +40,7 @@ Notifications.setNotificationHandler({
   }),
 });
 
-
-
+SplashScreen.preventAutoHideAsync();
 
 // create database for user
 const createDbIfNeeded = async (db: any) => {
@@ -96,84 +89,94 @@ const createDbIfNeeded = async (db: any) => {
   }
 }
 
+function SlotContainer() {
+  const [appIsReady, setAppIsReady] = useState(false);
+  const dispatch = useAppDispatch();
+  const db: any = useSQLiteContext();
+  const mode = useAppSelector(( selector) => selector.appmode.mode)
 
-export default function RootLayout() {
+  useEffect(() => {
+    Purchases.setLogLevel(LOG_LEVEL.VERBOSE);
 
+    if (Platform.OS === 'ios') {
+       return;
+    } else if (Platform.OS === 'android') {
+       Purchases.configure({apiKey: 'goog_rVQVenVofsJXeCoXjfjwYEGUHCp'});
+    }
+  }, []);
 
-  function SlotContainer() {
-
-    const dispatch = useAppDispatch()
-    const db: any = useSQLiteContext();
-    const notificationListener = useRef<any>('');
-   
-    
-  
-  
-    useEffect(() => {
-      Purchases.setLogLevel(LOG_LEVEL.VERBOSE);
-  
-      if (Platform.OS === 'ios') {
-         return;
-      } else if (Platform.OS === 'android') {
-         Purchases.configure({apiKey: 'goog_rVQVenVofsJXeCoXjfjwYEGUHCp'});
-  
-  
+  useEffect(() => {
+    const initializeTheme = async () => {
+      try {
+        const savedMode = await loadTheme();
+        console.log("SAVED MODE: ", savedMode);
+        dispatch(setMode({ 
+          mode: (savedMode as 'light' | 'dark' | null) || 'light' 
+        }));
+      } catch (error) {
+        dispatch(setMode({ mode: 'light' }));
       }
-  
-    }, []);
-  
-  
-    // async function getCustomerInfo() {
-    //   const customerInfo = await Purchases.getCustomerInfo();
-    //   console.log(JSON.stringify(customerInfo), null, 2)
-  
-    // }
+    };
+    initializeTheme();
+  }, [dispatch]);
 
-  
-    useEffect(() => {
-      const initializeTheme = async () => {
-        try {
-          const savedMode = await loadTheme();
-          console.log("SAVED MODE: ", savedMode);
-          // Use saved theme if available, otherwise default to 'light'
-          dispatch(setMode({ 
-            mode: (savedMode as 'light' | 'dark' | null) || 'light' 
-          }));
-        } catch (error) {
-         
-          dispatch(setMode({ mode: 'light' }));
+  useEffect(() => {
+    async function prepare() {
+      try {
+        const activeSub = await getActiveSubscription(db)
+        if (activeSub.length === 0) {
+          return;
         }
-      };
-      initializeTheme();
-    }, [dispatch]);
+        for (const sub of activeSub) {
+          const billingrecurringlist = JSON.parse(sub.billingrecurringlist)
+          if (!billingrecurringlist) continue;
+          const listLastItem = billingrecurringlist[billingrecurringlist.length -1]
+          if (dayjs().isAfter(dayjs(listLastItem.expirydate))) {
+           const newScheduledNotifications =  await scheduleRecurringNotificationsUpdate(sub, listLastItem)
+           await updateNotification(db, sub.id, newScheduledNotifications)
+          }
 
+        }
+      
+      } catch (e) {
+        console.warn(e);
+      } finally {
+        setAppIsReady(true);
+      }
+    }
 
+    prepare();
+  }, []);
 
+  const onLayoutRootView = useCallback( async () => {
+    if (appIsReady) {
+      // Hide the splash screen
+      await SplashScreen.hideAsync();
+    }
+  }, [appIsReady]);
 
-    return (
-
-
-      <>
-     
-      <Slot/>
-    
-      </>
-    )
-    
+  if (!appIsReady) {
+    return null; // Keep showing the splash screen
   }
 
+  return (
+    <View style={{ flex: 1, backgroundColor: mode === 'light' ? '#fff' : '#000' }} onLayout={onLayoutRootView}>
+      <StatusBar 
+              style={mode === 'light' ? 'dark' : 'light'} 
+             />
+      <Slot />
+    </View>
+  );
+}
 
-
-
+export default function RootLayout() {
   return (
     <Provider store={store}>
       <PaperProvider>
         <GestureHandlerRootView style={{ flex: 1 }}>
           <SafeAreaProvider>
             <SafeAreaView style={{ flex: 1 }}>
-            <StatusBar 
-              style={'dark'} 
-        backgroundColor='#ffffff'/>
+            <FlashMessage position="bottom" />
             <SQLiteProvider databaseName="subTrackers41.db" onInit={createDbIfNeeded}>
               <SlotContainer/>
             </SQLiteProvider>
@@ -185,5 +188,3 @@ export default function RootLayout() {
     </Provider>
   );
 }
-
-  

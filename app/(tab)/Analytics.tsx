@@ -1,16 +1,19 @@
 import {View, Text, StyleSheet } from 'react-native'
-import { useAppSelector } from '@/redux/hooks'
 import { LightTheme, DarkTheme } from '@/constants/Styles/AppStyle'
 import AnalyticLayout from '@/components/analytics/AnalyticLayout'
+import { useAppSelector } from '@/redux/hooks'
+import { useAppTranslation } from '@/hooks/useAppTranslator'
 
 
 
 const Analytics = () => {
+
     const mode = useAppSelector((state) => state.appmode.mode)
     const theme = mode === "light" ? LightTheme: DarkTheme
+    const {t } = useAppTranslation()
     return (
         <View style={[ styles.container, {backgroundColor: theme.background} ]}>
-            <Text style={[styles.title, {color: theme.primaryText}]}>Analytics</Text>
+            <Text style={[styles.title, {color: theme.primaryText}]}>{t('analytics.title    ')}</Text>
             <AnalyticLayout theme={theme} mode={mode} />
         </View>
     )

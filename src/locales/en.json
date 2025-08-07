@@ -75,13 +75,17 @@
         "placeholder": "Name of service you are subscribed too"
       },
       "price": {
-        "text": "Price",
+        "text": "Price*",
         "placeholder": "10.00"
       },
       "firstpayment": {
         "text": "First Payment*",
         "placeholder": "First Payment"
       },
+      "dateofActivation" : {
+        "text": "Date of Activation*",
+        "placeholder": "Date of Activation"
+      }, 
       "category": {
         "text": "Category*",
         "placeholder": "Choose a Category"
@@ -97,6 +101,9 @@
       "note": {
         "text": "Note",
         "placeholder": "e.g Any additional information"
+      },
+      "optional" :{
+        "text": "optional"
       }
     },
     "continue": "Continue",
@@ -223,6 +230,40 @@
       "systemmode": {
       "light": "light", 
       "dark": "dark"
+      },
+      "gmailfeature": "Gmail Feature coming soon",
+      "info":"Login to be one of the first to signup to our automatic gmail tracker",
+      "success" : {
+        "logout": "Successfully logged out" ,
+        "error": "Something went wrong, check your connnection",
+        "login": "Successfully logged out"
+      },
+      "trackingCard" : {
+        "title": "Gmail Auto-Tracking (Beta, Coming Soon)",
+        "subTitle":"We're are currently building the feature to Find all your subscriptiosn directly from your Gmail Inbox", 
+        "joinWaitlist": "Join joinWaitlist", 
+        "success": "Success",
+        "successTitle": "You have successfully joined the waitlist"
+      }, 
+      "feedback" : {
+        "error1": "Please sign in to submit feedback", 
+        "error2": "Please fill in the subject and message before submitting.",
+        "General Feedback": "General Feedback",
+        "Bug Report": "Bug Report",
+        "Feature Request": "Feature Request", 
+        "success": "Successfully submitted feedback", 
+        "error": "Something went wrong, try again later, check connection", 
+        "subject": {
+          "title": "Subject", 
+          "placeholder":"e.g., App crashes when I..."
+        }, 
+        "message": {
+          "title": "Your Message", 
+          "placeholder": "Tell us what you think..."  
+        },
+        "cancel": "Cancel",
+        "sendFeedback": "Send Feedback",
+        "feedbacktype": "Select Feedback Type"
       }
   },
     "currencyPickerCurrencies": {
@@ -286,5 +327,30 @@
         "deactivate": "Deactivate",
         "delete": "Delete"
       }
+    },
+    "Analytics": {
+      "title": "Analytics",
+      "timeoptions": {
+        "3 months":  "3 months", 
+         "6 months":  "6 months",
+          "1 year":  "1 year"
+      }
+    },
+    "bottomtablabels": {
+      "subscriptions": "subscriptions", 
+      "AllSubscription": "All Subscriptions",
+      "Analytics": "Analytics",
+      "Add": "Add"
+    },
+    "currencypicker": {
+      "update": "Update",
+      "next": "Next",
+      "title": "Currency Picker",
+      "subtitle": "Select a currency",
+      "changeSymbol": "Change symbol",
+      "changeSymbolBody": "When you change the currency it automatically changes the currency of your previous subscription"
+    }, 
+    "common": {
+      "cancel": "Cancel"
     }
 }

@@ -152,11 +152,42 @@ async function noOfUpcomingBillsThisMonth(db: any, targetDate = new Date()) {
 
 }
 
-  
+const findNextPaymentDate = (billingRecurringListString: string): string | null => {
+  try {
+      // 1. Parse the stringified data back into a list of objects.
+      const parsedList = JSON.parse(billingRecurringListString);
+
+      // Ensure the parsed data is an array before proceeding.
+      if (!Array.isArray(parsedList)) {
+          console.error("Parsed data is not an array.");
+          return null;
+      }
+
+      // 2. Get today's date and format it for comparison.
+      const today = dayjs().startOf('day');
+
+      // 3. Find the first date in the list that is today or in the future.
+      for (const item of parsedList) {
+          if (item && item.billingrecurringtime) {
+              const notificationDate = dayjs(item.billingrecurringtime).startOf('day');
+              // Use isSameOrAfter() for a robust comparison.
+              if (notificationDate.isSameOrAfter(today, 'day')) {
+                  // This is the next upcoming date. Return its formatted string.
+                  return notificationDate.format('YYYY-MM-DD');
+              }
+          }
+      }
+  } catch (error) {
+      console.error("Failed to parse billingrecurringlist:", error);
+  }
+
+  // 4. If the loop finishes without finding a future date, return null.
+  return null;
+};
 
 
 
 
 
 
-export { generateBillingDates, noOfUpcomingBillsThisMonth}
+export { generateBillingDates, noOfUpcomingBillsThisMonth, findNextPaymentDate}

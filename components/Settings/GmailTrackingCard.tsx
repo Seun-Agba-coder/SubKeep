@@ -6,6 +6,7 @@ import GmailModal from './GmailModal'
 import {  onAuthStateChanged } from 'firebase/auth';
 import { auth } from '@/firebaseConfig'; 
 import { saveUserToWaitlist } from '@/Firebase/FirebaseBackend'
+import { useAppTranslation } from '@/hooks/useAppTranslator';
 
 
 interface ThemeProps {
@@ -21,6 +22,7 @@ const GmailTracker = ({theme, setSnackVisible, setSnackMessage}: ThemeProps) => 
     const [userinfo, setUser] = useState<any>(null)
     const [isAuthenticated, setIsAuthenticated] = useState(false)
     const [signedUp, setSignedUp] = useState(false)
+    const {t } = useAppTranslation()
 
    useEffect(() => {
     onAuthStateChanged(auth, (user) => {
@@ -52,7 +54,7 @@ const GmailTracker = ({theme, setSnackVisible, setSnackMessage}: ThemeProps) => 
         } catch (error) {
             console.log(error)
             setSnackVisible(true)
-            setSnackMessage({message: "Something went wrong, try again later or check your connection", color: "green"})
+            setSnackMessage({message: "Something went wrong, try again later or check your connection", color: "red"})
         }
 
 
@@ -70,18 +72,18 @@ const GmailTracker = ({theme, setSnackVisible, setSnackMessage}: ThemeProps) => 
 
     return (
         <View style={{backgroundColor: theme.secondaryColor, padding: 17, borderRadius: 15, opacity: 0.5, marginBottom: 20,}}>
-            <Text style={styles.title}>Gmail Auto-Tracking (Beta, Coming Soon)</Text>
-            <Text style={styles.subTitle}>We're are currently building the feature to Find all your subscriptiosn directly from your Gmail Inbox</Text>
+            <Text style={styles.title}>{t("setting.trackingCard.title")}</Text>
+            <Text style={styles.subTitle}>{t("setting.trackingCard.subTitle")}</Text>
             <View style={{alignItems: 'flex-start', marginLeft: -20,  }}>
 
-            <CustomButton title="Join Waitlist"  onPress={JoinWaitlist} textColor={theme.primaryColor} textStyle={{alignSelf: 'flex-start', paddingVertical: 5, paddingHorizontal: 10, backgroundColor: theme.accentColor, borderRadius: 15, }}/>
+            <CustomButton title={`${t("setting.trackingCard.joinWaitlist")}` }  onPress={JoinWaitlist} textColor={theme.primaryColor} textStyle={{alignSelf: 'flex-start', paddingVertical: 5, paddingHorizontal: 10, backgroundColor: theme.accentColor, borderRadius: 15, }}/>
             </View>
             
 
 
            
             {modalVisibleSuccess &&
-             <GmailModal modalVisible={modalVisibleSuccess} setModalVisible={setModalVisibleSuccess} title="Success" subtitle="You have successfully joined the waitlist" theme={theme}/>
+             <GmailModal modalVisible={modalVisibleSuccess} setModalVisible={setModalVisibleSuccess} title={t('setting.trackingCard.success')} subtitle="You have successfully joined the waitlist" theme={theme}/>
                
             }
 

@@ -15,10 +15,11 @@ interface MinimalDropdowmProp {
     visible?: boolean;
     setVisible?: (value: boolean) => void;
     setSelected?: React.Dispatch<React.SetStateAction<string>>;
-    systemChange?: boolean
+    systemChange?: boolean;
+    lang?: boolean;
 }
 
-const MinimalDropdown = ({ list, theme, label, selected, setSelected, visible, setVisible, systemChange }: MinimalDropdowmProp) => {
+const MinimalDropdown = ({ list, theme, label, selected, setSelected, visible, setVisible, systemChange, lang }: MinimalDropdowmProp) => {
     const dispatch = useAppDispatch()
 
 
@@ -44,13 +45,11 @@ const MinimalDropdown = ({ list, theme, label, selected, setSelected, visible, s
                 return <Menu.Item onPress={async (e) => {
                     e.preventDefault();
                     if (setSelected) {
-                   
-
-                        // const name = await item.onPress()
-
-
-                        // // setSelected(name)
-                        setSelected(item.name)
+                        if (lang) {
+                             const name = await item.onPress()
+                             setSelected(name)
+                        }
+                        setSelected(item.value)
                     }
                     if (setVisible) {
                         setVisible(false)

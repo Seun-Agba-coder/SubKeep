@@ -8,6 +8,10 @@ import * as SecureStore from 'expo-secure-store';
 import { useLocalSearchParams } from 'expo-router';
 import { useAppTranslation } from '@/hooks/useAppTranslator';
 import UseCurrencyHook from '@/hooks/useCurrencyHook';
+import ModalContainer from '@/components/ui/ModalContainer';
+import { ChangeCurrenySymbolForAllSub } from '@/utils/Crud';
+import { useSQLiteContext } from 'expo-sqlite';
+import { useRef } from 'react';
 
 export interface CurrrencyListProp {
     code: string;
@@ -25,19 +29,24 @@ export interface CurrrencyListProp {
 export default function CurrencySelectScreen() {
     const mode = useAppSelector((selector) => selector.appmode.mode)
     const theme = mode === 'light' ? LightTheme : DarkTheme;
+    const [modalVisible, setModalVisible] = useState(false)
+    const currencyChange = useRef<boolean>(false)
     const {t} = useAppTranslation()
 
     const {CurrencyList} = UseCurrencyHook()
    
     const { to } = useLocalSearchParams()
+    console.log("To: : ", to)
 
+
+    const db  = useSQLiteContext();
   const router = useRouter();
   const [selectedCurrency, setSelectedCurrency] = useState<any>(null);
 
-  const handleNext = () => {
+  const handleNext = async () => {
     if (selectedCurrency) {
       
-     storeCurrencyInDevice(selectedCurrency)
+    await  storeCurrencyInDevice(selectedCurrency)
      if (to === 'update') {
       router.push('/(tab)/Setting'); 
      }else {
@@ -51,7 +60,13 @@ async function storeCurrencyInDevice(selectedCurrency: CurrrencyListProp) {
     await SecureStore.setItemAsync("defaultCurrency", JSON.stringify({
         ...selectedCurrency
     }))
-    
+}
+
+
+async function UpdateCurrencyInDevice(selectedCurrency: CurrrencyListProp) {
+
+  await ChangeCurrenySymbolForAllSub(db, selectedCurrency.symbol);
+  await handleNext();
 
 }
 
@@ -60,6 +75,7 @@ useEffect(() => {
     const defaultCurrency = await SecureStore.getItemAsync("defaultCurrency")
     if (defaultCurrency) {
       setSelectedCurrency(JSON.parse(defaultCurrency))
+    
     }
   }
   getDefualtCurrency()
@@ -80,7 +96,10 @@ useEffect(() => {
           return (
             <>
               <Pressable
-                onPress={() => setSelectedCurrency(item)}
+                onPress={() => {
+                  setSelectedCurrency(item)
+                  currencyChange.current = true
+                }}
                 style={{
                   paddingVertical: 16,
                   backgroundColor: mode === 'dark' ? isSelected ? 'rgba(255, 255, 255, 0.09)' : 'transparent' : isSelected ? 'rgba(35, 157, 175, 0.09)' : 'transparent',
@@ -104,7 +123,21 @@ useEffect(() => {
 
       <Button
         mode="contained"
-        onPress={handleNext}
+        onPress={()  => {
+          if (!to) {
+            console.log('to: : ', to)
+            console.log("handel next is beeing pressed")
+            handleNext()
+            
+          }else {
+             if (currencyChange.current) {
+              setModalVisible(true)
+              return;
+             }
+             handleNext()
+          }
+           
+        }}
         disabled={!selectedCurrency}
   
         style={{ marginTop: 20, borderRadius: 50 }}
@@ -114,6 +147,10 @@ useEffect(() => {
       >
         {to === 'update' ? t('currencyPicker.update') : t('currencyPicker.next')}
       </Button>
+
+      {
+        modalVisible && <ModalContainer visible={modalVisible} setVisible={setModalVisible} actionText={t('currencyPicker.update')} title={t('currencypicker.subtitle')} body={t('currencypicker.changeSymbolBody')} theme={theme} actionHandler={() => {UpdateCurrencyInDevice(selectedCurrency)}}/>
+      }
     </View>
   );
 }

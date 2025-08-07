@@ -275,11 +275,10 @@ const updateUserSubscription = async (db: any, id: string, updatedData: Partial<
 
 };
 
-export const updateNotification  = async (db: any, id:string, subscriptionData:any)  => {
+export const updateNotification  = async (db: any, id:string, billingNotificationList:any)  => {
 
   // This is for the  useNotificationRefresh
 
-  const billingNotificationList = scheduleRecurringNotificationsUpdate(subscriptionData, subscriptionData.billingrecurringlist[subscriptionData.billingrecurringlist.length - 1])
   await db.runAsync(
     `UPDATE userSubscriptions 
      SET billingrecurringlist=? 
@@ -640,7 +639,19 @@ async function getSubscriptionsAlphabetically(db: any) {
 
 }
 
+async function ChangeCurrenySymbolForAllSub(db: any, symbol: string) {
+  try {
+    // This will update the 'symbol' column to '£' for every single row
+    await db.runAsync(
+      `UPDATE userSubscriptions 
+      SET symbol=?`,
+      [symbol]
+    );
 
+  }catch (error) {
+    return ;
+  }
+}
 
 
 
@@ -659,7 +670,8 @@ export {
           updateUserSubscription, 
           getSubscriptionsByPriceDesc,
            getSubscriptionsByPriceAsc,
-            getSubscriptionsAlphabetically
+            getSubscriptionsAlphabetically, 
+            ChangeCurrenySymbolForAllSub
 };
 
 

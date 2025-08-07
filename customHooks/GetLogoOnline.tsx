@@ -37,9 +37,10 @@ const useServiceHook = () => {
             })
       
           }
+          console.log("null found")
           return null;
         } catch (err: any) {
-           
+           console.log("error: : ", err)
             throw err
         
         }

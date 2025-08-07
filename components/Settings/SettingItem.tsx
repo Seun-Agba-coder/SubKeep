@@ -17,12 +17,13 @@ interface SettingItemProp {
     currency?: string;
     onPress?: () => void;
     systemChange?: boolean
-    border?: boolean
+    border?: boolean;
+    lang?: boolean;
 }
 
 
 
-const SettingItem = ({icon, label, list, theme, selected, setSelected, visible, setVisible, dropdown =true, currency, onPress, systemChange=false, border=true}: SettingItemProp) => {
+const SettingItem = ({icon, label, list, theme, selected, setSelected, visible, setVisible, dropdown =true, currency, onPress, systemChange=false, border=true, lang}: SettingItemProp) => {
     
     return (
         <View style={[styles.rowContainer, border && styles.borderBottom,  {justifyContent: 'space-between', padding: 10 }]}>
@@ -32,7 +33,7 @@ const SettingItem = ({icon, label, list, theme, selected, setSelected, visible, 
             </View>
              {
                 dropdown ?
-                <MinimalDropdown list={list} label="language"theme={theme} selected={selected} setSelected={setSelected} visible={visible} setVisible={setVisible} systemChange={systemChange}/>
+                <MinimalDropdown list={list} label="language"theme={theme} selected={selected} setSelected={setSelected} visible={visible} setVisible={setVisible} systemChange={systemChange} lang={lang}/>
                 :
                 <View style={styles.rowContainer}>
                     <Text style ={{fontSize: 10}}>{currency}</Text>

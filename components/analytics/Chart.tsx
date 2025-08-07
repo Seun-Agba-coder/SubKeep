@@ -26,7 +26,7 @@ const Chart = ({ theme, db, symbol }: ChartProps) => {
   const [trend, setTrend] = useState<any>([]);
  
 
-  const timeOptions = [{value: t("analytics.timeoptions.3months"), name: '3 months'}, {value: t("analytics.timeoptions.6months"), name: '6 months'}, {value: t("analytics.timeoptions.1year"), name: '1 year'}];
+  const timeOptions = [{name: t("Analytics.timeoptions.3months"), value: '3 months'}, {name: t("Analytics.timeoptions.6months"), value: '6 months'}, {name: t("Analytics.timeoptions.1year"), value: '1 year'}];
 
   useEffect(() => {
     const getFilteredData = async () => {
@@ -96,7 +96,7 @@ const Chart = ({ theme, db, symbol }: ChartProps) => {
           list={timeOptions} 
           theme={theme} 
           label={t('analytics.timerange')}
-          selected={selectedRange} 
+          selected={t(`Analytics.timeoptions.${selectedRange}`)} 
           setSelected={setSelectedRange} 
           setVisible={setVisible} 
           visible={visible}
