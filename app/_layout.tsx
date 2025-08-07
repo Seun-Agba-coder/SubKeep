@@ -22,6 +22,8 @@ import { getActiveSubscription, updateNotification } from '@/utils/Crud';
 import dayjs from 'dayjs';
 import { scheduleRecurringNotificationsUpdate } from '@/Extra';
 import FlashMessage from "react-native-flash-message";
+import * as NavigationBar from 'expo-navigation-bar';
+
 
 interface SubscriptionData {
   name: string;
@@ -148,6 +150,14 @@ function SlotContainer() {
     prepare();
   }, []);
 
+  useEffect(() => {
+    if (Platform.OS === 'android') {
+      NavigationBar.setBackgroundColorAsync(mode === 'light' ? '#fff' : '#000'); // Set background color
+      NavigationBar.setButtonStyleAsync('light'); // Set text/icon style to light
+    }
+  }, []);
+
+
   const onLayoutRootView = useCallback( async () => {
     if (appIsReady) {
       // Hide the splash screen
@@ -158,11 +168,13 @@ function SlotContainer() {
   if (!appIsReady) {
     return null; // Keep showing the splash screen
   }
+  
+ 
 
   return (
     <View style={{ flex: 1, backgroundColor: mode === 'light' ? '#fff' : '#000' }} onLayout={onLayoutRootView}>
       <StatusBar 
-              style={mode === 'light' ? 'dark' : 'light'} 
+              style={mode === 'light' ? 'dark' : 'dark'} 
              />
       <Slot />
     </View>

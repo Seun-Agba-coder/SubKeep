@@ -236,7 +236,7 @@
       "success" : {
         "logout": "Successfully logged out" ,
         "error": "Something went wrong, check your connnection",
-        "login": "Successfully logged out"
+        "login": "Successfully logged in"
       },
       "trackingCard" : {
         "title": "Gmail Auto-Tracking (Beta, Coming Soon)",
@@ -351,6 +351,7 @@
       "changeSymbolBody": "When you change the currency it automatically changes the currency of your previous subscription"
     }, 
     "common": {
-      "cancel": "Cancel"
+      "cancel": "Cancel", 
+      "inactive":"Made inactive on"
     }
 }

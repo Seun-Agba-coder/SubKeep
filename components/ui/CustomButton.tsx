@@ -24,7 +24,8 @@ const CustomButton: React.FC<FilledButtonProps> = ({
   return (
     <Pressable
       onPress={onPress}
-      style={({pressed}) => [{opacity: pressed ? 0.5 : 1}]}
+      style={({pressed}) => [ pressed && {opacity: 0.1}]}
+  
 
     >
       <View style={[styles.button, style]}>

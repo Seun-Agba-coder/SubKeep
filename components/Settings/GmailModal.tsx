@@ -1,5 +1,6 @@
 import {View, Text, Modal, StyleSheet} from 'react-native';
 import PressableText from '../ui/PressableText';
+import { useAppTranslation } from '@/hooks/useAppTranslator';
 
 interface GmailModalProps {
     modalVisible: boolean;
@@ -10,6 +11,7 @@ interface GmailModalProps {
 }
 
 const GmailModal = ({modalVisible, setModalVisible, title, subtitle, theme}: GmailModalProps) => {
+  const {t } = useAppTranslation()
   console.log("SubTitle: :", subtitle)
       return (
         <Modal
@@ -27,7 +29,7 @@ const GmailModal = ({modalVisible, setModalVisible, title, subtitle, theme}: Gma
       </Text>
       <View style={{alignItems: 'flex-end'}}>
      <PressableText extraTextStyle={{color: 'green'}} onPress={() => setModalVisible(false)}>
-        Cancel
+        {t('common.cancel')}
      </PressableText>
       </View>
      

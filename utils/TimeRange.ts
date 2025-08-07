@@ -65,7 +65,7 @@ async function ChartDataViaRange(db: any, timeRange: string = '6 months') {
 
 
 
-        const first = dayjs(firstpayment) 
+        const first = !freetrialendday ? dayjs(firstpayment) : dayjs(freetrialendday)
         console.log("First : ", first)
         const cancel = canceldate ? dayjs(canceldate) : null;
 

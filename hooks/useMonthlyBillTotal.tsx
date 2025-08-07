@@ -7,6 +7,7 @@ import {
   isSameMonth,
   isSameYear,
 } from 'date-fns';
+import { connectFirestoreEmulator } from 'firebase/firestore';
 
 type BillingPeriod = 'Month' | 'Year' | 'Week';
 
@@ -26,6 +27,9 @@ export default function useMonthlyBillTotal(db: any) {
     targetYear: number,
     targetMonth: number
   ): Promise<string> => {
+
+    console.log("Target Year", targetYear)
+    console.log("Target Month", targetMonth)
     try {
       const subscriptions = await db.getAllAsync(
         `SELECT * FROM userSubscriptions WHERE isactive = ? AND isdeleted = ?`,
@@ -54,9 +58,11 @@ export default function useMonthlyBillTotal(db: any) {
         let nextDate = new Date(firstpayment);
      
         const targetDate = new Date(targetYear, targetMonth - 1);
+        
      
 
         const interval = Math.max(parseInt(billingperiodnumber), 1); // fallback to 1 if missing or invalid
+        console.log("interval ::", interval)
 
         if (billingperiodtime === 'One Time') {
           if (
@@ -73,6 +79,8 @@ export default function useMonthlyBillTotal(db: any) {
             isSameMonth(nextDate, targetDate) &&
             isSameYear(nextDate, targetDate)
           ) {
+            console.log("yes")
+            
             total += Number(price);
             break; // only count once per month
           }

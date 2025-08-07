@@ -225,7 +225,9 @@ async function saveSubcription () {
    return ;
   }
         console.log("going to the  save subscription in device")
-    await saveSubcriptionLocally(db, { ...notifScreenParams, ...params }, trialEndFormatted)
+        console.log({ ...notifScreenParams, ...params })
+        return;
+    // await saveSubcriptionLocally(db, { ...notifScreenParams, ...params }, trialEndFormatted)
     router.replace({pathname: "/(tab)/Index", params: {refresh: Date.now().toString()}})
   } catch (error) {
     console.log(error)

@@ -13,7 +13,7 @@ const Analytics = () => {
     const {t } = useAppTranslation()
     return (
         <View style={[ styles.container, {backgroundColor: theme.background} ]}>
-            <Text style={[styles.title, {color: theme.primaryText}]}>{t('analytics.title    ')}</Text>
+            <Text style={[styles.title, {color: theme.primaryText}]}>{t('Analytics.title')}</Text>
             <AnalyticLayout theme={theme} mode={mode} />
         </View>
     )

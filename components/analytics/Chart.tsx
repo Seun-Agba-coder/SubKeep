@@ -26,7 +26,7 @@ const Chart = ({ theme, db, symbol }: ChartProps) => {
   const [trend, setTrend] = useState<any>([]);
  
 
-  const timeOptions = [{name: t("Analytics.timeoptions.3months"), value: '3 months'}, {name: t("Analytics.timeoptions.6months"), value: '6 months'}, {name: t("Analytics.timeoptions.1year"), value: '1 year'}];
+  const timeOptions = [{name: t("Analytics.timeoptions.3 months"), value: '3 months'}, {name: t("Analytics.timeoptions.6 months"), value: '6 months'}, {name: t("Analytics.timeoptions.1 year"), value: '1 year'}];
 
   useEffect(() => {
     const getFilteredData = async () => {

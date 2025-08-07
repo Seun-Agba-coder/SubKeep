@@ -54,7 +54,7 @@ const GmailTracker = ({theme, setSnackVisible, setSnackMessage}: ThemeProps) => 
         } catch (error) {
             console.log(error)
             setSnackVisible(true)
-            setSnackMessage({message: "Something went wrong, try again later or check your connection", color: "red"})
+            setSnackMessage({message: `${t('setting.success.error')}}`, color: "#DC2626"})
         }
 
 

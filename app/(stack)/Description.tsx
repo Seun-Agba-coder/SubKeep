@@ -117,6 +117,11 @@ function DescriptionHeader({ color, theme, item, width }: { color: string, theme
 
 const freeTrialExpired = (data: any) => {
     const today = dayjs()
+
+
+    if (!data.freetrialendday) {
+        return true
+    }
     const expiresOn = dayjs(data.freetrialendday)
 
     if (today.isBefore(expiresOn)) {
@@ -183,9 +188,9 @@ const Description = () => {
                         <Data title={t('description.data.name')} data={data.platformname} />
                         <Data title={t('description.data.price')} data={data.symbol + data.price} />
                         <Data title={t('description.data.occurence')} data={data.billingperiodtime ? t(`addsub.notificationscreen.dropdown.${data.billingperiodtime.toLowerCase()}`) : 'N/A'} />
-                        <Data title={t('description.data.firstpayment')} data={data.firstpayment && dayjs(data.firstpayment).locale(i18n.language).format('MMM D, YYYY')} />
-                        {!freeTrialExpired(data) ? <Data title={"Free trial ending"} data={dayjs(data.freetrialendday).locale(i18n.language).format('MMM D, YYYY')} /> : 
-                            <Data title={t('description.data.nextpayment')} data={ data.billingrecurringlist ? dayjs(findNextPaymentDate(data.billingrecurringlist)).locale(i18n.language).format('MMM D, YYYY') : 'null'} />}
+                        <Data title={t('description.data.firstpayment')} data={data.firstpayment && dayjs(data.firstpayment).locale(i18n.language).format('MMMM D, YYYY')} />
+                        {!freeTrialExpired(data) ? <Data title={"Free trial ending"} data={dayjs(data.freetrialendday).locale(i18n.language).format('MMMM D, YYYY')} /> : 
+                            <Data title={t('description.data.nextpayment')} data={ data.billingrecurringlist ? dayjs(findNextPaymentDate(data.billingrecurringlist)).locale(i18n.language).format('MMMM D, YYYY') : 'null'} />}
 
                     </View>
 

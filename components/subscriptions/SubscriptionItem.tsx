@@ -8,6 +8,7 @@ import 'dayjs/locale/fr';
 import 'dayjs/locale/it';
 import { Image, StyleSheet, Text, View, Pressable } from 'react-native';
 import { router } from 'expo-router';
+import { findNextPaymentDate } from '@/utils/FutureBilling';
 
 
 
@@ -42,9 +43,8 @@ const SubscriptionItem = ({ data, theme, active }: any) => {
 
     const normalExpiryDate = () => {
         const isoString = calculateNextBilling(!data.freetrialendday ? data.firstpayment : data.freetrialendday, data.billingperiodnumber, data.billingperiodtime)
-        // Add 1 day to get the next day
-    const nextDay = dayjs(isoString).add(1, 'day');
-        const formatted = `${t("AllSubscription.expireson")} ${dayjs(nextDay).locale(i18n.language).format('MMMM D')}`;
+  
+        const formatted = `${t("AllSubscription.expireson")} ${dayjs(isoString).locale(i18n.language).format('MMMM D')}`;
         return formatted
     }
 
@@ -55,7 +55,7 @@ const SubscriptionItem = ({ data, theme, active }: any) => {
     let showThisUnder
     if  (!active) {
         showThis =  <Text style={{ color: "red", fontSize: 10 }}>
-        Made inactive on {dayjs(data.latestPausedAt).locale(i18n.language).format('MMMM D YYYY')}
+        {t("common.inactive")} {dayjs(data.latestPausedAt).locale(i18n.language).format('MMMM D YYYY')}
         
     </Text>
     showThisUnder = ""
@@ -64,7 +64,7 @@ const SubscriptionItem = ({ data, theme, active }: any) => {
             showThis = <Text style={[{ color: billingType2['freetrial'] }]} >{freeTrialExpiryDate()}</Text>
             showThisUnder = <Text style={{ fontSize: 10, color: billingType2['freetrial'] }}>{t("AllSubscription.freetrial")}</Text>
         } else {
-            showThis = <Text style={[{ color: billingType2[data.billingperiodtime] }]} >{data.billingrecurringtime ? `Expires on the, ${dayjs(data.billingrecurringtime).locale(i18n.language).format('MMMM D')}` : normalExpiryDate()}</Text>
+            showThis = <Text style={[{ color: billingType2[data.billingperiodtime] }]} >{data.billingrecurringtime ? `Expires on the, ${dayjs(findNextPaymentDate(data.billingrecurringlist)).locale(i18n.language).format('MMMM D')}` : normalExpiryDate()}</Text>
              showThisUnder = ""
         }
     }
@@ -99,7 +99,7 @@ const SubscriptionItem = ({ data, theme, active }: any) => {
 
                 <View >
                     <Text style={[{ color: theme.primaryText }]}>{data.symbol}{data.price}</Text>
-                    <Text style={[{ color: theme.secondaryText, }]}>{data.billingperiodtime}</Text>
+                    <Text style={[{ color: theme.secondaryText, }]}>{  t(`addsub.notificationscreen.dropdown.${data.billingperiodtime.toLowerCase()}`)}</Text>
                 </View>
 
                 {showThisUnder}

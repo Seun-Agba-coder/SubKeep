@@ -27,7 +27,7 @@ interface BillingDatesParams {
 function generateBillingDates({
   firstPayment,
   billingType,
-  numberOfPeriods = 3,
+  numberOfPeriods = 10,
   interval = 1,
   freeTrialDays = 0, 
   isactive = 0,
@@ -168,8 +168,8 @@ const findNextPaymentDate = (billingRecurringListString: string): string | null 
 
       // 3. Find the first date in the list that is today or in the future.
       for (const item of parsedList) {
-          if (item && item.billingrecurringtime) {
-              const notificationDate = dayjs(item.billingrecurringtime).startOf('day');
+          if (item && item.expirydate) {
+              const notificationDate = dayjs(item.expirydate).startOf('day');
               // Use isSameOrAfter() for a robust comparison.
               if (notificationDate.isSameOrAfter(today, 'day')) {
                   // This is the next upcoming date. Return its formatted string.

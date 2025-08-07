@@ -155,7 +155,7 @@ try {
                     try {
                         await logOut()
                         setSnackVisible(true)
-                        setSnackMessage({message:  `${t('setting.success.logout')}}`, color: "#16A34A"})
+                        setSnackMessage({message:  `${t('setting.success.login')}`, color: "#16A34A"})
                     } catch (error) {
                         console.log(error)
                         setSnackVisible(true)

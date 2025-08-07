@@ -86,8 +86,7 @@ export async function scheduleReminder(
               billingStartDate: billingStartDate,
             },
             // --- THIS IS THE KEY FIX ---
-            // We link this notification directly to our background task by name.
-            categoryIdentifier: BACKGROUND_NOTIFICATION_TASK,
+  
           },
           trigger: {
             type: 'date',

@@ -20,8 +20,7 @@ import { auth } from '@/firebaseConfig';
 import { useFocusEffect } from '@react-navigation/native';
 import { Calendar,  CalendarList} from 'react-native-calendars';
 import { useLocalSearchParams } from 'expo-router'
-import dayjs from 'dayjs'
-import { useNotificationRefresh } from '@/hooks/useNotificationRefresh'
+import dayjs from 'dayjs';
 import { LocaleConfig } from 'react-native-calendars';
 
 
@@ -239,7 +238,7 @@ useEffect(() => {
             })
             .sort((a: any, b: any) => a.subremainingDays - b.subremainingDays);
             
-            console.log("UPDATED SUBSCRIPTION: ", updatedSubscription)
+           
             setUpdatedSubscription(updatedSubscription)
     
         }
