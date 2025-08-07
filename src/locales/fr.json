@@ -1,37 +1,39 @@
 {
   "onboarding": {
     "title1": "Prenez de l'avance et contrôlez vos finances",
-    "description1": "Tous vos abonnements au même endroit. Gardez le contrôle de vos dépenses.",
+    "description1": "Tous vos abonnements en un seul endroit. Gardez le contrôle sur ce que vous payez.",
     "title2": "Ne manquez jamais un paiement",
-    "description2": "Vos abonnements, à jour - sans surprises.",
+    "description2": "Vos abonnements, à l'heure — pas de surprises.",
     "title3": "Laissez notre application faire le travail",
     "description3": "La détection intelligente vous fait gagner du temps. Nous trouvons vos abonnements pour vous."
   },
   "signin": {
     "skip": "Passer",
-    "androidSignin": "Connectez-vous en sécurité avec votre compte Google :",
-    "iosSignin": "Connectez-vous en sécurité avec votre compte Apple :"
+    "androidSignin": "Connectez-vous en toute sécurité avec votre compte Google :",
+    "iosSignin": "Connectez-vous en toute sécurité avec votre compte Apple :"
   },
   "terms": {
-    "title": "Conditions & Politique de Confidentialité",
-    "description": "En continuant, vous acceptez nos Conditions & Politique de Confidentialité",
+    "title": "Conditions et politique de confidentialité",
+    "description": "En continuant, vous acceptez nos conditions et politique de confidentialité",
     "policy": "Politique"
   },
   "currencyPicker": {
-    "title": "Choisissez une devise pour continuer :",
+    "title": "Choisissez une devise pour continuer : ",
     "next": "Suivant",
     "update": "Mettre à jour"
   },
   "index": {
-    "monthlytotal": "Total Mensuel",
+    "monthlytotal": "Total mensuel",
+    "welcome": "Bienvenue",
+    "greeting": "Tous vos abonnements en un seul endroit",
     "type": {
       "monthly": "Mensuel",
       "yearly": "Annuel",
-      "onetime": "Unique",
+      "onetime": "Une fois",
       "inactive": "Inactif",
-      "freetrial": "Essai Gratuit"
+      "freetrial": "Essai gratuit"
     },
-    "title": "Prochain Paiement",
+    "title": "Paiement à venir",
     "subTitle": "Ajoutez votre premier abonnement",
     "weekdays": {
       "mon": "Lun",
@@ -46,13 +48,13 @@
     "buttonText": "Ajouter un abonnement"
   },
   "AllSubscription": {
-    "title": "Mes Abonnements",
-    "acitveplan": "Plan Actif",
-    "inactiveplan": "Plan Inactif",
+    "title": "Mes abonnements",
+    "acitveplan": "Plan actif",
+    "inactiveplan": "Plan inactif",
     "viewall": "Voir tout",
     "filterOptions": {
-      "1": "Prix : Du plus élevé au plus bas",
-      "2": "Prix : Du plus bas au plus élevé",
+      "1": "Du prix le plus élevé au plus bas",
+      "2": "Du prix le plus bas au plus élevé",
       "3": "Par ordre alphabétique"
     },
     "active": "Aucun abonnement actif pour le moment",
@@ -63,83 +65,100 @@
   "addsub": {
     "leftText": "Retour",
     "RightText": "Ajouter un abonnement",
-    "error": "Remplissez les champs obligatoires",
+    "error": "Remplissez le champ requis",
     "update": "Mettre à jour",
+    "info": "L'icône est générée automatiquement",
     "subquestion": {
-      "icon": "Icône*",
+      "icon": "Icône* ",
       "name": {
         "text": "Nom*",
         "placeholder": "Nom du service auquel vous êtes abonné"
       },
       "price": {
-        "text": "Prix",
-        "placeholder": "$10.00"
+        "text": "Prix*",
+        "placeholder": "10.00"
       },
       "firstpayment": {
-        "text": "Premier Paiement*",
-        "placeholder": "Premier Paiement"
+        "text": "Premier paiement*",
+        "placeholder": "Premier paiement"
       },
-      "category": "Catégorie*",
+      "dateofActivation": {
+        "text": "Date d'activation*",
+        "placeholder": "Date d'activation"
+      },
+      "category": {
+        "text": "Catégorie*",
+        "placeholder": "Choisissez une catégorie"
+      },
       "description": {
         "text": "Description",
         "placeholder": "ex. Abonné à ce service pour le travail"
       },
       "paymentmethod": {
-        "text": "Moyen de Paiement",
+        "text": "Méthode de paiement",
         "placeholder": "ex. Carte de crédit"
       },
       "note": {
-        "text": "Note",
+        "text": "Remarque",
         "placeholder": "ex. Toute information supplémentaire"
+      },
+      "optional": {
+        "text": "facultatif"
       }
     },
     "continue": "Continuer",
     "category": {
-      "label1": "Divertissement & Streaming",
-      "label2": "Productivité & Outils",
-      "label3": "Shopping & Livraison",
-      "label4": "Internet & Cloud",
-      "label5": "Santé & Bien-être",
-      "label6": "Business & Marketing",
-      "label7": "Jeux & Biens Virtuels",
-      "label8": "Confidentialité & Sécurité",
-      "label9": "IA & Outils Développeur",
-      "label10": "Autre"
+      "Entertainment & Streaming": "Divertissement et streaming",
+      "Productivity & Tools": "Productivité et outils",
+      "Shopping & Delivery": "Shopping et livraison",
+      "Internet & Cloud": "Internet et cloud",
+      "Health & Wellness": "Santé et bien-être",
+      "Business & Marketing": "Entreprise et marketing",
+      "Gaming & Virtual Goods": "Jeux et biens virtuels",
+      "Privacy & Security": "Confidentialité et sécurité",
+      "AI & Developer Tools": "IA et outils pour développeurs",
+      "Other": "Autre"
     },
     "notificationscreen": {
       "header": {
         "title": "Ajouter un abonnement"
       },
+      "every": "Chaque",
       "dropdown": {
         "week": "Semaine",
         "month": "Mois",
-        "yearly": "Annuel",
-        "onetime": "Unique"
+        "year": "Annuel",
+        "onetime": "Une fois"
       },
       "billingtype": {
-        "recurring": "récurrent",
-        "onetime": "unique"
+        "recurring": "récurrent"
       },
       "edittext": {
         "subscriptionfor": "Abonnement pour",
-        "ofprice": "au prix de",
-        "startingon": "commençant le",
-        "intheyear": "en l'année"
+        "ofprice": "de prix",
+        "startingon": "commençant le ",
+        "intheyear": "dans l'année "
       },
       "freetrial": {
-        "label": "est-ce un essai gratuit ?",
-        "notify1": "Nous vous rappellerons cet essai gratuit le",
-        "notify2": "avant sa fin"
+        "label": "est un essai gratuit d'abonnement",
+        "notify1": "Vous serez rappelé de cet essai gratuit le",
+        "notify2": "avant qu'il ne se termine"
       },
       "enablenotification": {
         "label": "Activer les notifications",
-        "notify1": "Vous serez notifié chaque",
-        "notify2": "un jour avant l'expiration de votre paiement"
+        "notify1": "Vous serez notifié",
+        "notify2": "un jour avant l'expiration de votre paiement chaque"
       },
       "updatesubscription": "Mettre à jour l'abonnement",
       "addsubscription": "Ajouter un abonnement",
       "cancel": "Annuler",
-      "save": "Enregistrer"
+      "save": "Enregistrer",
+      "modal": {
+        "freetrialsetup": "Configuration de l'essai gratuit",
+        "startdate": "Date de début",
+        "trialduration": "Durée de l'essai",
+        "trialending": "Fin de l'essai"
+      }
     }
   },
   "description": {
@@ -149,19 +168,19 @@
     "data": {
       "name": "Nom",
       "price": "Prix",
-      "occurence": "Fréquence",
-      "firstpayment": "Premier Paiement",
-      "nextpayment": "Prochain Paiement",
+      "occurence": "Occurrence",
+      "firstpayment": "Premier paiement",
+      "nextpayment": "Prochain paiement",
       "category": "Catégorie",
-      "freetrial": "Essai Gratuit",
+      "freetrial": "Essai gratuit",
       "remindme": "Me rappeler (notification)",
-      "paymentmethod": "Moyen de Paiement",
+      "paymentmethod": "Méthode de paiement",
       "description": "Description",
-      "note": "Note"
+      "note": "Remarque"
     },
     "datadefault": {
-      "freetrialfalse": "Non",
-      "freetrialtrue": "Oui",
+      "freetrialfalse": "Faux",
+      "freetrialtrue": "Vrai",
       "remindme": "1 jour avant",
       "description": "Aucune description",
       "note": "Aucune note",
@@ -171,7 +190,7 @@
     "modal": {
       "delete": {
         "title": "Supprimer l'abonnement",
-        "body": "Êtes-vous sûr de vouloir supprimer cet abonnement ? Nous vous suggérons de le désactiver si vous pensez continuer le service",
+        "body": "Êtes-vous sûr de vouloir supprimer cet abonnement ? Nous vous suggérons de le désactiver si vous pensez continuer avec le service.",
         "actionHandler": "DeleteSubcriptionHandler",
         "actionText": "Supprimer"
       },
@@ -198,51 +217,85 @@
       "english": "Anglais",
       "french": "Français",
       "spanish": "Espagnol",
-      "italian": "Italien", 
-       "turkish": "Turc"
+      "italian": "Italien",
+      "turkish": "Turc"
     },
     "systemmode": {
       "light": "Clair",
       "dark": "Sombre"
+    },
+    "gmailfeature": "Fonctionnalité Gmail bientôt disponible",
+    "info": "Connectez-vous pour être parmi les premiers à vous inscrire à notre traqueur automatique Gmail.",
+    "success": {
+      "logout": "Déconnexion réussie",
+      "error": "Quelque chose s'est mal passé, vérifiez votre connexion",
+      "login": "Connexion réussie"
+    },
+    "trackingCard": {
+      "title": "Suivi automatique Gmail (Bêta, bientôt disponible)",
+      "subTitle": "Nous développons actuellement la fonctionnalité pour trouver tous vos abonnements directement depuis votre boîte de réception Gmail.",
+      "joinWaitlist": "Rejoindre la liste d'attente",
+      "success": "Succès",
+      "successTitle": "Vous avez rejoint la liste d'attente avec succès"
+    },
+    "feedback": {
+      "error1": "Veuillez vous connecter pour soumettre un retour.",
+      "error2": "Veuillez remplir le sujet et le message avant de soumettre.",
+      "General Feedback": "Retour général",
+      "Bug Report": "Rapport de bug",
+      "Feature Request": "Demande de fonctionnalité",
+      "success": "Retour soumis avec succès",
+      "error": "Quelque chose s'est mal passé, réessayez plus tard, vérifiez la connexion",
+      "subject": {
+        "title": "Sujet",
+        "placeholder": "ex. L'application plante quand je..."
+      },
+      "message": {
+        "title": "Votre message",
+        "placeholder": "Dites-nous ce que vous pensez..."
+      },
+      "cancel": "Annuler",
+      "sendFeedback": "Envoyer un retour",
+      "feedbacktype": "Sélectionnez le type de retour"
     }
   },
   "currencyPickerCurrencies": {
-    "usd": "Dollar Américain",
+    "usd": "Dollar américain",
     "eur": "Euro",
-    "gbp": "Livre Sterling",
-    "ngn": "Naira Nigérian",
-    "jpy": "Yen Japonais",
-    "aud": "Dollar Australien",
-    "cad": "Dollar Canadien",
-    "chf": "Franc Suisse",
-    "cny": "Yuan Chinois",
-    "inr": "Roupie Indienne",
-    "aed": "Dirham des Émirats Arabes Unis",
-    "sar": "Riyal Saoudien",
-    "ars": "Peso Argentin",
-    "clp": "Peso Chilien",
-    "cop": "Peso Colombien",
-    "pen": "Sol Péruvien",
-    "uah": "Hryvnia Ukrainienne",
-    "zar": "Rand Sud-Africain",
-    "kes": "Shilling Kenyan",
-    "ghs": "Cedi Ghanéen",
-    "brl": "Réal Brésilien",
-    "mxn": "Peso Mexicain",
-    "krw": "Won Sud-Coréen",
-    "try": "Lire Turque",
-    "sek": "Couronne Suédoise",
-    "nok": "Couronne Norvégienne",
-    "dkk": "Couronne Danoise",
-    "rub": "Rouble Russe",
-    "pln": "Złoty Polonais"
+    "gbp": "Livre sterling",
+    "ngn": "Naira nigérian",
+    "jpy": "Yen japonais",
+    "aud": "Dollar australien",
+    "cad": "Dollar canadien",
+    "chf": "Franc suisse",
+    "cny": "Yuan chinois",
+    "inr": "Roupie indienne",
+    "aed": "Dirham des Émirats arabes unis",
+    "sar": "Riyal saoudien",
+    "ars": "Peso argentin",
+    "clp": "Peso chilien",
+    "cop": "Peso colombien",
+    "pen": "Sol péruvien",
+    "uah": "Hryvnia ukrainienne",
+    "zar": "Rand sud-africain",
+    "kes": "Shilling kényan",
+    "ghs": "Cedi ghanéen",
+    "brl": "Real brésilien",
+    "mxn": "Peso mexicain",
+    "krw": "Won sud-coréen",
+    "try": "Lire turque",
+    "sek": "Couronne suédoise",
+    "nok": "Couronne norvégienne",
+    "dkk": "Couronne danoise",
+    "rub": "Rouble russe",
+    "pln": "Złoty polonais"
   },
   "analytics": {
     "thismonth": "Ce mois-ci",
     "card": {
-      "monthlyexpense": "Estimation des dépenses",
-      "activesub": "Abonnements Actifs",
-      "trails": "Essais en expiration",
+      "monthlyexpense": "Estimé à dépenser",
+      "activesub": "Abonnement actif",
+      "trails": "Essais expirant/expirés",
       "upcomingbills": "Factures à venir"
     },
     "timeoptions": {
@@ -250,11 +303,47 @@
       "6months": "6 mois",
       "1year": "1 an"
     },
-    "timerange": "Période",
-    "monthlyspending": "Dépenses Mensuelles"
+    "timerange": "Plage de temps",
+    "monthlyspending": "Dépenses mensuelles"
   },
   "category": {
-    "title": "Dépenses par Catégorie",
+    "title": "Dépenses par catégorie",
     "emptyText": "Commencez à enregistrer vos transactions pour voir vos analyses de dépenses !"
+  },
+  "upcomingpayment": {
+    "daysremain": "Jours restants"
+  },
+  "Description": {
+    "actionbutton": {
+      "edit": "Modifier",
+      "deactivate": "Désactiver",
+      "delete": "Supprimer"
+    }
+  },
+  "Analytics": {
+    "title": "Analytiques",
+    "timeoptions": {
+      "3 months": "3 mois",
+      "6 months": "6 mois",
+      "1 year": "1 an"
+    }
+  },
+  "bottomtablabels": {
+    "subscriptions": "Abonnements",
+    "AllSubscription": "Tous les abonnements",
+    "Analytics": "Analytiques",
+    "Add": "Ajouter"
+  },
+  "currencypicker": {
+    "update": "Mettre à jour",
+    "next": "Suivant",
+    "title": "Sélecteur de devise",
+    "subtitle": "Sélectionnez une devise",
+    "changeSymbol": "Changer le symbole",
+    "changeSymbolBody": "Lorsque vous changez de devise, cela change automatiquement la devise de vos abonnements précédents."
+  },
+  "common": {
+    "cancel": "Annuler",
+    "inactive": "Désactivé le"
   }
 }

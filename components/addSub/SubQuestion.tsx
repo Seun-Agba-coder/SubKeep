@@ -63,12 +63,13 @@ const SubQuestion = ({ theme, id, activate }: { theme: any, id?: string, activat
         setServiceName(text)
     }
 
-    function findLogoHandler() {
+    async function findLogoHandler() {
         if (!serviceName) {
             return
         }
         try {
-            FindLogo(serviceName)
+            console.log('presseddddddd')
+            await FindLogo(serviceName)
             console.log("logo Image: ", logoImage)
         } catch (error) {
            
@@ -98,7 +99,7 @@ const SubQuestion = ({ theme, id, activate }: { theme: any, id?: string, activat
 
      
         // checks if the necessary field  has been filled out
-        const validation = !!price && !!selectedCategory && !!validDate.current && !!serviceName && !!logoImage
+        const validation = !!price && !!selectedCategory && !!validDate.current && !!serviceName 
 
        
         if (!validation) {
@@ -124,7 +125,7 @@ const SubQuestion = ({ theme, id, activate }: { theme: any, id?: string, activat
 
 
         return () => clearTimeout(interval)
-    }, [price, selectedCategory, validDate.current, serviceName])
+    }, [price, selectedCategory, validDate.current, serviceName, logoImage])
 
     const addsubParams = {
         platformname: serviceName,
