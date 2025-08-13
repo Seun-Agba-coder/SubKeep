@@ -44,87 +44,87 @@ interface PropUpdate {
 
 
 
-const updateandschedulefreetrialandenabledNot = async (data: PropUpdate, subscriptionId: string) => {
-  const {
-    db,
-    freetrialEnabled,
-    reminderEnabled,
-    platformname,
-    billingperiodtime,
-    billingperiodnumber,
-    firstpayment,
-    freetrialendday,
-    freetrialduration
-  } = data;
+// const updateandschedulefreetrialandenabledNot = async (data: PropUpdate, subscriptionId: string) => {
+//   const {
+//     db,
+//     freetrialEnabled,
+//     reminderEnabled,
+//     platformname,
+//     billingperiodtime,
+//     billingperiodnumber,
+//     firstpayment,
+//     freetrialendday,
+//     freetrialduration
+//   } = data;
 
-  let freeid: any = 'null';
-  let notificationId: any = 'null';
+//   let freeid: any = 'null';
+//   let notificationId: any = 'null';
 
-  // 📆 Schedule Free Trial Notification
-  if (freetrialEnabled.toString() === 'true') {
-    try {
-      freeid = await scheduleTrialNotification(freetrialendday, platformname);
+//   // 📆 Schedule Free Trial Notification
+//   if (freetrialEnabled.toString() === 'true') {
+//     try {
+//       freeid = await scheduleTrialNotification(freetrialendday, platformname);
      
-      console.log('freetrialnotificationid', freeid);
-    } catch (error) {
-      console.error('Error scheduling trial notification:', error);
-    }
-  }
+//       console.log('freetrialnotificationid', freeid);
+//     } catch (error) {
+//       console.error('Error scheduling trial notification:', error);
+//     }
+//   }
 
-  // 📆 Schedule Recurring Billing Reminder Notification
-  if (reminderEnabled.toString() === 'true') {
-    try {
-      let firstpaymentDate = dayjs(firstpayment);
+//   // 📆 Schedule Recurring Billing Reminder Notification
+//   if (reminderEnabled.toString() === 'true') {
+//     try {
+//       let firstpaymentDate = dayjs(firstpayment);
 
-      // If free trial exists, push first payment forward
-      if (freetrialEnabled.toString() === 'true') {
-        const days = parseInt(freetrialduration);
-        console.log("This is in the freetrial enabled section the free trail durationd date: ", days)
-        firstpaymentDate = firstpaymentDate.add(days, 'day');
-      }
+//       // If free trial exists, push first payment forward
+//       if (freetrialEnabled.toString() === 'true') {
+//         const days = parseInt(freetrialduration);
+//         console.log("This is in the freetrial enabled section the free trail durationd date: ", days)
+//         firstpaymentDate = firstpaymentDate.add(days, 'day');
+//       }
 
-      const billingDate = calculateNextBilling(
-        firstpaymentDate.toDate(),
-        billingperiodnumber,
-        billingperiodtime
-      );
+//       const billingDate = calculateNextBilling(
+//         firstpaymentDate.toDate(),
+//         billingperiodnumber,
+//         billingperiodtime
+//       );
 
-      notificationId = await scheduleReminder(
-        dayjs(billingDate).toDate(),
-        `Your ${platformname} will soon renew`,
-        `Your ${platformname} will renew tomorrow, a reminder so you do not forget`,
-        platformname,
-        subscriptionId,
-        billingperiodtime,
-        billingperiodnumber,
-        freetrialEnabled.toString() === 'true'? firstpaymentDate.toISOString() :  firstpayment
-      );
+//       notificationId = await scheduleReminder(
+//         dayjs(billingDate).toDate(),
+//         `Your ${platformname} will soon renew`,
+//         `Your ${platformname} will renew tomorrow, a reminder so you do not forget`,
+//         platformname,
+//         subscriptionId,
+//         billingperiodtime,
+//         billingperiodnumber,
+//         freetrialEnabled.toString() === 'true'? firstpaymentDate.toISOString() :  firstpayment
+//       );
 
 
-      if (!notificationId) {
-        throw new Error('Notification Id not generated ');
-        return 
-      }
+//       if (!notificationId) {
+//         throw new Error('Notification Id not generated ');
+//         return 
+//       }
 
-      console.log('notificationId', notificationId)
-    } catch (error: any) {
-      throw new Error('Error scheduling reminder: ' + error.message);
-    }
-  }
+//       console.log('notificationId', notificationId)
+//     } catch (error: any) {
+//       throw new Error('Error scheduling reminder: ' + error.message);
+//     }
+//   }
 
-  // 💾 Update SQLite with Notification IDs
-  try {
-    await db.runAsync(
-      `UPDATE userSubscriptions
-       SET trialNotificationid = ?, billingNotificationid = ?
-       WHERE id = ?`,
-      [freeid, notificationId, subscriptionId]
-    );
-    console.log(`✅ Updated notification IDs for subscription ${subscriptionId}`);
-  } catch (err) {
-    console.error(`❌ Failed to update notification IDs:`, err);
-  }
-};
+//   // 💾 Update SQLite with Notification IDs
+//   try {
+//     await db.runAsync(
+//       `UPDATE userSubscriptions
+//        SET trialNotificationid = ?, billingNotificationid = ?
+//        WHERE id = ?`,
+//       [freeid, notificationId, subscriptionId]
+//     );
+//     console.log(`✅ Updated notification IDs for subscription ${subscriptionId}`);
+//   } catch (err) {
+//     console.error(`❌ Failed to update notification IDs:`, err);
+//   }
+// };
 
 const saveSubcriptionLocally = async (db: any, data: Prop, trialend: string) => {
   try {
@@ -151,8 +151,10 @@ const saveSubcriptionLocally = async (db: any, data: Prop, trialend: string) => 
       category,
       freetrialendday = "null"
     } = data;
-
-    const icondeviceurl = await saveImageToDevice(iconurl, platformname)
+    let icondeviceurl = 'null'
+    if (iconurl && iconurl !== 'subkeep') {
+      icondeviceurl = await saveImageToDevice(iconurl, platformname)
+    }
 
     const freetrialEnabled = freetrial
     const reminderEnabled = reminderenabled
@@ -285,7 +287,6 @@ export const updateNotification  = async (db: any, id:string, billingNotificatio
      WHERE id = ?`,
     [JSON.stringify(billingNotificationList), id]
   );
-
 
 }
 

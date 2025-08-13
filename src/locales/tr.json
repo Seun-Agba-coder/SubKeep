@@ -1,260 +1,357 @@
 {
-    "onboarding": {
-      "title1": "Önde Olun ve Finansınızın Kontrolünü Elinize Alın",
-      "description1": "Tüm abonelikleriniz tek bir yerde. Ödediğiniz hizmetleri takip edin.",
-      "title2": "Ödeme Kaçırmayın",
-      "description2": "Abonelikleriniz planlandığı gibi - sürpriz olmadan.",
-      "title3": "İşi Uygulamamıza Bırakın",
-      "description3": "Akıllı tespit size zaman kazandırır. Aboneliklerinizi sizin için buluruz."
+  "onboarding": {
+    "title1": "Önde olun ve finansınızın kontrolünü elinize alın",
+    "description1": "Tüm abonelikleriniz tek bir yerde. Ne için ödeme yaptığınızı takip edin.",
+    "title2": "Asla bir ödemeyi kaçırmayın",
+    "description2": "Abonelikleriniz, program dahilinde — sürpriz yok.",
+    "title3": "İşi uygulamamızın yapmasına izin verin",
+    "description3": "Akıllı tespit size zaman kazandırır. Aboneliklerinizi sizin için buluyoruz."
+  },
+  "signin": {
+    "skip": "Atla",
+    "androidSignin": "Google hesabınızla güvenli bir şekilde giriş yapın:",
+    "iosSignin": "Apple hesabınızla güvenli bir şekilde giriş yapın:"
+  },
+  "terms": {
+    "title": "Şartlar ve Gizlilik Politikası",
+    "description": "Devam ederek, Şartlar ve Gizlilik Politikamızı kabul etmiş olursunuz",
+    "policy": "Politika"
+  },
+  "currencyPicker": {
+    "title": "Devam etmek için bir para birimi seçin: ",
+    "next": "Sonraki",
+    "update": "Güncelle"
+  },
+  "index": {
+    "monthlytotal": "Aylık Toplam",
+    "welcome": "Hoş Geldiniz",
+    "greeting": "Tüm abonelikleriniz tek bir yerde",
+    "type": {
+      "monthly": "Aylık",
+      "yearly": "Yıllık",
+      "onetime": "Tek seferlik",
+      "inactive": "Etkin değil",
+      "freetrial": "Ücretsiz Deneme"
     },
-    "signin": {
-      "skip": "Atla",
-      "androidSignin": "Google hesabınızla güvenli giriş yapın:",
-      "iosSignin": "Apple hesabınızla güvenli giriş yapın:"
+    "title": "Yaklaşan Ödeme",
+    "subTitle": "İlk Aboneliğinizi Ekleyin",
+    "weekdays": {
+      "mon": "Pzt",
+      "tue": "Sal",
+      "wed": "Çar",
+      "thu": "Per",
+      "fri": "Cum",
+      "sat": "Cmt",
+      "sun": "Paz"
     },
-    "terms": {
-      "title": "Şartlar & Gizlilik Politikası",
-      "description": "Devam ederek Şartlar & Gizlilik Politikamızı kabul etmiş olursunuz",
-      "policy": "Politika"
+    "emptyTitle": "İlk Aboneliğinizi Ekleyin",
+    "buttonText": "Abonelik Ekle"
+  },
+  "AllSubscription": {
+    "title": "Aboneliklerim",
+    "acitveplan": "Aktif Plan",
+    "inactiveplan": "Etkin Olmayan Plan",
+    "viewall": "Tümünü Görüntüle",
+    "filterOptions": {
+      "1": "En yüksekten en düşük fiyata",
+      "2": "En düşükten en yüksek fiyata",
+      "3": "Alfabetik olarak"
     },
-    "currencyPicker": {
-      "title": "Devam etmek için bir para birimi seçin: ",
-      "next": "İleri",
-      "update": "Güncelle"
-    },
-    "index": {
-      "monthlytotal": "Aylık Toplam",
-      "type": {
-        "monthly": "Aylık",
-        "yearly": "Yıllık",
-        "onetime": "Tek Seferlik",
-        "inactive": "Aktif Değil",
-        "freetrial": "Ücretsiz Deneme"
+    "active": "Henüz aktif abonelik yok",
+    "inactive": "Etkin Olmayan Abonelik Yok",
+    "expireson": "Son kullanma tarihi",
+    "freetrial": "Hala ücretsiz deneme sürümünde"
+  },
+  "addsub": {
+    "leftText": "Geri",
+    "RightText": "Abonelik Ekle",
+    "error": "Gerekli alanı doldurun",
+    "update": "Güncelle",
+    "info": "Simge otomatik olarak oluşturulur",
+    "subquestion": {
+      "icon": "Simge* ",
+      "name": {
+        "text": "Ad*",
+        "placeholder": "Abone olduğunuz hizmetin adı"
       },
-      "title": "Yaklaşan Ödeme",
-      "subTitle": "İlk Aboneliğinizi Ekleyin",
-      "weekdays": {
-        "mon": "Pzt",
-        "tue": "Sal",
-        "wed": "Çar",
-        "thu": "Per",
-        "fri": "Cum",
-        "sat": "Cmt",
-        "sun": "Paz"
+      "price": {
+        "text": "Fiyat*",
+        "placeholder": "10.00"
       },
-      "emptyTitle": "İlk Aboneliğinizi Ekleyin",
-      "buttonText": "Abonelik Ekle"
-    },
-    "AllSubscription": {
-      "title": "Aboneliklerim",
-      "acitveplan": "Aktif Plan",
-      "inactiveplan": "Aktif Olmayan Plan",
-      "viewall": "Tümünü Görüntüle",
-      "filterOptions": {
-        "1": "Fiyat: Yüksekten Düşüğe",
-        "2": "Fiyat: Düşükten Yükseğe",
-        "3": "Alfabetik"
+      "firstpayment": {
+        "text": "İlk Ödeme*",
+        "placeholder": "İlk Ödeme"
       },
-      "active": "Henüz aktif aboneliğiniz yok",
-      "inactive": "Aktif olmayan abonelik yok",
-      "expireson": "Son kullanma tarihi",
-      "freetrial": "Hala ücretsiz deneme sürümünde"
-    },
-    "addsub": {
-      "leftText": "Geri",
-      "RightText": "AbonelikEkle",
-      "error": "gerekli alanları doldurun",
-      "update": "güncelle",
-      "subquestion": {
-        "icon": "Simge* ",
-        "name": {
-          "text": "Ad*",
-          "placeholder": "Abone olduğunuz hizmetin adı"
-        },
-        "price": {
-          "text": "Fiyat",
-          "placeholder": "$10.00"
-        },
-        "firstpayment": {
-          "text": "İlk Ödeme*",
-          "placeholder": "İlk Ödeme"
-        },
-        "category": "Kategori*",
-        "description": {
-          "text": "Açıklama",
-          "placeholder": "örn. Bu hizmete iş için abone olundu"
-        },
-        "paymentmethod": {
-          "text": "Ödeme Yöntemi",
-          "placeholder": "örn. Kredi Kartı"
-        },
-        "note": {
-          "text": "Not",
-          "placeholder": "örn. Herhangi bir ek bilgi"
-        }
+      "dateofActivation": {
+        "text": "Aktivasyon Tarihi*",
+        "placeholder": "Aktivasyon Tarihi"
       },
-      "continue": "Devam",
       "category": {
-        "label1": "Eğlence & Yayın",
-        "label2": "Üretkenlik & Araçlar",
-        "label3": "Alışveriş & Teslimat",
-        "label4": "İnternet & Bulut",
-        "label5": "Sağlık & Refah",
-        "label6": "İş & Pazarlama",
-        "label7": "Oyun & Sanal Ürünler",
-        "label8": "Gizlilik & Güvenlik",
-        "label9": "Yapay Zeka & Geliştirici Araçları",
-        "label10": "Diğer"
+        "text": "Kategori*",
+        "placeholder": "Bir Kategori Seçin"
       },
-      "notificationscreen": {
-        "header": {
-          "title": "Abonelik ekle"
-        },
-        "dropdown": {
-          "week": "Hafta",
-          "month": "Ay",
-          "yearly": "Yıllık",
-          "onetime": "Tek Seferlik"
-        },
-        "billingtype": {
-          "recurring": "tekrarlayan",
-          "onetime": "tek seferlik"
-        },
-        "edittext": {
-          "subscriptionfor": "Abonelik ",
-          "ofprice": "fiyatlı",
-          "startingon": "tarihinde başlayacak",
-          "intheyear": "yılında"
-        },
-        "freetrial": {
-          "label": "bu abonelik ücretsiz deneme mi",
-          "notify1": "Bu ücretsiz deneme hakkında size ",
-          "notify2": "bitmeden önce hatırlatılacak"
-        },
-        "enablenotification": {
-          "label": "Bildirimleri Etkinleştir",
-          "notify1": "Her ",
-          "notify2": "ödemelerinizin sona ermesinden bir gün önce bilgilendirileceksiniz"
-        },
-        "updatesubscription": "Aboneliği Güncelle",
-        "addsubscription": "Abonelik Ekle",
-        "cancel": "İptal",
-        "save": "Kaydet"
+      "description": {
+        "text": "Açıklama",
+        "placeholder": "örn. İş için bu hizmete abone olundu"
+      },
+      "paymentmethod": {
+        "text": "Ödeme Yöntemi",
+        "placeholder": "örn. Kredi Kartı"
+      },
+      "note": {
+        "text": "Not",
+        "placeholder": "örn. Herhangi bir ek bilgi"
+      },
+      "optional": {
+        "text": "isteğe bağlı"
       }
     },
-    "description": {
-      "header": {
-        "text": "Detaylar"
-      },
-      "data": {
-        "name": "Ad",
-        "price": "Fiyat",
-        "occurence": "Sıklık",
-        "firstpayment": "İlk Ödeme",
-        "nextpayment": "Sonraki Ödeme",
-        "category": "Kategori",
-        "freetrial": "ÜcretsizDeneme",
-        "remindme": "Bana hatırlat (bildirim)",
-        "paymentmethod": "Ödeme Yöntemi",
-        "description": "Açıklama",
-        "note": "Not"
-      },
-      "datadefault": {
-        "freetrialfalse": "Hayır",
-        "freetrialtrue": "Evet",
-        "remindme": "1 Gün Önce",
-        "description": "Açıklama Yok",
-        "note": "Not Yok",
-        "paymentmethod": "belirtilmemiş",
-        "category": "Y/A"
-      },
-      "modal": {
-        "delete": {
-          "title": "Aboneliği Sil",
-          "body": "Bu aboneliği silmek istediğinize emin misiniz? Hizmete devam edecekseniz devre dışı bırakmanızı öneririz",
-          "actionHandler": "DeleteSubcriptionHandler",
-          "actionText": "Sil"
-        },
-        "inactive": {
-          "title": "Aboneliği Devre Dışı Bırak",
-          "body": "Bu aboneliği devre dışı bırakmak istediğinize emin misiniz",
-          "actionHandler": "SetSubscriptionInactive",
-          "actionText": "Devre Dışı Bırak"
-        }
-      }
-    },
-    "setting": {
-      "title": "Ayarlar",
-      "login": "Giriş Yap",
-      "logout": "Çıkış Yap",
-      "upgradepremium": "Premium'a Yükselt",
-      "settingitem": {
-        "item1": "Dil",
-        "item2": "Varsayılan Para Birimi",
-        "item3": "Sistem Modu",
-        "item4": "Geri Bildirim"
-      },
-      "language": {
-        "english": "İngilizce",
-        "french": "Fransızca",
-        "spanish": "İspanyolca",
-        "italian": "İtalyanca",
-        "turkish": "Türkçe"
-      },
-      "systemmode": {
-        "light": "açık",
-        "dark": "koyu"
-      }
-    },
-    "currencyPickerCurrencies": {
-      "usd": "Amerikan Doları",
-      "eur": "Euro",
-      "gbp": "İngiliz Sterlini",
-      "ngn": "Nijerya Nairası",
-      "jpy": "Japon Yeni",
-      "aud": "Avustralya Doları",
-      "cad": "Kanada Doları",
-      "chf": "İsviçre Frangı",
-      "cny": "Çin Yuanı",
-      "inr": "Hindistan Rupisi",
-      "aed": "Birleşik Arap Emirlikleri Dirhemi",
-      "sar": "Suudi Arabistan Riyali",
-      "ars": "Arjantin Pesosu",
-      "clp": "Şili Pesosu",
-      "cop": "Kolombiya Pesosu",
-      "pen": "Peru Solü",
-      "uah": "Ukrayna Grivnası",
-      "zar": "Güney Afrika Randı",
-      "kes": "Kenya Şilini",
-      "ghs": "Gana Sedisi",
-      "brl": "Brezilya Reali",
-      "mxn": "Meksika Pesosu",
-      "krw": "Güney Kore Wonu",
-      "try": "Türk Lirası",
-      "sek": "İsveç Kronu",
-      "nok": "Norveç Kronu",
-      "dkk": "Danimarka Kronu",
-      "rub": "Rus Rublesi",
-      "pln": "Polonya Zlotisi"
-    },
-    "analytics": {
-      "thismonth": "Bu ay",
-      "card": {
-        "monthlyexpense": "Tahmini harcama",
-        "activesub": "Aktif Abonelik",
-        "trails": "Sona Eren Denemeler",
-        "upcomingbills": "Yaklaşan Faturalar"
-      },
-      "timeoptions": {
-        "3months": "3 ay",
-        "6months": "6 ay",
-        "1year": "1 yıl"
-      },
-      "timerange": "Zaman Aralığı",
-      "monthlyspending": "Aylık Harcama"
-    },
+    "continue": "Devam Et",
     "category": {
-      "title": "Kategoriye Göre Harcama",
-      "emptyText": "Harcama analizlerinizi görmek için işlemlerinizi kaydetmeye başlayın!"
+      "Entertainment & Streaming": "Eğlence ve Yayın",
+      "Productivity & Tools": "Verimlilik ve Araçlar",
+      "Shopping & Delivery": "Alışveriş ve Teslimat",
+      "Internet & Cloud": "İnternet ve Bulut",
+      "Health & Wellness": "Sağlık ve Refah",
+      "Business & Marketing": "İş ve Pazarlama",
+      "Gaming & Virtual Goods": "Oyun ve Sanal Ürünler",
+      "Privacy & Security": "Gizlilik ve Güvenlik",
+      "AI & Developer Tools": "Yapay Zeka ve Geliştirici Araçları",
+      "Other": "Diğer"
+    },
+    "notificationscreen": {
+      "header": {
+        "title": "Abonelik ekle"
+      },
+      "every": "Her",
+      "dropdown": {
+        "week": "Hafta",
+        "month": "Ay",
+        "year": "Yıllık",
+        "onetime": "Tek seferlik"
+      },
+      "billingtype": {
+        "recurring": "tekrarlanan"
+      },
+      "edittext": {
+        "subscriptionfor": "Abonelik",
+        "ofprice": "fiyatı",
+        "startingon": "başlangıç tarihi ",
+        "intheyear": "yılın "
+      },
+      "freetrial": {
+        "label": "abonelik ücretsiz deneme sürümü",
+        "notify1": "Bu ücretsiz deneme hakkında size şu tarihte hatırlatılacak:",
+        "notify2": "bitmeden önce"
+      },
+      "enablenotification": {
+        "label": "Bildirimleri Etkinleştir",
+        "notify1": "Bildirim alacaksınız",
+        "notify2": "ödemelerinizin her birinin sona ermesinden bir gün önce"
+      },
+      "updatesubscription": "Aboneliği Güncelle",
+      "addsubscription": "Abonelik Ekle",
+      "cancel": "İptal",
+      "save": "Kaydet",
+      "modal": {
+        "freetrialsetup": "Ücretsiz Deneme Ayarları",
+        "startdate": "Başlangıç Tarihi",
+        "trialduration": "Deneme Süresi",
+        "trialending": "Deneme Bitişi"
+      }
     }
-  }
+  },
+  "description": {
+    "header": {
+      "text": "Detaylar"
+    },
+    "data": {
+      "name": "Ad",
+      "price": "Fiyat",
+      "occurence": "Sıklık",
+      "firstpayment": "İlk Ödeme",
+      "nextpayment": "Sonraki Ödeme",
+      "category": "Kategori",
+      "freetrial": "Ücretsiz Deneme",
+      "remindme": "Bana hatırlat (bildirim)",
+      "paymentmethod": "Ödeme Yöntemi",
+      "description": "Açıklama",
+      "note": "Not"
+    },
+    "datadefault": {
+      "freetrialfalse": "Yanlış",
+      "freetrialtrue": "Doğru",
+      "remindme": "1 gün önce",
+      "description": "Açıklama Yok",
+      "note": "Not Yok",
+      "paymentmethod": "belirtilmemiş",
+      "category": "Yok"
+    },
+    "modal": {
+      "delete": {
+        "title": "Aboneliği Sil",
+        "body": "Bu aboneliği silmek istediğinizden emin misiniz? Hizmete devam edecekseniz devre dışı bırakmanızı öneririz.",
+        "actionHandler": "DeleteSubcriptionHandler",
+        "actionText": "Sil"
+      },
+      "inactive": {
+        "title": "Aboneliği Devre Dışı Bırak",
+        "body": "Bu aboneliği devre dışı bırakmak istediğinizden emin misiniz?",
+        "actionHandler": "SetSubscriptionInactive",
+        "actionText": "Devre Dışı Bırak"
+      }
+    }
+  },
+  "setting": {
+    "title": "Ayarlar",
+    "login": "Giriş Yap",
+    "logout": "Çıkış Yap",
+    "upgradepremium": "Premium'a Yükselt",
+    "settingitem": {
+      "item1": "Dil",
+      "item2": "Varsayılan Para Birimi",
+      "item3": "Sistem Modu",
+      "item4": "Geri Bildirim"
+    },
+    "language": {
+      "english": "İngilizce",
+      "french": "Fransızca",
+      "spanish": "İspanyolca",
+      "italian": "İtalyanca",
+      "turkish": "Türkçe"
+    },
+    "systemmode": {
+      "light": "Açık",
+      "dark": "Koyu"
+    },
+    "gmailfeature": "Gmail Özelliği Yakında Geliyor",
+    "info": "Otomatik Gmail takipçimize kaydolmak için giriş yapın.",
+    "success": {
+      "logout": "Başarıyla çıkış yapıldı",
+      "error": "Bir şeyler yanlış gitti, bağlantınızı kontrol edin",
+      "login": "Başarıyla giriş yapıldı"
+    },
+    "trackingCard": {
+      "title": "Gmail Otomatik Takip (Beta, Yakında)",
+      "subTitle": "Gmail Gelen Kutunuzdan tüm aboneliklerinizi doğrudan bulmak için şu anda bu özelliği geliştiriyoruz.",
+      "joinWaitlist": "Bekleme Listesine Katıl",
+      "success": "Başarı",
+      "successTitle": "Bekleme listesine başarıyla katıldınız"
+    },
+    "feedback": {
+      "error1": "Geri bildirim göndermek için giriş yapın",
+      "error2": "Göndermeden önce konu ve mesajı doldurun.",
+      "General Feedback": "Genel Geri Bildirim",
+      "Bug Report": "Hata Raporu",
+      "Feature Request": "Özellik İsteği",
+      "success": "Geri bildirim başarıyla gönderildi",
+      "error": "Bir şeyler yanlış gitti, daha sonra tekrar deneyin, bağlantıyı kontrol edin",
+      "subject": {
+        "title": "Konu",
+        "placeholder": "örn. Uygulama şu durumda çöküyor..."
+      },
+      "message": {
+        "title": "Mesajınız",
+        "placeholder": "Bize ne düşündüğünüzü söyleyin..."
+      },
+      "cancel": "İptal",
+      "sendFeedback": "Geri Bildirim Gönder",
+      "feedbacktype": "Geri Bildirim Türünü Seçin"
+    }
+  },
+  "currencyPickerCurrencies": {
+    "usd": "Amerikan Doları",
+    "eur": "Euro",
+    "gbp": "İngiliz Sterlini",
+    "ngn": "Nijerya Nairası",
+    "jpy": "Japon Yeni",
+    "aud": "Avustralya Doları",
+    "cad": "Kanada Doları",
+    "chf": "İsviçre Frangı",
+    "cny": "Çin Yuanı",
+    "inr": "Hindistan Rupisi",
+    "aed": "Birleşik Arap Emirlikleri Dirhemi",
+    "sar": "Suudi Arabistan Riyali",
+    "ars": "Arjantin Pesosu",
+    "clp": "Şili Pesosu",
+    "cop": "Kolombiya Pesosu",
+    "pen": "Peru Solü",
+    "uah": "Ukrayna Grivnası",
+    "zar": "Güney Afrika Randı",
+    "kes": "Kenya Şilini",
+    "ghs": "Gana Sedisi",
+    "brl": "Brezilya Reali",
+    "mxn": "Meksika Pesosu",
+    "krw": "Güney Kore Wonu",
+    "try": "Türk Lirası",
+    "sek": "İsveç Kronu",
+    "nok": "Norveç Kronu",
+    "dkk": "Danimarka Kronu",
+    "rub": "Rus Rublesi",
+    "pln": "Polonya Złotisi"
+  },
+  "analytics": {
+    "thismonth": "Bu ay",
+    "card": {
+      "monthlyexpense": "Tahmini harcama",
+      "activesub": "Aktif Abonelik",
+      "trails": "Denemeler Sona Eriyor/Sona Erdi",
+      "upcomingbills": "Yaklaşan Faturalar"
+    },
+    "timeoptions": {
+      "3months": "3 ay",
+      "6months": "6 ay",
+      "1year": "1 yıl"
+    },
+    "timerange": "Zaman Aralığı",
+    "monthlyspending": "Aylık Harcamalar"
+  },
+  "category": {
+    "title": "Kategoriye Göre Harcamalar",
+    "emptyText": "Harcama analizlerinizi görmek için işlemlerinizi kaydetmeye başlayın!"
+  },
+  "upcomingpayment": {
+    "daysremain": "Kalan Günler"
+  },
+  "Description": {
+    "actionbutton": {
+      "edit": "Düzenle",
+      "deactivate": "Devre Dışı Bırak",
+      "delete": "Sil"
+    }
+  },
+  "Analytics": {
+    "title": "Analitikler",
+    "timeoptions": {
+      "3 months": "3 ay",
+      "6 months": "6 ay",
+      "1 year": "1 yıl"
+    }
+  },
+  "bottomtablabels": {
+    "subscriptions": "Abonelikler",
+    "AllSubscription": "Tüm Abonelikler",
+    "Analytics": "Analitikler",
+    "setting": "Ayarlar"
+  },
+  "currencypicker": {
+    "update": "Güncelle",
+    "next": "Sonraki",
+    "title": "Para Birimi Seçici",
+    "subtitle": "Bir para birimi seçin",
+    "changeSymbol": "Sembolü değiştir",
+    "changeSymbolBody": "Para birimini değiştirdiğinizde, önceki aboneliklerinizin para birimi otomatik olarak değişir."
+  },
+  "common": {
+    "cancel": "İptal",
+    "inactive": "Şu tarihte devre dışı bırakıldı:"
+  }, 
+  "extra": {
+  "feeddone": "Geri bildirim başarıyla gönderildi",
+  "feederror": "Bir şeyler ters gitti, daha sonra tekrar deneyin, bağlantıyı kontrol edin",
+  "giveus": "Bize geri bildirimde bulunun",
+  "feedtype": "Geri bildirim türü",
+  "subfor": "Abonelik için",
+  "close": "Kapat"
+}
+}

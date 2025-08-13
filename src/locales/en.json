@@ -340,7 +340,7 @@
       "subscriptions": "subscriptions", 
       "AllSubscription": "All Subscriptions",
       "Analytics": "Analytics",
-      "Add": "Add"
+      "setting": "Setting"
     },
     "currencypicker": {
       "update": "Update",
@@ -353,5 +353,13 @@
     "common": {
       "cancel": "Cancel", 
       "inactive":"Made inactive on"
+    }, 
+    "extra": {
+      "feeddone": "Successfully submitted feedback", 
+      "feederror": "Something went wrong, try again later, check connection", 
+      "giveus": "Give us your feedback", 
+      "feedtype": "Feedback Type",
+      "subfor": "Subscripton for", 
+      "close": "Close"
     }
 }

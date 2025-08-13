@@ -38,7 +38,11 @@
       ]
      
       },
-      "edgeToEdgeEnabled": true,
+      "navigationBar": {
+        "visible": true,
+        "backgroundColor": "#000000",
+        "barStyle": "light-content"
+      },
       "package": "com.agbacoder.subkeep"
     },
     "web": {

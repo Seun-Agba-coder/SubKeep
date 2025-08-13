@@ -2,10 +2,11 @@ import { billingType2 } from '@/constants/Styles/AppStyle';
 import { useAppTranslation } from '@/hooks/useAppTranslator';
 import { calculateNextBilling } from '@/utils/Billiigfunctions';
 import dayjs from 'dayjs';
-import 'dayjs/locale/en';
-import 'dayjs/locale/es';
-import 'dayjs/locale/fr';
-import 'dayjs/locale/it';
+import 'dayjs/locale/es'; // Spanish
+import 'dayjs/locale/fr'; // French
+import 'dayjs/locale/en'; // English
+import 'dayjs/locale/it'; // Italian
+import 'dayjs/locale/tr'; // Turkish
 import { Image, StyleSheet, Text, View, Pressable } from 'react-native';
 import { router } from 'expo-router';
 import { findNextPaymentDate } from '@/utils/FutureBilling';

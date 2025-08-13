@@ -108,7 +108,7 @@ const TabLayout = () => {
                                 <IconButton name="settings" size={size} color={color} onPress={() => router.push("./Setting")}/>
                             </TouchableOpacity>
                         ),
-                        tabBarLabel: t('bottomtablabels.Setting')
+                        tabBarLabel: t('bottomtablabels.setting')
                     }} />
 
                 </Tabs>

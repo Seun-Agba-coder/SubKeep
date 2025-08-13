@@ -68,15 +68,15 @@ const FeedbackModal = ({ isVisible, onClose, theme, setSnackVisible, setSnackMes
 
         // Close the modal and reset the form
         onClose();
-        setFeedbackType('General Feedback');
+        setFeedbackType(t(`setting.feedback.General Feedback`));
         setSubject('');
         setMessage('');
         setSnackVisible(true)
-        setSnackMessage({message: "Successfully submitted feedback", color: "#16A34A"})
+        setSnackMessage({message: t("extra.feeddone"), color: "#16A34A"})
     } catch (error) {
       console.log("Error submitting feedback:", error)
       setSnackVisible(true)
-      setSnackMessage({message: "Something went wrong, try again later, check connection", color: "#DC2626"})
+      setSnackMessage({message: t("extra.feederror"), color: "#DC2626"})
     }
 
     
@@ -93,7 +93,7 @@ const FeedbackModal = ({ isVisible, onClose, theme, setSnackVisible, setSnackMes
         <View style={styles.modalView}>
           {/* Modal Header */}
           <View style={styles.modalHeader}>
-            <Text style={[styles.modalTitle, { color: theme.text} ]}>Give us your feedback</Text>
+            <Text style={[styles.modalTitle, { color: theme.text} ]}>{t('extra.giveus')}</Text>
             <TouchableOpacity onPress={onClose}>
               <View style={styles.closeButton}>
                 {/* Close Icon (X) using a simple Text component */}
@@ -106,7 +106,7 @@ const FeedbackModal = ({ isVisible, onClose, theme, setSnackVisible, setSnackMes
           <View>
             {/* Feedback Type Selector (Dropdown simulation) */}
             <View style={styles.inputContainer}>
-              <Text style={[styles.label, { color: theme.text, marginBottom: -9, } ]}>Feedback Type</Text>
+              <Text style={[styles.label, { color: theme.text, marginBottom: -9, } ]}>{t("extra.feedtype")}</Text>
             <FeedbackDropdown open={open} setOpen={setOpen} value={value} setValue={setValue} items={items} setItems={setItems}/>
             </View>
 

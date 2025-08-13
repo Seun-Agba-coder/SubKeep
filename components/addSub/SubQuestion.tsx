@@ -15,6 +15,7 @@ import 'dayjs/locale/es'; // Spanish
 import 'dayjs/locale/fr'; // French
 import 'dayjs/locale/en'; // English
 import 'dayjs/locale/it'; // Italian
+import 'dayjs/locale/tr'; // Turkish
 import i18n from '../../src/locales/index'
 import SnackBarBottom from '../ui/SnackBar';
 

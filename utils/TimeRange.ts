@@ -106,7 +106,7 @@ async function ChartDataViaRange(db: any, timeRange: string = '6 months') {
                     !isPaused
                 ) {
                     console.log("price")
-                    monthlyTotals[label] += 20;
+                    monthlyTotals[label] +=price;
                 }
                 console.log(" meant to be running")
 

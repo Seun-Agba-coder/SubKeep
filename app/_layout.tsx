@@ -25,6 +25,7 @@ import FlashMessage from "react-native-flash-message";
 import * as NavigationBar from 'expo-navigation-bar';
 
 
+
 interface SubscriptionData {
   name: string;
   subscriptionId: string;
@@ -157,6 +158,34 @@ function SlotContainer() {
     }
   }, []);
 
+  useEffect(() => {
+    const updateNavigationBar = async () => {
+      if (Platform.OS === 'android') {
+      
+          try {
+            // First disable edge-to-edge
+            await NavigationBar.setPositionAsync('absolute');
+            await NavigationBar.setVisibilityAsync('visible');
+            
+            // Then apply styles
+            if (mode === 'dark') {
+              await NavigationBar.setBackgroundColorAsync('#000000');
+              await NavigationBar.setButtonStyleAsync('light');
+            } else {
+              console.log("Workign")
+              await NavigationBar.setBackgroundColorAsync('#ffffff');
+              await NavigationBar.setButtonStyleAsync('dark');
+            }
+          
+        } catch (error) {
+          console.log('NavigationBar error:', error);
+        }
+      }
+    };
+    
+    updateNavigationBar();
+  }, [mode]);
+
 
   const onLayoutRootView = useCallback( async () => {
     if (appIsReady) {
@@ -172,7 +201,7 @@ function SlotContainer() {
  
 
   return (
-    <View style={{ flex: 1, backgroundColor: mode === 'light' ? '#fff' : '#000' }} onLayout={onLayoutRootView}>
+    <View style={{ flex: 1}} onLayout={onLayoutRootView}>
       <StatusBar 
               style={mode === 'light' ? 'dark' : 'dark'} 
              />

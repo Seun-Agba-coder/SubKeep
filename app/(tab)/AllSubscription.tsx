@@ -27,7 +27,7 @@ const AllSubscription = () =>  {
 
     useFocusEffect(useCallback(() => {
         const userSubscription = async () => {
-            const subscriptions = await getSubscriptions(db)
+           
             const activeSub = await getActiveSubscription(db)
             const inactiveSub = await getInactiveSubscription(db)
             

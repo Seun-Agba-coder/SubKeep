@@ -24,7 +24,15 @@ const useServiceHook = () => {
 
   async function FindLogo(serviceName: any) {
       const cleanedInput = cleanInput(serviceName)
-      console.log('Cleaned Input: : ', cleanedInput)
+       if (cleanedInput.toLowerCase() === "subkeep") {
+        console.log("Yes")
+        setLogoImage({
+          logo: "../../assets/AppImages/subkeep.png",
+          name: "subkeep"
+        })
+        return;
+       }
+
     
         try {
           // const response = await axios.get(`https://autocomplete.clearbit.com/v1/companies/suggest`, {

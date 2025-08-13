@@ -221,13 +221,13 @@ async function saveSubcription () {
  
 
   //  await updateUserSubscription(db, id, { ...notifScreenParams, ...params, freetrial: String(freeTrial),reminderenabled: String(notificationsEnabled) }, billingList)
-  //  router.replace({pathname: "/(tab)/Index", params: {refresh: Date.now().toString()}})
+   router.replace({pathname: "/(tab)/Index", params: {refresh: Date.now().toString()}})
    return ;
   }
         console.log("going to the  save subscription in device")
         console.log({ ...notifScreenParams, ...params })
-        return;
-    // await saveSubcriptionLocally(db, { ...notifScreenParams, ...params }, trialEndFormatted)
+        
+    await saveSubcriptionLocally(db, { ...notifScreenParams, ...params }, trialEndFormatted)
     router.replace({pathname: "/(tab)/Index", params: {refresh: Date.now().toString()}})
   } catch (error) {
     console.log(error)

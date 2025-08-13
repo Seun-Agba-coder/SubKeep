@@ -22,13 +22,20 @@ const SubHorizontalList = ({data, theme}: Props) => {
          keyExtractor={(item) => item.id} 
          showsHorizontalScrollIndicator={false}
 
-         ListEmptyComponent={() => (
-            <View>
-                <Text style={[styles.subTitle, { color: theme.primaryText, marginVertical: 4,  }]}>{t("index.emptyTitle")}</Text>
-                <CustomButton title={t("index.buttonText")} onPress={() => router.push('/(stack)/AddSub')} style={styles.buttonStyle} />
-            </View>
-                      
-         )}
+         ListEmptyComponent={() => 
+            data !== null ? ( // Only render after data is loaded
+                <View>
+                  <Text style={[styles.subTitle, { color: theme.primaryText, marginVertical: 4 }]}>
+                    {t("index.emptyTitle")}
+                  </Text>
+                  <CustomButton 
+                    title={t("index.buttonText")} 
+                    onPress={() => router.push('/(stack)/AddSub')} 
+                    style={styles.buttonStyle} 
+                  />
+                </View>
+              ) : null
+            }
          renderItem={({item}) => {
          return <SubHorizontalItem theme={theme} item={item}/>
          

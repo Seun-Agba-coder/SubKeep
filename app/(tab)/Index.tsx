@@ -14,7 +14,7 @@ import { useSQLiteContext } from 'expo-sqlite'
 import React, { useCallback, useEffect, useState } from 'react'
 import { StyleSheet, Text, View, Image, Pressable, Modal, ScrollView} from 'react-native'
 import { useAppTranslation } from '@/hooks/useAppTranslator'
-import i18n from '../../src/locales/index'
+
 import { onAuthStateChanged } from 'firebase/auth';
 import { auth } from '@/firebaseConfig'; 
 import { useFocusEffect } from '@react-navigation/native';
@@ -22,6 +22,8 @@ import { Calendar,  CalendarList} from 'react-native-calendars';
 import { useLocalSearchParams } from 'expo-router'
 import dayjs from 'dayjs';
 import { LocaleConfig } from 'react-native-calendars';
+import InitialAvatar from '@/components/ui/IntialAvatar'
+
 
 
 
@@ -51,10 +53,11 @@ const Home = () => {
     const getTotal = useMonthlyBillTotal(db);
 
     const [savedSubscription, setSavedSubscritption] = useState<any>()
-    const [updatedSubscription, setUpdatedSubscription] = useState<any>([])
+    const [updatedSubscription, setUpdatedSubscription] = useState<any>(null)
     const [billingMarkers, setBillingMarkers] = useState<any>([])
     const [getMontlyTotal, setGetMonthlyTotal] = useState<string>("0.00")
     const [calendarKey, setCalendarKey] = useState(0);
+
 
    const { refresh } = useLocalSearchParams();
 
@@ -254,7 +257,6 @@ useEffect(() => {
 
       const CustomDay = ({ date, marking }: any) => {
         const hasSubscriptions = marking && marking.subscriptions;
-     
         const dayNumber = date.day;
         
         return (
@@ -277,9 +279,12 @@ useEffect(() => {
             >
           
              {hasSubscriptions && (
-              <View style={[styles.logoContainer,, {marginBottom: -3}]}>
-                {marking.subscriptions.slice(0, 1).map((sub: any, index: any) => (
-                  <Image
+              <View style={[styles.logoContainer, {marginBottom: -3}]}>
+                {marking.subscriptions.slice(0, 1).map((sub: any, index: any) => {
+                  const haslogo = !!sub.iconurl
+                
+                 return haslogo ? (   
+               <Image
                     key={index}
                     source={{ uri: sub.iconurl }}
                     style={[
@@ -294,7 +299,13 @@ useEffect(() => {
                     ]}
                     resizeMode="contain"
                   />
-                ))}
+                  ) : (
+                    <InitialAvatar name={sub.platformname} size={14} />
+                  )
+
+                }
+                
+                )}
 
                
                     <View style={{alignItems: 'flex-start'}}>
@@ -435,8 +446,8 @@ useEffect(() => {
 
              
 
-                    <View style={updatedSubscription.length == 0 ? {alignItems: 'center'} : {paddingLeft: '2%'}}>
-                        {updatedSubscription.length > 0 && <Text style={{ color: theme.primaryText, fontSize: 16, fontWeight: '600', paddingLeft: '2%' }}> {t("index.title")}</Text>}
+                    <View style={updatedSubscription?.length == 0 ? {alignItems: 'center'} : {paddingLeft: '2%'}}>
+                        {updatedSubscription !== null? <Text style={{ color: theme.primaryText, fontSize: 16, fontWeight: '600', paddingLeft: '2%' }}> {t("index.title")}</Text> : null}
                    
                         <SubHorizontalList data={updatedSubscription} theme={theme} />
                     </View> 
@@ -450,7 +461,7 @@ useEffect(() => {
                       <View style={styles.modalBackground}>
                         <View style={styles.modalContent}>
                           <Text style={{ fontWeight: 'bold', fontSize: 16, marginBottom: 8 }}>
-                            Subscriptions for {selectedDate}
+                            {t("extra.subfor")} {selectedDate}
                           </Text>
                           <ScrollView contentContainerStyle={{ flexDirection: 'row', flexWrap: 'wrap', gap: 10 }}>
                             {selectedDayMarkers.map((sub: any, index: any) => (
@@ -475,7 +486,7 @@ useEffect(() => {
                             ))}
                           </ScrollView>
                           <Pressable onPress={() => setModalVisible(false)} style={styles.modalClose}>
-                            <Text style={{ color: '#fff' }}>Close</Text>
+                            <Text style={{ color: '#fff' }}>{t('extra.close')}</Text>
                           </Pressable>
                         </View>
                       </View>

@@ -4,7 +4,7 @@ import { router } from "expo-router";
 import dayjs from "dayjs";
 import { billingType2 } from '@/constants/Styles/AppStyle'; 
 import { useAppTranslation } from "@/hooks/useAppTranslator";
-
+import InitialAvatar from "../ui/IntialAvatar";
 
 interface SubHorizontalItemProps {
     item: any
@@ -50,7 +50,7 @@ const SubHorizontalItem = ({ item, theme }: SubHorizontalItemProps) => {
     return (
         <Pressable style={[styles.container, {backgroundColor: theme.secondaryColor}]} onPress={() => goToDescription()} android_ripple={{color:'rgba(255, 255, 255, 0.96)'}}>
             <View style={styles.rowContainer}>
-                <Image source={{uri: item.iconurl}} style={styles.image}/>
+                {item.iconurl ? <Image source={{uri: item.iconurl}} style={styles.image}/> : <InitialAvatar name={item.platformname} size={30} color={theme.primaryColor} />}
                 <View>
                     <Text style={[styles.title, { color: theme.tetiaryText }]}>${item.price}</Text>
                     <Text style={[styles.subtitle, {color: theme.secondaryText}]}>{t('addsub.notificationscreen.dropdown.' + item.billingperiodtime.toLowerCase())}</Text>
