@@ -9,11 +9,14 @@ import {
 import { BlurView } from 'expo-blur';
 import { Feather } from '@expo/vector-icons';
 import { LinearGradient } from 'expo-linear-gradient';
+import { useAppTranslation } from '@/hooks/useAppTranslator';
 
 const { width, height } = Dimensions.get('window');
 
 export const AnalyticsPaywallOverlay = ({ onUpgradePress, visible = true, theme, mode}: any) => {
   if (!visible) return null;
+
+  const {t} = useAppTranslation()
 
   return (
     <BlurView intensity={100} style={styles.blurOverlay}>
@@ -29,19 +32,18 @@ export const AnalyticsPaywallOverlay = ({ onUpgradePress, visible = true, theme,
           </LinearGradient>
           
           {/* Main Heading */}
-          <Text style={[styles.title, {color: theme.primaryText}]}>Premium Analytics</Text>
+          <Text style={[styles.title, {color: theme.primaryText}]}>{t('paywall.title')}</Text>
           
           {/* Description */}
           <Text style={[styles.description, {color: theme.primaryText}]}>
-            Get detailed insights into your spending patterns, track trends, and make smarter financial decisions.
-          </Text>
+          {t('paywall.subtitle')}          </Text>
           
           {/* Feature List */}
           <View style={styles.featureList}>
-            <FeatureItem text="Detailed spending breakdown" theme={theme} />
-            <FeatureItem text="Monthly trend analysis" theme={theme} />
-            <FeatureItem text="Export and share reports" theme={theme} />
-            <FeatureItem text="Advanced insights & tips" theme={theme} />
+            <FeatureItem text={t('paywall.advantage1')} theme={theme} />
+            <FeatureItem text={t('paywall.advantage2')} theme={theme} />
+            {/* <FeatureItem text="Export and share reports" theme={theme} /> */}
+            <FeatureItem text={t('paywall.advantage3')}  theme={theme} />
           </View>
           
           {/* Upgrade Button */}
@@ -56,13 +58,13 @@ export const AnalyticsPaywallOverlay = ({ onUpgradePress, visible = true, theme,
               start={{ x: 0, y: 0 }}
               end={{ x: 1, y: 0 }}
             >
-              <Text style={[styles.upgradeButtonText, {color: theme.primaryText}]}>Unlock Analytics</Text>
+              <Text style={[styles.upgradeButtonText, {color: theme.primaryText}]}>{t('paywall.buttontitle')} </Text>
             </LinearGradient>
           </TouchableOpacity>
           
           {/* Trust Signal */}
           <Text style={[styles.trustSignal, {color: theme.primaryText}]}>
-            Cancel anytime • 7-day free trial
+          {t('paywall.paywall guarantee')} 
           </Text>
         </View>
       </View>

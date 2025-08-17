@@ -364,5 +364,15 @@
     },
     "extra2": {
       "emptyText": "Add a subcription"
+    },
+    "paywall": {
+      "title": "Premium Analytics", 
+      "subtitle": " Get detailed insights into your spending patterns, track trends, and make smarter financial decisions.", 
+      "advantage1": "Detailed spending breakdown", 
+      "advantage2": "Monthly trend analysis", 
+      "advantage3": "Advanced insights & tips(coming soon)",
+      "buttontitle": "Unlock Analytics", 
+      "paywall guarantee": "Cancel anytime • 7-day free trial"
+
     }
 }

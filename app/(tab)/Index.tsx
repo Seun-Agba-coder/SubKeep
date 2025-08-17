@@ -373,6 +373,23 @@ useEffect(() => {
         setupLocaleConfig(i18n.language);
       }, [i18n.language]);
 
+    function setMinMaxDate(operator: string, num: number){
+      // use to set the minimum and maximum range for the caledar component
+      const today = new Date()
+      const dateToSet = new Date()
+
+      if (operator === "minus") {
+        dateToSet.setFullYear(today.getFullYear() - num);
+        return dateToSet
+      } else if (operator === "addition") {
+        dateToSet.setFullYear(today.getFullYear() + num);
+        return dateToSet
+      }
+
+     return  new Date()
+
+    }
+
     
     return (
         <ScrollView showsVerticalScrollIndicator={false} contentContainerStyle={{ paddingBottom: 150 }} style={[styles.container, { backgroundColor: theme.background }]}>
@@ -428,6 +445,7 @@ useEffect(() => {
                    enableSwipeMonths={true}
                    markingType={'multi-dot'}
                    markedDates={billingMarkers}
+                   
                    dayComponent={CustomDay}
                    theme={
                     {

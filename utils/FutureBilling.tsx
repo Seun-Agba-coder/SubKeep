@@ -27,7 +27,7 @@ interface BillingDatesParams {
 function generateBillingDates({
   firstPayment,
   billingType,
-  numberOfPeriods = 20,
+  numberOfPeriods = 30,
   interval = 1,
   freeTrialDays = 0, 
   isactive = 0,
@@ -87,6 +87,8 @@ function generateBillingDates({
   if (!advanceStrategy) {
     throw new Error(`Unsupported billing type: ${billingType}`);
   }
+  // /// while (first payment is not yet greater than maxDate) {
+  // }
 
   // Generate billing dates
   for (let i = 0; i < numberOfPeriods; i++) {
