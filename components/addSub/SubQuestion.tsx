@@ -73,9 +73,9 @@ const SubQuestion = ({ theme, id, activate }: { theme: any, id?: string, activat
             await FindLogo(serviceName)
             console.log("logo Image: ", logoImage)
         } catch (error) {
-           
-            setSnackBarVisible(true)
-            setSnackBarMessage({message: "Something went wrong, You need a connection to retrive a logo", color: "#DC2626"})
+            return ;
+            // setSnackBarVisible(true)
+            // setSnackBarMessage({message: "Something went wrong, You need a connection to retrive a logo", color: "#DC2626"})
         }
     }
 
@@ -193,7 +193,12 @@ const SubQuestion = ({ theme, id, activate }: { theme: any, id?: string, activat
         getSymbol()
     }, [])
 
+   console.log("LOGO IMagE:: : : ", logoImage.logo)
 
+
+//    let logoImage 
+
+//    if (log)
 
     return (
         <ScrollView>
@@ -212,7 +217,7 @@ const SubQuestion = ({ theme, id, activate }: { theme: any, id?: string, activat
                             
 
                         </View>
-                        {logoImage ? <Image source={{ uri: logoImage.logo }} style={styles.image} /> :
+                        {logoImage ? <Image source={{ uri: logoImage.logo}}  style={[styles.image, { width: 60, height: 60 ,}]} /> : 
                             <View
                                 style={{ width: 50, height: 50, backgroundColor: 'red', justifyContent: 'center', alignItems: 'center', borderRadius: 10, marginVertical: 10 }}
                             >
@@ -270,7 +275,7 @@ const SubQuestion = ({ theme, id, activate }: { theme: any, id?: string, activat
 
                                 if (ValidateNecessaryField() === false) {
                                     setSnackBarVisible(true);
-                                    setSnackBarMessage({message: "Cannot Add subscription Fill in the spaces", color: "#DC2626"});
+                                    setSnackBarMessage({message: "Cannot add subscription fill in the necessary spaces", color: "#DC2626"});
                                     return
 
                                 }

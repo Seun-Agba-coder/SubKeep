@@ -7,7 +7,7 @@ import {
   StyleSheet,
   Pressable,
   TouchableOpacity,
-  SafeAreaView,
+  Keyboard,
   Alert
 } from 'react-native';
 import FeedbackDropdown from './FeedbackDropdown';
@@ -15,6 +15,7 @@ import {submitFeedbackToFirestore} from '@/Firebase/FirebaseBackend';
 import {  onAuthStateChanged } from 'firebase/auth';
 import { auth } from '@/firebaseConfig'; 
 import { useAppTranslation } from '@/hooks/useAppTranslator';
+import { showMessage } from 'react-native-flash-message';
 
 
 const FeedbackModal = ({ isVisible, onClose, theme, setSnackVisible, setSnackMessage }: { isVisible: boolean; onClose: () => void, theme: any, setSnackVisible: (visible: boolean) => void, setSnackMessage: (message: {message: string, color: string}) => void }) => {
@@ -52,6 +53,7 @@ const FeedbackModal = ({ isVisible, onClose, theme, setSnackVisible, setSnackMes
   // Dummy function for submitting feedback
   const handleSubmit = async () => {
     // Check if essential fields are filled
+    Keyboard.dismiss()
     if (!userinfo) {
       Alert.alert(`${t("setting.feedback.error1")}`);
       return;
@@ -62,8 +64,9 @@ const FeedbackModal = ({ isVisible, onClose, theme, setSnackVisible, setSnackMes
     }
     
     try {
-      await submitFeedbackToFirestore(feedbackType, subject, message, userinfo)
-          // In a real app, you would send this data to your backend
+      // await submitFeedbackToFirestore(feedbackType, subject, message, userinfo)
+      //     // In a real app, you would send this data to your backend
+      //#16A34A
         console.log('Feedback Submitted:', { feedbackType, subject, message, userinfo });
 
         // Close the modal and reset the form
@@ -71,12 +74,22 @@ const FeedbackModal = ({ isVisible, onClose, theme, setSnackVisible, setSnackMes
         setFeedbackType(t(`setting.feedback.General Feedback`));
         setSubject('');
         setMessage('');
-        setSnackVisible(true)
-        setSnackMessage({message: t("extra.feeddone"), color: "#16A34A"})
+     
+        showMessage({
+          message: t("extra.feeddone"),
+          type: "success",
+          duration: 5000, 
+          style: { bottom: 60 } 
+        })
+       
     } catch (error) {
-      console.log("Error submitting feedback:", error)
-      setSnackVisible(true)
-      setSnackMessage({message: t("extra.feederror"), color: "#DC2626"})
+      
+      showMessage({
+        message: t("extra.feederror"),
+        type: "danger",
+        duration: 5000, 
+        style: { bottom: 60 } 
+      })
     }
 
     

@@ -1,7 +1,7 @@
 import React from 'react';
 import { View, Text, StyleSheet } from 'react-native';
 
-const InitialAvatar = ({ name, size = 50, color = '#6733b9' }: { name: string; size?: number; color?: string }) => {
+const InitialAvatar = ({ name, size = 50, color = '#6733b9'}: { name: string; size?: number; color?: string}) => {
   if (!name) {
     return null; 
   }
@@ -12,7 +12,7 @@ const InitialAvatar = ({ name, size = 50, color = '#6733b9' }: { name: string; s
     .map((word: string) => word.charAt(0))
     .join('')
     .toUpperCase()
-    .slice(0, 2); // Limit to a maximum of two initials
+
 
   return (
     <View style={[styles.container, { 

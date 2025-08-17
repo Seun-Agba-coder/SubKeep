@@ -30,11 +30,17 @@ function calculateDaysUntilNextBilling(subscription: SubscriptionBilling): numbe
   const today = dayjs();
   
   const firstPayment = dayjs(firstPaymentDate);
+  const freetrialending = dayjs(freetrialendday)
+
+
   
-  if (freetrial === "true") {
+  if (freetrial === "true" && firstPayment.isAfter(today)) {
     const freetrialending = dayjs(freetrialendday)
     if (today.isBefore(freetrialending)) {
-    const diffTime = freetrialending.startOf('day').diff(today, 'day');
+      console.log("Today: : , ", today);
+      console.log("freetrialendday: : , ", freetrialendday);
+    const diffTime = freetrialending.startOf('day').diff(today.startOf('day'), 'day');
+    console.log("diffTime: ", diffTime)
     return diffTime
     }
   }
@@ -70,9 +76,13 @@ function addBillingPeriod(date: dayjs.Dayjs, period: string, type: string): dayj
 
   
    // Keep adding billing periods until we find a future date
+
+
    while (nextBillingDate.isBefore(today)) {
   // Reassign the nextBillingDate to the new date returned by the function
    nextBillingDate = addBillingPeriod(nextBillingDate, billingPeriod, billingType);
+
+   console.log("next billing date: : ", nextBillingDate)
    }
    
    // Calculate days difference

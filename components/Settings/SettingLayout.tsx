@@ -118,6 +118,11 @@ const SettingLayout = ({ theme, lang, defCurrency, mode, paywall, snackVisible, 
 async function presentPaywall(): Promise<boolean> {
 try {
     const offerings = await Purchases.getOfferings();
+    const currentOffering: any = offerings.current;
+    const paywall = currentOffering?.paywall;
+   
+    // Log the entire paywall configuration
+    console.log('Paywall config:', JSON.stringify(paywall, null, 2));
   
   
     // Present paywall for current offering:
@@ -127,6 +132,7 @@ try {
 
     switch (paywallResult) {
         case PAYWALL_RESULT.NOT_PRESENTED:
+
         case PAYWALL_RESULT.ERROR:
         case PAYWALL_RESULT.CANCELLED:
             return false;
@@ -168,8 +174,11 @@ try {
                             await signInWithGoogleAndFirebase()
                             setSnackVisible(true)
                             setSnackMessage({message: `${t('setting.success.login')}}`, color: "#16A34A"})
-                        } catch (error) {
-                            console.log(error)
+                        } catch (error: any) {
+                    
+                            if (error.message === "Cannot read property 'user' of null" ) {
+                                return;
+                            }
                             setSnackVisible(true)
                             setSnackMessage({message: `${t('setting.success.error')}}`, color: "#DC2626"})
                         }

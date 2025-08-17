@@ -38,9 +38,15 @@ const useServiceHook = () => {
           // const response = await axios.get(`https://autocomplete.clearbit.com/v1/companies/suggest`, {
           //   params: { query: cleanedInput }
           // })
-          const response = await axios.get(`https://api.brandfetch.io/v2/search/${cleanedInput}?c=1idRAnosyXJQQvodyHO`)
-  
-          const data = response.data;
+          console.log("Cleaned Input: ", cleanedInput)
+          const response = await fetch(`https://api.logo.dev/search?q=${cleanedInput}`, {
+            headers: {
+              "Authorization": `Bearer: sk_bltQKE7jRRmceBdaP3cirA`
+            }, 
+           
+          })
+          console.log(response)
+          const data = await response.json()
           console.log("data: ", data)
 
           if (data.length === 0 ) {
@@ -59,7 +65,7 @@ const useServiceHook = () => {
 
           if (data.length > 0) {
             setLogoImage({
-              logo: data[0].icon,
+              logo: data[0].logo_url,
               name: data[0].name
             })
       

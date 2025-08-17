@@ -48,7 +48,8 @@ const SubHorizontalList = ({data, theme}: Props) => {
 const styles = StyleSheet.create({
     subTitle: {
         fontWeight: '300',
-        fontSize: 12
+        fontSize: 12, 
+        textAlign: 'center'
     },
     buttonStyle: {
         backgroundColor: '#2f80ed',

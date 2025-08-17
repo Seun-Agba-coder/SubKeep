@@ -19,8 +19,9 @@ const Card = ({icon, title, num, background, textColor}: Prop) => {
             <Text style={{color: textColor}}>{title}</Text>
 
             </View>
+           
             {num ? (
-                <View>
+                <View >
                     <Text style={{color: textColor}}>{num}</Text>
                 </View>
             ) : null}
@@ -42,8 +43,6 @@ const styles = StyleSheet.create({
     rowContainer: {
         flexDirection: 'row', 
         gap: 5,
-        marginHorizontal: 2, 
-        paddingRight: 1, 
         alignItems: 'center',
         
     }

@@ -23,6 +23,8 @@ import dayjs from 'dayjs';
 import { scheduleRecurringNotificationsUpdate } from '@/Extra';
 import FlashMessage from "react-native-flash-message";
 import * as NavigationBar from 'expo-navigation-bar';
+import { useColorScheme } from 'react-native';
+import * as SecureStore from 'expo-secure-store'
 
 
 
@@ -53,7 +55,7 @@ const createDbIfNeeded = async (db: any) => {
         CREATE TABLE IF NOT EXISTS userSubscriptions (
           id INTEGER PRIMARY KEY AUTOINCREMENT,
           platformname TEXT NOT NULL,
-          iconurl TEXT NOT NULL,
+          iconurl TEXT NULL,
           currency TEXT DEFAULT 'USD',
           symbol  TEXT DEFAULT '$',
           currencyname TEXT DEFAULT 'United States Dollar',
@@ -93,10 +95,23 @@ const createDbIfNeeded = async (db: any) => {
 }
 
 function SlotContainer() {
+  const colorScheme = useColorScheme();
   const [appIsReady, setAppIsReady] = useState(false);
   const dispatch = useAppDispatch();
   const db: any = useSQLiteContext();
   const mode = useAppSelector(( selector) => selector.appmode.mode)
+
+  const getCustomerInfo = async () => {
+    const customerInfo = await Purchases.getCustomerInfo();
+    console.log("Customer Info: ", customerInfo)
+  }
+
+  const getOffering = async () => {
+    const offerings = await Purchases.getOfferings();
+
+    if (offerings.current === null || offerings.current.availablePackages.length !== 0) return;
+    console.log("Offerings: ", offerings)
+  }
 
   useEffect(() => {
     Purchases.setLogLevel(LOG_LEVEL.VERBOSE);
@@ -106,7 +121,11 @@ function SlotContainer() {
     } else if (Platform.OS === 'android') {
        Purchases.configure({apiKey: 'goog_rVQVenVofsJXeCoXjfjwYEGUHCp'});
     }
+    // getCustomerInfo()
+    // getOffering()
   }, []);
+   
+
 
   useEffect(() => {
     const initializeTheme = async () => {
@@ -127,6 +146,7 @@ function SlotContainer() {
     async function prepare() {
       try {
         const activeSub = await getActiveSubscription(db)
+      
         if (activeSub.length === 0) {
           return;
         }
@@ -158,33 +178,30 @@ function SlotContainer() {
     }
   }, []);
 
-  useEffect(() => {
-    const updateNavigationBar = async () => {
-      if (Platform.OS === 'android') {
+  // useEffect(() => {
+  //   const updateNavigationBar = async () => {
       
-          try {
-            // First disable edge-to-edge
-            await NavigationBar.setPositionAsync('absolute');
-            await NavigationBar.setVisibilityAsync('visible');
+  //     if (Platform.OS === 'android') {
+      
+  //         try {
+  //           if (Platform.OS === 'android') {
+  //             // This works WITH edge-to-edge enabled
+  //             if (colorScheme === 'dark') {
+              
+  //              NavigationBar.setStyle('light'); // Dark nav bar with light content
+  //             } else {
             
-            // Then apply styles
-            if (mode === 'dark') {
-              await NavigationBar.setBackgroundColorAsync('#000000');
-              await NavigationBar.setButtonStyleAsync('light');
-            } else {
-              console.log("Workign")
-              await NavigationBar.setBackgroundColorAsync('#ffffff');
-              await NavigationBar.setButtonStyleAsync('dark');
-            }
-          
-        } catch (error) {
-          console.log('NavigationBar error:', error);
-        }
-      }
-    };
+  //               NavigationBar.setStyle('dark'); // Light nav bar with dark content
+  //             }
+  //           }
+  //       } catch (error) {
+  //         console.log('NavigationBar error:', error);
+  //       }
+  //     }
+  //   };
     
-    updateNavigationBar();
-  }, [mode]);
+  //   updateNavigationBar();
+  // }, [mode]);
 
 
   const onLayoutRootView = useCallback( async () => {
@@ -199,11 +216,11 @@ function SlotContainer() {
   }
   
  
-
+ 
   return (
     <View style={{ flex: 1}} onLayout={onLayoutRootView}>
       <StatusBar 
-              style={mode === 'light' ? 'dark' : 'dark'} 
+              style={colorScheme === 'dark' ? 'light' : 'dark'} 
              />
       <Slot />
     </View>
@@ -218,7 +235,7 @@ export default function RootLayout() {
           <SafeAreaProvider>
             <SafeAreaView style={{ flex: 1 }}>
             <FlashMessage position="bottom" />
-            <SQLiteProvider databaseName="subTrackers41.db" onInit={createDbIfNeeded}>
+            <SQLiteProvider databaseName="subTrackers42.db" onInit={createDbIfNeeded}>
               <SlotContainer/>
             </SQLiteProvider>
             

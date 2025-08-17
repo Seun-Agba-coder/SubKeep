@@ -50,7 +50,7 @@ const GmailTracker = ({theme, setSnackVisible, setSnackMessage}: ThemeProps) => 
         try {
             await saveUserToWaitlist(userinfo)
             setModalVisibleSuccess(true)
-            setSignedUp(true)
+          
         } catch (error) {
             console.log(error)
             setSnackVisible(true)
@@ -83,7 +83,7 @@ const GmailTracker = ({theme, setSnackVisible, setSnackMessage}: ThemeProps) => 
 
            
             {modalVisibleSuccess &&
-             <GmailModal modalVisible={modalVisibleSuccess} setModalVisible={setModalVisibleSuccess} title={t('setting.trackingCard.success')} subtitle="You have successfully joined the waitlist" theme={theme}/>
+             <GmailModal modalVisible={modalVisibleSuccess} setModalVisible={setModalVisibleSuccess} title={t('setting.trackingCard.success')} subtitle="You have successfully joined the waitlist" theme={theme} setSignedUp={setSignedUp}/>
                
             }
 

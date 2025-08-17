@@ -27,7 +27,7 @@ interface BillingDatesParams {
 function generateBillingDates({
   firstPayment,
   billingType,
-  numberOfPeriods = 10,
+  numberOfPeriods = 20,
   interval = 1,
   freeTrialDays = 0, 
   isactive = 0,
@@ -152,7 +152,7 @@ async function noOfUpcomingBillsThisMonth(db: any, targetDate = new Date()) {
 
 }
 
-const findNextPaymentDate = (billingRecurringListString: string): string | null => {
+const findNextPaymentDate = (billingRecurringListString: string, firstpayment?:any, billingPeriod?:any, billingType?: any): string | null | dayjs.Dayjs => {
   try {
       // 1. Parse the stringified data back into a list of objects.
       const parsedList = JSON.parse(billingRecurringListString);
@@ -177,6 +177,49 @@ const findNextPaymentDate = (billingRecurringListString: string): string | null 
               }
           }
       }
+
+
+      function addBillingPeriod(date: dayjs.Dayjs, period: string, type: string): dayjs.Dayjs {
+        switch (type) {
+         case 'Week':
+         // Return the new date from the add method
+         return date.add(7 * parseInt(period), 'day');
+        
+         case 'Month':
+         // Return the new date from the add method
+         const newDate = date.add(parseInt(period), 'month');
+        // If the day changed due to month overflow, set it to the last day of the new month
+        if (newDate.date() !== date.date()) {
+          return newDate.endOf('month');
+        }
+        return newDate;
+        
+        case 'Year':
+        // Return the new date from the add method
+        return date.add(parseInt(period), 'year');
+        
+        default:
+        throw new Error(`Invalid billing type: ${type}`);
+      }
+        }
+        
+
+      let nextBillingDate = dayjs(firstpayment)
+      
+      while (nextBillingDate.isBefore(today)) {
+        // Reassign the nextBillingDate to the new date returned by the function
+         nextBillingDate = addBillingPeriod(nextBillingDate, billingPeriod, billingType);
+      
+         console.log("next billing date: : ", nextBillingDate)
+         }
+      return nextBillingDate
+
+
+    
+      
+
+
+
   } catch (error) {
       console.error("Failed to parse billingrecurringlist:", error);
   }

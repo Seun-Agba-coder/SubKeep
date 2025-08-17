@@ -77,6 +77,7 @@ export default function DatePickerComponent({
       <DatePicker
         modal
         open={show}
+      
         date={date}
         mode="date"
         locale={getLocaleTag(i18n.language)}

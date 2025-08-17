@@ -76,7 +76,7 @@ const Category = ({ data, theme }: Data) => {
         </View>
       </View>
     ) : (
-      <Text style={{color: theme.primaryText}}>{t("analytics.category.emptyText")}</Text>
+      <Text style={{color: theme.primaryText}}>{t("extra2.emptyText")}</Text>
     
     )}
     </View>

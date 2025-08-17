@@ -41,30 +41,33 @@ const signInWithGoogleAndFirebase = async (): Promise<any> => {
     const idToken = result.data.idToken;
 
 
-
+   console.log("idtoken:", idToken)
     // 4. Create Firebase credential
     const credential = GoogleAuthProvider.credential(idToken);
-
+    console.log(credential)
+      console.log("Signing in to firebase")
     // 5. Sign in to Firebase
     const userCredential = await signInWithCredential(auth, credential);
+    console.log("Signed in to firebase")
 
     console.log('Firebase user:', userCredential.user);
     return userCredential;
 
   } catch (error: any) {
-    // console.error('Google sign-in error:', error);
+    
 
-    // // Handle specific errors
-    // if (error.code === statusCodes.SIGN_IN_CANCELLED) {
-    //   console.log('User cancelled login');
-    // } else if (error.code === statusCodes.IN_PROGRESS) {
-    //   console.log('Sign-in operation already in progress');
-    // } else if (error.code === statusCodes.PLAY_SERVICES_NOT_AVAILABLE) {
-    //   console.log('Play services not available');
-    // } else {
-    //   console.log('Other sign-in error:', error.message);
+    // Handle specific errors
+    if (error.code === statusCodes.SIGN_IN_CANCELLED) {
+      console.error('Google sign-in error:', error);
+    
+    } else if (error.code === statusCodes.IN_PROGRESS) {
+      console.log('Sign-in operation already in progress');
+    } else if (error.code === statusCodes.PLAY_SERVICES_NOT_AVAILABLE) {
+      console.log('Play services not available');
+    } else {
+      console.log('Other sign-in error:', error.message);
 
-    // }
+    }
     throw error
 
   }

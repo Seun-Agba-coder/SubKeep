@@ -15,6 +15,7 @@ import { useAppTranslation } from '@/hooks/useAppTranslator';
 import useNotificationHook from '@/hooks/useNotification';
 import * as Notifications from 'expo-notifications'
 import { setActive } from '@/utils/Crud';
+import { showMessage } from 'react-native-flash-message';
 import dayjs from 'dayjs';
 import 'dayjs/locale/es';
 import 'dayjs/locale/fr';
@@ -194,7 +195,7 @@ const notifScreenParams = {
   freetrial: freeTrial,
   reminderenabled: notificationsEnabled,
   freetrialduration: trialDuration,
-  freetrialendday: freeTrial ? trialEndDate.toDate().toDateString() : null,
+  freetrialendday: freeTrial ? dayjs(trialEndDate).format('YYYY-MM-DD HH:mm:ss') : null,
   billingperiodnumber: period,
   billingperiodtime: selectedPeriod.value,
   billingtype: selectedPeriod.label === t('addsub.notificationscreen.dropdown.onetime') ? "One Time" : "Recurring",
@@ -230,7 +231,13 @@ async function saveSubcription () {
     await saveSubcriptionLocally(db, { ...notifScreenParams, ...params }, trialEndFormatted)
     router.replace({pathname: "/(tab)/Index", params: {refresh: Date.now().toString()}})
   } catch (error) {
-    console.log(error)
+      showMessage({
+                message: `${error}`,
+                type: "danger",
+                duration: 5000, 
+                style: { bottom: 60 } 
+              })
+   
   }
 }
 

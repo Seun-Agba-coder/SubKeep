@@ -5,12 +5,13 @@ import { useAppTranslation } from '@/hooks/useAppTranslator';
 interface GmailModalProps {
     modalVisible: boolean;
     setModalVisible: (value: boolean) => void;
+    setSignedUp: (value: boolean) => void;
     title: string;
     subtitle: string;
     theme: any;
 }
 
-const GmailModal = ({modalVisible, setModalVisible, title, subtitle, theme}: GmailModalProps) => {
+const GmailModal = ({modalVisible, setModalVisible, title, subtitle, theme, setSignedUp}: GmailModalProps) => {
   const {t } = useAppTranslation()
   console.log("SubTitle: :", subtitle)
       return (
@@ -28,7 +29,7 @@ const GmailModal = ({modalVisible, setModalVisible, title, subtitle, theme}: Gma
         {subtitle}
       </Text>
       <View style={{alignItems: 'flex-end'}}>
-     <PressableText extraTextStyle={{color: 'green'}} onPress={() => setModalVisible(false)}>
+     <PressableText extraTextStyle={{color: 'green'}} onPress={() => {setModalVisible(false); setSignedUp(true)}}>
         {t('common.cancel')}
      </PressableText>
       </View>

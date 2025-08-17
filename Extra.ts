@@ -15,7 +15,7 @@ export const scheduleRecurringNotifications = async (subscriptionData: any, firs
 
     }
 
-    // Schedule next 12 notifications (1 year worth)
+    // Schedule next 6 notifications (6 year worth)
     for (let i = 1; i <= 6; i++) {
         const nextBillingDate = dayjs(!subscriptionData.freetrialendday ? subscriptionData.firstpayment : subscriptionData.freetrialendday)
             .add(i * subscriptionData.billingperiodnumber, subscriptionData.billingperiodtime)

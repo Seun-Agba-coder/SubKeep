@@ -1,7 +1,5 @@
 import BillingIndicator from '@/components/Index/BillingIndicator'
-import CustomCalender from '@/components/Index/CustomCalender'
 import SubHorizontalList from '@/components/subscriptions/SubHorizontalList'
-import CustomButton from '@/components/ui/CustomButton'
 import { DarkTheme, LightTheme } from '@/constants/Styles/AppStyle'
 import useMonthlyBillTotal from '@/hooks/useMonthlyBillTotal'
 import { useAppSelector } from '@/redux/hooks'
@@ -83,7 +81,7 @@ const Home = () => {
               const key = date.date.toISOString().split("T")[0]; // format: "YYYY-MM-DD"
   
               if (!billingMarkers[key]) billingMarkers[key] = [];
-              billingMarkers[key].push({ iconurl: sub.iconurl, status: date.color });
+              billingMarkers[key].push({ iconurl: sub.iconurl, status: date.color, platformname: sub.platformname });
           });
   
   
@@ -120,6 +118,7 @@ const Home = () => {
     };
 
     const customBillingMarkers: any = createMarkedDates();
+   
     
  
     const currencyItem = await SecureStore.getItemAsync('defaultCurrency');
@@ -281,9 +280,12 @@ useEffect(() => {
              {hasSubscriptions && (
               <View style={[styles.logoContainer, {marginBottom: -3}]}>
                 {marking.subscriptions.slice(0, 1).map((sub: any, index: any) => {
-                  const haslogo = !!sub.iconurl
+
+                  
+                  const haslogo = sub.iconurl === 'null' ? false : true
+                  console.log("has logo: ", haslogo)
                 
-                 return haslogo ? (   
+                 return haslogo ?  
                <Image
                     key={index}
                     source={{ uri: sub.iconurl }}
@@ -299,9 +301,9 @@ useEffect(() => {
                     ]}
                     resizeMode="contain"
                   />
-                  ) : (
-                    <InitialAvatar name={sub.platformname} size={14} />
-                  )
+                   : 
+                    <InitialAvatar name={sub.platformname} size={14} key={index} />
+                  
 
                 }
                 
@@ -371,10 +373,9 @@ useEffect(() => {
         setupLocaleConfig(i18n.language);
       }, [i18n.language]);
 
-
-
+    
     return (
-        <ScrollView showsVerticalScrollIndicator={false} contentContainerStyle={{ paddingBottom: 100 }} style={[styles.container, { backgroundColor: theme.background }]}>
+        <ScrollView showsVerticalScrollIndicator={false} contentContainerStyle={{ paddingBottom: 150 }} style={[styles.container, { backgroundColor: theme.background }]}>
              <View>
             {
                 isAuthenticated && (
@@ -415,7 +416,6 @@ useEffect(() => {
                 </View>
 
                 <View  style={{marginBottom: '5%'}}>
-                    {/* <CustomCalender theme={theme} changeMonth={handleMonthChange} billingMarkers={billingMarkers} /> */}
                     <Calendar
                      
                     key={`${theme.background}-${i18n.language}-${calendarKey}`}
@@ -447,7 +447,8 @@ useEffect(() => {
              
 
                     <View style={updatedSubscription?.length == 0 ? {alignItems: 'center'} : {paddingLeft: '2%'}}>
-                        {updatedSubscription !== null? <Text style={{ color: theme.primaryText, fontSize: 16, fontWeight: '600', paddingLeft: '2%' }}> {t("index.title")}</Text> : null}
+
+                        {updatedSubscription?.length > 0 ? <Text style={{ color: theme.primaryText, fontSize: 16, fontWeight: '600', paddingLeft: '2%' }}> {t("index.title")}</Text> : null}
                    
                         <SubHorizontalList data={updatedSubscription} theme={theme} />
                     </View> 
@@ -466,12 +467,14 @@ useEffect(() => {
                           <ScrollView contentContainerStyle={{ flexDirection: 'row', flexWrap: 'wrap', gap: 10 }}>
                             {selectedDayMarkers.map((sub: any, index: any) => (
                               <View style={{flexDirection: 'row', gap:2}} key={index}>
-                              <Image
+                               {sub.iconurl !== 'null'?  <Image
                                 key={`${sub.iconurl}-${index}`}
                                 source={{ uri: sub.iconurl }}
                                 style={{ width: 40, height: 40, borderRadius: 5 }}
                                 resizeMode="contain"
-                              />
+                              /> : <InitialAvatar name={sub.platformname} size={30}  />}
+
+                             
                               <View>
                                             <View
                                     style={{

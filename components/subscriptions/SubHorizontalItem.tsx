@@ -50,14 +50,14 @@ const SubHorizontalItem = ({ item, theme }: SubHorizontalItemProps) => {
     return (
         <Pressable style={[styles.container, {backgroundColor: theme.secondaryColor}]} onPress={() => goToDescription()} android_ripple={{color:'rgba(255, 255, 255, 0.96)'}}>
             <View style={styles.rowContainer}>
-                {item.iconurl ? <Image source={{uri: item.iconurl}} style={styles.image}/> : <InitialAvatar name={item.platformname} size={30} color={theme.primaryColor} />}
+                {item.iconurl !== 'null'? <Image source={{uri: item.iconurl}} style={styles.image}/> : <InitialAvatar name={item.platformname} size={30}  />}
                 <View>
-                    <Text style={[styles.title, { color: theme.tetiaryText }]}>${item.price}</Text>
+                    <Text style={[styles.title, { color: theme.tetiaryText }]}>{item.symbol}{item.price}</Text>
                     <Text style={[styles.subtitle, {color: theme.secondaryText}]}>{t('addsub.notificationscreen.dropdown.' + item.billingperiodtime.toLowerCase())}</Text>
                    
                 </View>
                 {
-                 !freeTrialExpired(item) ? <View style={[styles.dot, {backgroundColor: 'white'}]}></View>:  <View style={[styles.dot, {backgroundColor: billingType2[item.billingperiodtime]}]}></View>
+                 !freeTrialExpired(item) ? <View style={[styles.dot, {backgroundColor: '#FAEBD7'}]}></View>:  <View style={[styles.dot, {backgroundColor: billingType2[item.billingperiodtime]}]}></View>
                 }
                 
             </View>
@@ -86,7 +86,8 @@ const styles = StyleSheet.create({
     },
     image: {
         width: 30,
-        height: 30
+        height: 30, 
+        borderRadius: 15,
     },
     rowContainer: {
         flexDirection: 'row',

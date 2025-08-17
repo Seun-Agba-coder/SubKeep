@@ -138,7 +138,7 @@ const saveSubcriptionLocally = async (db: any, data: Prop, trialend: string) => 
       currency = code ?? 'USD',
       reminderenabled = false,
       price,
-      iconurl = 'null',
+      iconurl = null,
       note = 'null',
       description = 'null',
       billingtype,
@@ -151,6 +151,8 @@ const saveSubcriptionLocally = async (db: any, data: Prop, trialend: string) => 
       category,
       freetrialendday = "null"
     } = data;
+
+    console.log("iconurl: ", typeof(iconurl))
     let icondeviceurl = 'null'
     if (iconurl && iconurl !== 'subkeep') {
       icondeviceurl = await saveImageToDevice(iconurl, platformname)

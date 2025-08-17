@@ -10,6 +10,7 @@ import 'dayjs/locale/tr'; // Turkish
 import { Image, StyleSheet, Text, View, Pressable } from 'react-native';
 import { router } from 'expo-router';
 import { findNextPaymentDate } from '@/utils/FutureBilling';
+import InitialAvatar from '../ui/IntialAvatar';
 
 
 
@@ -65,7 +66,7 @@ const SubscriptionItem = ({ data, theme, active }: any) => {
             showThis = <Text style={[{ color: billingType2['freetrial'] }]} >{freeTrialExpiryDate()}</Text>
             showThisUnder = <Text style={{ fontSize: 10, color: billingType2['freetrial'] }}>{t("AllSubscription.freetrial")}</Text>
         } else {
-            showThis = <Text style={[{ color: billingType2[data.billingperiodtime] }]} >{data.billingrecurringtime ? `Expires on the, ${dayjs(findNextPaymentDate(data.billingrecurringlist)).locale(i18n.language).format('MMMM D')}` : normalExpiryDate()}</Text>
+            showThis = <Text style={[{ color: billingType2[data.billingperiodtime] }]} >{data.billingrecurringtime ? `${t("AllSubscription.expireson")}, ${dayjs(findNextPaymentDate(data.billingrecurringlist)).locale(i18n.language).format('MMMM D')}` : normalExpiryDate()}</Text>
              showThisUnder = ""
         }
     }
@@ -84,7 +85,7 @@ const SubscriptionItem = ({ data, theme, active }: any) => {
     }}>
 
             <View style={styles.rowContainer}>
-                <Image source={{ "uri": data.iconurl }} style={styles.image} />
+            {data.iconurl !== 'null'? <Image source={{uri: data.iconurl}} style={styles.image}/> : <InitialAvatar name={data.platformname} size={30}  />}
 
                 <View>
                     <Text style={[{ color: theme.secondaryText }]}>{data.platformname}</Text>

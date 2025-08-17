@@ -1,6 +1,6 @@
 {
   "onboarding": {
-    "title1": "Stay Ahead and Take Contol of your fiacnce",
+    "title1": "Stay Ahead and Take Contol of your finance",
     "description1": "All your subscriptions in one place. Stay on top of what you’re paying for.",
     "title2": "Never Miss a Payment",
     "description2": "Your subscriptions, on schedule — no surprises.",
@@ -241,7 +241,7 @@
       "trackingCard" : {
         "title": "Gmail Auto-Tracking (Beta, Coming Soon)",
         "subTitle":"We're are currently building the feature to Find all your subscriptiosn directly from your Gmail Inbox", 
-        "joinWaitlist": "Join joinWaitlist", 
+        "joinWaitlist": "Join Waitlist", 
         "success": "Success",
         "successTitle": "You have successfully joined the waitlist"
       }, 
@@ -361,5 +361,8 @@
       "feedtype": "Feedback Type",
       "subfor": "Subscripton for", 
       "close": "Close"
+    },
+    "extra2": {
+      "emptyText": "Add a subcription"
     }
 }
