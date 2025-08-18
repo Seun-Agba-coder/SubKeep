@@ -125,5 +125,26 @@ async function ChartDataViaRange(db: any, timeRange: string = '6 months') {
 }
 
 
+const getDateRange = (minYears: number, maxYears: number) => {
+    const today = new Date();
+    
+    // Calculate minimum date (years only)
+    const minimumDate = new Date(today);
+    minimumDate.setFullYear(today.getFullYear() + minYears);
+    
+    // Calculate maximum date (years only)
+    const maximumDate = new Date(today);
+    maximumDate.setFullYear(today.getFullYear() + maxYears);
+    
+    return {
+      minimumDate,
+      maximumDate,
+      // Formatted versions for react-native-calendars (YYYY-MM-DD format)
+      minDateString: minimumDate.toISOString().split('T')[0],
+      maxDateString: maximumDate.toISOString().split('T')[0]
+    };
+  };
 
-export {ChartDataViaRange}
+
+
+export {ChartDataViaRange, getDateRange}

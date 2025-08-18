@@ -50,6 +50,25 @@ export default function DatePickerComponent({
     if (validDate) validDate.current = false;
   };
 
+  
+  
+  function setMinMaxDate(operator: string, num: number){
+    // use to set the minimum and maximum range for the caledar component
+    const today = new Date()
+    const dateToSet = new Date()
+
+    if (operator === "minus") {
+      dateToSet.setFullYear(today.getFullYear() - num);
+      return dateToSet
+    } else if (operator === "addition") {
+      dateToSet.setFullYear(today.getFullYear() + num);
+      return dateToSet
+    }
+
+   return  new Date()
+
+  }
+
   return (
     <>
       <Pressable
@@ -81,6 +100,9 @@ export default function DatePickerComponent({
         date={date}
         mode="date"
         locale={getLocaleTag(i18n.language)}
+
+        minimumDate={setMinMaxDate("minus", 3)}
+        maximumDate={setMinMaxDate("addition", 3)}
         onConfirm={onConfirm}
         onCancel={onCancel}
         theme="light"

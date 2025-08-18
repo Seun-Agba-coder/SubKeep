@@ -22,6 +22,7 @@ interface BillingDatesParams {
   isactive: number;
   canceldate?: string;
   latestResumedAt?: string;
+  isdeleted: integer
 }
 
 function generateBillingDates({
@@ -33,6 +34,7 @@ function generateBillingDates({
   isactive = 0,
   canceldate, 
   latestResumedAt, 
+  isdeleted, 
 }: BillingDatesParams): BillingEntry[] {
   const result: BillingEntry[] = [];
  
@@ -46,6 +48,10 @@ function generateBillingDates({
   };
   
   const billingColor = typeColors[billingType] || 'black';
+
+  if (isdeleted === 1) {
+    return result;
+  }
   
   if (isactive === 1 && canceldate) {
     result.push({

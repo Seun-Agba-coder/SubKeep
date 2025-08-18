@@ -21,6 +21,7 @@ import { useLocalSearchParams } from 'expo-router'
 import dayjs from 'dayjs';
 import { LocaleConfig } from 'react-native-calendars';
 import InitialAvatar from '@/components/ui/IntialAvatar'
+import { getDateRange } from '@/utils/TimeRange'
 
 
 
@@ -68,12 +69,12 @@ const Home = () => {
     console.log("Sub: ", subscriptions)
       const billingMarkers: any = {}
       subscriptions.forEach((sub: any) => {
-          const dates = generateBillingDates({ firstPayment: sub.firstpayment,
+          const dates = generateBillingDates({ firstPayment: !sub.freetrialendday ? sub.firstpayment : sub.freetrialendday,
              billingType: sub.billingperiodtime,
               interval: parseInt(sub.billingperiodnumber),
                freeTrialDays: sub.freetrialduration ? parseInt(sub.freetrialduration) : 0,
                 isactive: parseInt(sub.isactive), 
-                canceldate: sub.canceldate, latestResumedAt: sub.latestResumedAt });
+                canceldate: sub.canceldate, latestResumedAt: sub.latestResumedAt, isdeleted: sub.isdeleted});
           
      
   
@@ -389,7 +390,10 @@ useEffect(() => {
      return  new Date()
 
     }
+    
 
+    // get the range for the caleder 
+    const { minDateString, maxDateString } = getDateRange(-3, 3);
     
     return (
         <ScrollView showsVerticalScrollIndicator={false} contentContainerStyle={{ paddingBottom: 150 }} style={[styles.container, { backgroundColor: theme.background }]}>
@@ -445,7 +449,9 @@ useEffect(() => {
                    enableSwipeMonths={true}
                    markingType={'multi-dot'}
                    markedDates={billingMarkers}
-                   
+                   minDate={minDateString}
+                   maxDate={maxDateString}
+                  
                    dayComponent={CustomDay}
                    theme={
                     {
