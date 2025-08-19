@@ -152,9 +152,10 @@ const saveSubcriptionLocally = async (db: any, data: Prop, trialend: string) => 
       freetrialendday = "null"
     } = data;
 
-    console.log("iconurl: ", typeof(iconurl))
+
     let icondeviceurl = 'null'
-    if (iconurl && iconurl !== 'subkeep') {
+    if (iconurl && platformname.toLowerCase().trim() !== 'subkeep') {
+      console.log("platform ::", platformname.toLowerCase())
       icondeviceurl = await saveImageToDevice(iconurl, platformname)
     }
 
@@ -184,26 +185,21 @@ const saveSubcriptionLocally = async (db: any, data: Prop, trialend: string) => 
     }
     // console.log("dataPassed", dataPassed)
 
-
-    const billingNotificationList = await scheduleRecurringNotifications(subscriptonData, true)
-    console.log("billingNotificationList", billingNotificationList)
-    console.log(`
+    if (billingperiodtime !== 'One Time') {
+      const billingNotificationList = await scheduleRecurringNotifications(subscriptonData, true)
+  
+      await db.runAsync(
+        `UPDATE userSubscriptions 
+         SET billingrecurringlist=? 
+         WHERE id = ?`,
+        [JSON.stringify(billingNotificationList), subscriptionId]
+      );
+  
+  
       
-      
-      
-      
-      
-      
-      
-      `)
-    await db.runAsync(
-      `UPDATE userSubscriptions 
-       SET billingrecurringlist=? 
-       WHERE id = ?`,
-      [JSON.stringify(billingNotificationList), subscriptionId]
-    );
-
-
+    }
+  
+  
   } catch (error) {
     console.log("Error: ", error)
   }
@@ -242,7 +238,7 @@ const updateUserSubscription = async (db: any, id: string, updatedData: Partial<
     }
 
     const billingNotificationList = await scheduleRecurringNotifications(subscriptionData, true)
-    console.log("Billing Notification: ", billingNotificationList)
+   
 
 
 

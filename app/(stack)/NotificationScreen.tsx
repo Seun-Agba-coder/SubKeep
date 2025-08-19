@@ -221,7 +221,7 @@ async function saveSubcription () {
   console.log({ ...notifScreenParams, ...params, freetrial: String(freeTrial),reminderenabled: String(notificationsEnabled) })
  
 
-  //  await updateUserSubscription(db, id, { ...notifScreenParams, ...params, freetrial: String(freeTrial),reminderenabled: String(notificationsEnabled) }, billingList)
+  await updateUserSubscription(db, id, { ...notifScreenParams, ...params, freetrial: String(freeTrial),reminderenabled: String(notificationsEnabled) }, billingList)
    router.replace({pathname: "/(tab)/Index", params: {refresh: Date.now().toString()}})
    return ;
   }

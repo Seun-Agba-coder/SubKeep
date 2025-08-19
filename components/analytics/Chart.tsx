@@ -1,9 +1,19 @@
 import { Text, View, ScrollView, StyleSheet, Pressable, useWindowDimensions } from 'react-native';
 import { LineChart } from 'react-native-chart-kit';
-import { useState, useEffect } from 'react';
-import { ChartDataViaRange } from '@/utils/TimeRange';
+import { useState, useEffect, useCallback  } from 'react';
+// import { ChartDataViaRange } from '@/utils/TimeRange';
 import MinimalDropdown from '../ui/MinimalDropdowm';
 import { useAppTranslation } from '@/hooks/useAppTranslator';
+import { useFocusEffect } from 'expo-router';
+import { useTimeRange } from '@/hooks/useTimeRange';
+import dayjs from 'dayjs';
+import 'dayjs/locale/es'; // Spanish
+import 'dayjs/locale/fr'; // French
+import 'dayjs/locale/en'; // English
+import 'dayjs/locale/it'; // Italian
+import 'dayjs/locale/tr'; // Turkish
+
+
 
 interface ChartProps {
   theme: {
@@ -20,37 +30,48 @@ interface DataPoint {
 
 const Chart = ({ theme, db, symbol }: ChartProps) => {
   const { width } = useWindowDimensions();
-  const {t } = useAppTranslation()
+  const {t, i18n } = useAppTranslation()
   const [selectedRange, setSelectedRange] = useState<string>('6 months');
   const [visible, setVisible] = useState<boolean>(false);
   const [trend, setTrend] = useState<any>([]);
- 
+
+  
+  const {ChartDataViaRange} = useTimeRange()
 
   const timeOptions = [{name: t("Analytics.timeoptions.3 months"), value: '3 months'}, {name: t("Analytics.timeoptions.6 months"), value: '6 months'}, {name: t("Analytics.timeoptions.1 year"), value: '1 year'}];
+  
+  dayjs.locale(i18n.language);
 
-  useEffect(() => {
-    const getFilteredData = async () => {
-      try {
-        
-        const data = await ChartDataViaRange(db, selectedRange);
-        console.log('DATA: ', data)
-        
-        if (data && data.length > 0) {
-          setTrend(data);
-        } else {
-          // Fallback data when no data is available
-          setTrend([
-            { 'No Data': 0 }
-          ]);
-        }
-      } catch (err) {
-        console.error('Error fetching chart data:', err);
 
-      } 
-    };
+  useFocusEffect(
+    useCallback(() => {
+      const getFilteredData = async () => {
+        try {
+          
+          const data = await ChartDataViaRange(db, selectedRange);
+ 
+          
+          if (data && data.length > 0) {
+            setTrend(data);
+          } else {
+            // Fallback data when no data is available
+            setTrend([
+              { 'No Data': 0 }
+            ]);
+          }
+        } catch (err) {
+          console.error('Error fetching chart data:', err);
+  
+        } 
+      };
+  
+      getFilteredData();
+    }, [selectedRange, db])
 
-    getFilteredData();
-  }, [selectedRange, db]);
+  )
+
+
+
 
   const getChartData = () => {
     if (trend.length === 0) {

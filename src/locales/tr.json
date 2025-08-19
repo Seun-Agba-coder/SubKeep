@@ -353,5 +353,22 @@
   "feedtype": "Geri bildirim türü",
   "subfor": "Abonelik için",
   "close": "Kapat"
-}
-}
+}, 
+"extra2": {
+      "emptyText": "Grafiği görmek için bir abonelik ekleyin"
+    },
+"paywall": {
+      "title": "Premium Analizler", 
+      "subtitle": "Harcama alışkanlıklarınızla ilgili detaylı bilgiler edinin, eğilimleri takip edin ve daha akıllı finansal kararlar verin.", 
+      "advantage1": "Detaylı harcama analizi", 
+      "advantage2": "Aylık eğilim analizleri", 
+      "advantage3": "Gelişmiş öngörüler ve ipuçları (yakında)",
+      "buttontitle": "Analizleri Aç", 
+      "paywall guarantee": "İstediğiniz zaman iptal edin • 7 günlük ücretsiz deneme"
+    },
+   "logo": {
+      "error1": "Servisin logo görselini bulamadık: ",
+      "errorpart2": "internet bağlantınızı kontrol edin.",
+      "errorpart1": "varsayılan bir görsel kullanılacak"
+    }
+  }

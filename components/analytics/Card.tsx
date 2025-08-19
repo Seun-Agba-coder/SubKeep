@@ -16,7 +16,7 @@ const Card = ({icon, title, num, background, textColor}: Prop) => {
         <View style={[styles.container, {backgroundColor: background}]}>
             <View style={styles.rowContainer}>
                 {icon && <IconButton name={icon} size={24} color={textColor} />}
-            <Text style={{color: textColor}}>{title}</Text>
+            <Text style={{color: textColor, textAlign: 'left', paddingRight: 10, }}>{title}</Text>
 
             </View>
            

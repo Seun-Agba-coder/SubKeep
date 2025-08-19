@@ -16,6 +16,7 @@ import { useState } from 'react'
 import { Image, StyleSheet, Text, View, useWindowDimensions } from 'react-native'
 import { FAB } from 'react-native-paper'
 import i18n from '../../src/locales/index'
+import InitialAvatar from '@/components/ui/IntialAvatar'
 
 
 
@@ -89,7 +90,8 @@ function Data({ title, data }: { title: string, data: string }) {
                                 </Text>
                             }
                             {
-                                title === t('description.data.firstpayment') || title === t('description.data.nextpayment')  && <IconButton name="calendar" size={20} color={theme.primaryText} />
+                                (title === t('description.data.firstpayment') || title === t('description.data.nextpayment')) && 
+                                <IconButton name="calendar" size={20} color={theme.primaryText} />
                             }
                         </View>
                     </View> :
@@ -140,6 +142,8 @@ const Description = () => {
     const db = useSQLiteContext()
     const theme = mode === 'light' ? LightTheme : DarkTheme
     const { item }: any = useLocalSearchParams()
+
+    console.log("Item : : ", item)
     const data = JSON.parse(item)
     const [visibleDelete, setVisibleDelete] = useState(false)
     const [visibleInactivate, setVisibleInactivate] = useState(false)
@@ -170,6 +174,17 @@ const Description = () => {
 
 
     console.log("Category: ", data.category)
+    let showlogo = null
+    if (data?.platformname.toLowerCase().trim() === "subkeep") {
+        showlogo = <Image source={require("../../assets/AppImages/subkeep.png")} style={[styles.image, ]} />;
+    } else if (data?.platformname) {
+        showlogo = <Image source={{ uri: data.iconurl }} style={[styles.image]} />;
+    } else {         
+        showlogo = (
+         <InitialAvatar name={data.platformname} size={50}  />
+        );
+    }
+ 
 
 
     return (
@@ -180,7 +195,7 @@ const Description = () => {
 
                 <View style={{ paddingBottom: 100 }}>
                     <View style={{ alignItems: 'center' }}>
-                        <Image source={{ uri: data.iconurl || '' }} style={styles.image} />
+                        {showlogo}
                         <Text style={{ fontSize: 20, fontWeight: 'bold', color: theme.primaryText }}>{data.platformname || 'No Name'}</Text>
                     </View>
 
@@ -190,7 +205,7 @@ const Description = () => {
                         <Data title={t('description.data.occurence')} data={data.billingperiodtime ? t(`addsub.notificationscreen.dropdown.${data.billingperiodtime.toLowerCase()}`) : 'N/A'} />
                         <Data title={t('description.data.firstpayment')} data={data.firstpayment && dayjs(data.firstpayment).locale(i18n.language).format('MMMM D, YYYY')} />
                         {!freeTrialExpired(data) ? <Data title={"Free trial ending"} data={dayjs(data.freetrialendday).locale(i18n.language).format('MMMM D, YYYY')} /> : 
-                            <Data title={t('description.data.nextpayment')} data={ data.billingrecurringlist ? dayjs(findNextPaymentDate(data.billingrecurringlist)).locale(i18n.language).format('MMMM D, YYYY') : 'null'} />}
+                            <Data title={t('description.data.nextpayment')} data={ data.firstpayment ? dayjs(findNextPaymentDate(data.firstpayment, data.billingperiodnumber, data.billingperiodtime)).locale(i18n.language).format('MMMM D, YYYY') : 'null'} />}
 
                     </View>
 

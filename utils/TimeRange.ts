@@ -3,7 +3,6 @@ import advancedFormat from 'dayjs/plugin/advancedFormat';
 import isSameOrAfter from 'dayjs/plugin/isSameOrAfter';
 import isSameOrBefore from 'dayjs/plugin/isSameOrBefore';
 import isBetween from 'dayjs/plugin/isBetween';
-import { connectFirestoreEmulator } from 'firebase/firestore';
 
 
 
@@ -66,7 +65,7 @@ async function ChartDataViaRange(db: any, timeRange: string = '6 months') {
 
 
         const first = !freetrialendday ? dayjs(firstpayment) : dayjs(freetrialendday)
-        console.log("First : ", first)
+       
         const cancel = canceldate ? dayjs(canceldate) : null;
 
         if (billingtype === 'One Time') {
@@ -83,8 +82,7 @@ async function ChartDataViaRange(db: any, timeRange: string = '6 months') {
 
             while (billingCursor.isSameOrBefore(endDate)) {
                 const label = billingCursor.format('MMM YYYY');
-                console.log("LABEL : : ", label)
-                console.log(" meant to be running")
+                
 
                 // NEW: Check if the billing cursor falls within ANY paused period
                 let isPaused = false;
@@ -108,7 +106,7 @@ async function ChartDataViaRange(db: any, timeRange: string = '6 months') {
                     console.log("price")
                     monthlyTotals[label] +=price;
                 }
-                console.log(" meant to be running")
+                
 
                 // Move to the next billing period
                 billingCursor = billingCursor.add(billingperiodnumber, billingperiodtime.toLowerCase());

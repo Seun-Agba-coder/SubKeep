@@ -353,6 +353,18 @@
   "feedtype": "Tipo de comentarios",
   "subfor": "Suscripción para",
   "close": "Cerrar"
-}
+}, 
+"extra2": {
+      "emptyText": "Agrega una suscripción para ver el gráfico"
+    },
+"paywall": {
+      "title": "Analíticas Premium", 
+      "subtitle": "Obtén información detallada sobre tus patrones de gasto, sigue las tendencias y toma decisiones financieras más inteligentes.", 
+      "advantage1": "Desglose detallado de gastos", 
+      "advantage2": "Análisis de tendencias mensuales", 
+      "advantage3": "Información y consejos avanzados (próximamente)",
+      "buttontitle": "Desbloquear analíticas", 
+      "paywall guarantee": "Cancela cuando quieras • Prueba gratis de 7 días"
+    }
 
 }

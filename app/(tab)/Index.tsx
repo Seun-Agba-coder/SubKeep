@@ -60,6 +60,9 @@ const Home = () => {
 
    const { refresh } = useLocalSearchParams();
 
+     // get the range for the caleder 
+     const { minDateString, maxDateString, maximumDate } = getDateRange(-3, 3);
+
 
 
 
@@ -69,12 +72,14 @@ const Home = () => {
     console.log("Sub: ", subscriptions)
       const billingMarkers: any = {}
       subscriptions.forEach((sub: any) => {
-          const dates = generateBillingDates({ firstPayment: !sub.freetrialendday ? sub.firstpayment : sub.freetrialendday,
+          const dates = generateBillingDates({ firstPayment: sub.firstpayment,
              billingType: sub.billingperiodtime,
               interval: parseInt(sub.billingperiodnumber),
                freeTrialDays: sub.freetrialduration ? parseInt(sub.freetrialduration) : 0,
                 isactive: parseInt(sub.isactive), 
-                canceldate: sub.canceldate, latestResumedAt: sub.latestResumedAt, isdeleted: sub.isdeleted});
+                canceldate: sub.canceldate, 
+                latestResumedAt: sub.latestResumedAt, 
+                isdeleted: sub.isdeleted, maximumDate: maximumDate, billingperiodtime: sub.billingperiodtime});
           
      
   
@@ -89,12 +94,7 @@ const Home = () => {
       });
   
 
-   
-   
-
- 
-
-                    // Create markedDates object for custom rendering
+   // Create markedDates object for custom rendering
     const createMarkedDates = () => {
         const markedDates: any = {};
         
@@ -211,15 +211,22 @@ useEffect(() => {
 
     useEffect(() => {
         const getMonthlyTotal = async () => {
+
+           try {
             const total: string = await getTotal(visibleMonth.getFullYear(), visibleMonth.getMonth() + 1);
       
 
             const cleaned = total.replace(/^\s*0/, '');
             if (total === "0") {
               
-                return;
+                return  ;
             }
             setGetMonthlyTotal(cleaned);
+            
+           } catch (error: any) {
+               console.warn(error)
+           }
+           
         }
         getMonthlyTotal()
 
@@ -234,7 +241,7 @@ useEffect(() => {
             } 
         
             const updatedSubscription = savedSubscription
-            ?.filter((sub: any) => parseInt(sub.isactive) !== 1)
+            ?.filter((sub: any) => parseInt(sub.isactive) !== 1 && sub.billingperiodtime !== "One Time")
             .map((sub: any) => {
               const daysRemaining = calculateDaysUntilNextBilling(sub);
               return { ...sub, subremainingDays: daysRemaining };
@@ -282,9 +289,12 @@ useEffect(() => {
               <View style={[styles.logoContainer, {marginBottom: -3}]}>
                 {marking.subscriptions.slice(0, 1).map((sub: any, index: any) => {
 
-                  
+                  if (sub.platformname.toLowerCase().trim() === 'subkeep') {
+                    return <Image source={require("../../assets/AppImages/subkeep.png")} style={ { width: 14, height: 14 }} />;
+                  }
+
+                 
                   const haslogo = sub.iconurl === 'null' ? false : true
-                  console.log("has logo: ", haslogo)
                 
                  return haslogo ?  
                <Image
@@ -374,26 +384,7 @@ useEffect(() => {
         setupLocaleConfig(i18n.language);
       }, [i18n.language]);
 
-    function setMinMaxDate(operator: string, num: number){
-      // use to set the minimum and maximum range for the caledar component
-      const today = new Date()
-      const dateToSet = new Date()
-
-      if (operator === "minus") {
-        dateToSet.setFullYear(today.getFullYear() - num);
-        return dateToSet
-      } else if (operator === "addition") {
-        dateToSet.setFullYear(today.getFullYear() + num);
-        return dateToSet
-      }
-
-     return  new Date()
-
-    }
-    
-
-    // get the range for the caleder 
-    const { minDateString, maxDateString } = getDateRange(-3, 3);
+  
     
     return (
         <ScrollView showsVerticalScrollIndicator={false} contentContainerStyle={{ paddingBottom: 150 }} style={[styles.container, { backgroundColor: theme.background }]}>

@@ -36,7 +36,7 @@ export const AnalyticsPaywallOverlay = ({ onUpgradePress, visible = true, theme,
           
           {/* Description */}
           <Text style={[styles.description, {color: theme.primaryText}]}>
-          {t('paywall.subtitle')}          </Text>
+          {t('paywall.subtitle')}</Text>
           
           {/* Feature List */}
           <View style={styles.featureList}>
@@ -146,6 +146,8 @@ const styles = StyleSheet.create({
     color: '#6B7280',
     textAlign: 'center',
     lineHeight: 24,
+    alignItems: 'center',
+    padding:10,
     marginBottom: 24,
   },
   featureList: {

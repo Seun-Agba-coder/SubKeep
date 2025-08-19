@@ -353,5 +353,27 @@
   "feedtype": "Type de commentaires",
   "subfor": "Abonnement pour",
   "close": "Fermer"
-}
+}, 
+"extra2": {
+      "emptyText": "Ajoutez un abonnement pour afficher le graphique"
+    },
+"paywall": {
+      "title": "Analytiques Premium", 
+      "subtitle": "Obtenez des informations détaillées sur vos habitudes de dépenses, suivez les tendances et prenez des décisions financières plus avisées.", 
+      "advantage1": "Analyse détaillée des dépenses", 
+      "advantage2": "Analyse des tendances mensuelles", 
+      "advantage3": "Conseils et insights avancés (bientôt disponible)",
+      "buttontitle": "Débloquer les analytiques", 
+      "paywall guarantee": "Annulation à tout moment • Essai gratuit de 7 jours"
+    }, 
+    "logo": {
+      "error1": "Nous n'avons pas pu trouver l'image du logo du service : ",
+      "errorpart2": "vérifiez votre connexion internet.",
+      "errorpart1": "une image par défaut sera utilisée"
+    }, 
+    "logo": {
+      "error1": "No pudimos encontrar la imagen del logo del servicio: ",
+      "errorpart2": "verifica tu conexión a internet.",
+      "errorpart1": "se usará una imagen predeterminada"
+    }
 }

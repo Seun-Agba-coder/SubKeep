@@ -64,6 +64,9 @@ const AnalyticLayout = ({ theme, mode}: Prop) => {
             const subscriptions = await getActiveSubscription(db)
             const freeTrial: number = await getMonthlyFreeTrialCount(db, new Date().getFullYear(), new Date().getMonth() + 1)
             const billingNumber: number | undefined = await noOfUpcomingBillsThisMonth(db)
+            console.log(
+                "Billing Number: ", billingNumber
+            )
             const categorySummary = await getCategorySummary(db)
             console.log("Category Summary: ", categorySummary)
             setActiveSubscriptions(subscriptions)

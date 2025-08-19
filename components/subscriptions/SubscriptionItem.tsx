@@ -17,8 +17,29 @@ import InitialAvatar from '../ui/IntialAvatar';
 
 const SubscriptionItem = ({ data, theme, active }: any) => {
 
+    // if (data.billingperiodtime === "One Time") {
+    //     return (
+    //         <>
+    //         </>
+    //     )
+    // }
 
+    console.log(
+        "Data : : ", data
+    )
     const { t, i18n } = useAppTranslation()
+
+    let showLogo = null;
+    
+       if (data?.platformname.toLowerCase().trim() === "subkeep") {
+           showLogo = <Image source={require("../../assets/AppImages/subkeep.png")} style={[styles.image, ]} />;
+       }else if (data.iconurl === 'null') {         
+           showLogo = <InitialAvatar name={data.platformname} size={30}  />
+           
+       } else if (data?.platformname) {
+        showLogo = <Image source={{ uri: data.iconurl }} style={[styles.image]} />;
+    } 
+    
 
     const freeTrialExpired = (data: any) => {
         const today = dayjs()
@@ -50,7 +71,7 @@ const SubscriptionItem = ({ data, theme, active }: any) => {
         return formatted
     }
 
-    const isFreeTrialActive = !!freeTrialExpiryDate()
+   
 
     
     let showThis 
@@ -65,8 +86,13 @@ const SubscriptionItem = ({ data, theme, active }: any) => {
         if (!freeTrialExpired(data)) {
             showThis = <Text style={[{ color: billingType2['freetrial'] }]} >{freeTrialExpiryDate()}</Text>
             showThisUnder = <Text style={{ fontSize: 10, color: billingType2['freetrial'] }}>{t("AllSubscription.freetrial")}</Text>
-        } else {
-            showThis = <Text style={[{ color: billingType2[data.billingperiodtime] }]} >{data.billingrecurringtime ? `${t("AllSubscription.expireson")}, ${dayjs(findNextPaymentDate(data.billingrecurringlist)).locale(i18n.language).format('MMMM D')}` : normalExpiryDate()}</Text>
+        } else if(data.billingperiodtime === 'One Time'){
+             console.log(data.billingperiodtime.replace(" ", '').toLowerCase())
+              showThis = '',
+              showThisUnder = ''
+        }
+            else {
+            showThis = <Text style={[{ color: billingType2[data.billingperiodtime] }]} >{`${t("AllSubscription.expireson")}, ${dayjs(findNextPaymentDate(!data.freetrialendday? data.firstpayment : data.freetrialendday, data.billingperiodnumber, data.billingperiodtime)).locale(i18n.language).format('MMMM D')}`}</Text>
              showThisUnder = ""
         }
     }
@@ -85,7 +111,7 @@ const SubscriptionItem = ({ data, theme, active }: any) => {
     }}>
 
             <View style={styles.rowContainer}>
-            {data.iconurl !== 'null'? <Image source={{uri: data.iconurl}} style={styles.image}/> : <InitialAvatar name={data.platformname} size={30}  />}
+            { showLogo}
 
                 <View>
                     <Text style={[{ color: theme.secondaryText }]}>{data.platformname}</Text>
@@ -101,7 +127,7 @@ const SubscriptionItem = ({ data, theme, active }: any) => {
 
                 <View >
                     <Text style={[{ color: theme.primaryText }]}>{data.symbol}{data.price}</Text>
-                    <Text style={[{ color: theme.secondaryText, }]}>{  t(`addsub.notificationscreen.dropdown.${data.billingperiodtime.toLowerCase()}`)}</Text>
+                    <Text style={[{ color: theme.secondaryText, }]}>{  t(`addsub.notificationscreen.dropdown.${data.billingperiodtime.replace(" ", '').toLowerCase()}`)}</Text>
                 </View>
 
                 {showThisUnder}

@@ -65,9 +65,7 @@ const SubQuestion = ({ theme, id, activate }: { theme: any, id?: string, activat
     }
 
     async function findLogoHandler() {
-        if (!serviceName) {
-            return
-        }
+      
         try {
             console.log('presseddddddd')
             await FindLogo(serviceName)
@@ -193,12 +191,36 @@ const SubQuestion = ({ theme, id, activate }: { theme: any, id?: string, activat
         getSymbol()
     }, [])
 
-   console.log("LOGO IMagE:: : : ", logoImage.logo)
+   console.log("LOGO IMagE:: : : ", logoImage?.logo)
 
 
-//    let logoImage 
+   let showLogo = null;
 
-//    if (log)
+   if (logoImage?.name === "subkeep") {
+       showLogo = <Image source={require("../../assets/AppImages/subkeep.png")} style={[styles.image, { width: 60, height: 60 }]} />;
+   } else if (logoImage?.name) {
+       showLogo = <Image source={{ uri: logoImage.logo }} style={[styles.image, { width: 60, height: 60 }]} />;
+   } else {         
+       showLogo = (
+           <View
+               style={{ 
+                   width: 50, 
+                   height: 50, 
+                   backgroundColor: 'red', 
+                   justifyContent: 'center', 
+                   alignItems: 'center', 
+                   borderRadius: 10, 
+                   marginVertical: 10 
+               }}
+           >
+               <Text style={{ color: theme.primaryText, fontWeight: 'bold' }}>
+                   {serviceName ? serviceName.slice(0, 1) : '?'}
+               </Text>
+           </View>
+       );
+   }
+
+
 
     return (
         <ScrollView>
@@ -217,13 +239,14 @@ const SubQuestion = ({ theme, id, activate }: { theme: any, id?: string, activat
                             
 
                         </View>
-                        {logoImage ? <Image source={{ uri: logoImage.logo}}  style={[styles.image, { width: 60, height: 60 ,}]} /> : 
+                        {/* {logoImage ? <Image source={{ uri: logoImage.logo}}  style={[styles.image, { width: 60, height: 60 ,}]} /> : 
                             <View
                                 style={{ width: 50, height: 50, backgroundColor: 'red', justifyContent: 'center', alignItems: 'center', borderRadius: 10, marginVertical: 10 }}
                             >
                                 <Text style={{ color: theme.primaryText, fontWeight: 'bold' }}>{serviceName.slice(0, 1)}</Text>
                             </View>
-                        }
+                        } */}
+                        {showLogo}
 
                     </View>
 

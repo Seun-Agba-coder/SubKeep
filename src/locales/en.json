@@ -194,7 +194,7 @@
       "modal": {
         "delete": {
           "title": "Delete Subscription",
-          "body": "Are you sure you want to delete this subcription? we suggest you deactivate,  if you know you wil continue with the service",
+          "body": "Are you sure you want to delete this subcription? we suggest you deactivate,  if you know you will continue with the service",
           "actionHandler": "DeleteSubcriptionHandler",
           "actionText": "Delete"
         },
@@ -363,16 +363,20 @@
       "close": "Close"
     },
     "extra2": {
-      "emptyText": "Add a subcription"
+      "emptyText": "Add a subcription to see chart"
     },
     "paywall": {
       "title": "Premium Analytics", 
-      "subtitle": " Get detailed insights into your spending patterns, track trends, and make smarter financial decisions.", 
+      "subtitle": "Get detailed insights into your spending patterns, track trends, and make smarter financial decisions.", 
       "advantage1": "Detailed spending breakdown", 
       "advantage2": "Monthly trend analysis", 
       "advantage3": "Advanced insights & tips(coming soon)",
       "buttontitle": "Unlock Analytics", 
       "paywall guarantee": "Cancel anytime • 7-day free trial"
-
+    }, 
+    "logo":{
+      "error1":"We could not Find the logo image of the service: ",
+      "errorpart2": "check internet connection.",
+      "errorpart1": "a defualt image will be used"
     }
 }

@@ -12,7 +12,7 @@ import { router } from 'expo-router'
 
 
 const Analytics = () => {
-    const [isSubscribed, setIsSubscribed] = useState<boolean>(true)
+    const [isSubscribed, setIsSubscribed] = useState<boolean>(false)
 
     const mode = useAppSelector((state) => state.appmode.mode)
     const theme = mode === "light" ? LightTheme: DarkTheme
@@ -30,6 +30,7 @@ const Analytics = () => {
               return;
           }
         
+          validateCustomerSubscription()
     }, [])
 
     async function presentPaywall(): Promise<boolean> {

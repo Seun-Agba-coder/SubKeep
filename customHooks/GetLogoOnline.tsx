@@ -1,6 +1,6 @@
-import axios from 'axios'
 import { useState } from 'react';
 import { showMessage } from 'react-native-flash-message';
+import { useAppTranslation } from '@/hooks/useAppTranslator';
 
 interface Response {
   logo: string;
@@ -12,85 +12,90 @@ const cleanInput = (text: string) => text.trim().toLowerCase();
 
 
 const useServiceHook = () => {
-  const [logoImage, setLogoImage] = useState<any|Response>('')
-
+  const [logoImage, setLogoImage] = useState<any | Response>('')
+  const {t } = useAppTranslation()
 
   function setLogoHandler(logodetails: any) {
 
     setLogoImage(logodetails)
   }
-  
+
 
 
   async function FindLogo(serviceName: any) {
-      const cleanedInput = cleanInput(serviceName)
-       if (cleanedInput.toLowerCase() === "subkeep") {
-        console.log("Yes")
-        setLogoImage({
-          logo: "../../assets/AppImages/subkeep.png",
-          name: "subkeep"
-        })
-        return;
-       }
 
-    
-        try {
-          // const response = await axios.get(`https://autocomplete.clearbit.com/v1/companies/suggest`, {
-          //   params: { query: cleanedInput }
-          // })
-          console.log("Cleaned Input: ", cleanedInput)
-          const response = await fetch(`https://api.logo.dev/search?q=${cleanedInput}`, {
-            headers: {
-              "Authorization": `Bearer: sk_bltQKE7jRRmceBdaP3cirA`
-            }, 
-           
-          })
-          console.log(response)
-          const data = await response.json()
-          console.log("data: ", data)
+    if (!serviceName) {
+      setLogoImage({
+        logo: "",
+        name: ""
+      })
+      return;
+    }
+    const cleanedInput = cleanInput(serviceName)
+    if (cleanedInput.toLowerCase() === "subkeep") {
+      console.log("Yes")
+      setLogoImage({
+        logo: "../../assets/AppImages/subkeep.png",
+        name: "subkeep"
+      })
+      return;
+    }
 
-          if (data.length === 0 ) {
-            showMessage({
-              message: `We could not Find the logo image of the service: ${serviceName}, a default image will be used. `,
-              type: "danger",
-              duration: 5000, 
-              style: { bottom: 60 } 
-            })
-            setLogoImage({
-              logo: "",
-              name: ""
-            })
-            return null;
-          }
 
-          if (data.length > 0) {
-            setLogoImage({
-              logo: data[0].logo_url,
-              name: data[0].name
-            })
+    try {
+      console.log("Cleaned Input: ", cleanedInput)
       
-          }
-          console.log("null found")
-          return null;
-        } catch (err: any) {
-           console.log("error: : ", err)
-           showMessage({
-            message: `We could not Find the logo image of the service: ${serviceName}, check internet connection.`,
-            type: "danger",
-            duration: 5000, 
-            style: { bottom: 60 } 
-          })
-            throw err
-        
-        }
+      const response = await fetch(`https://api.logo.dev/search?q=${cleanedInput}`, {
+        headers: {
+          "Authorization": `Bearer: sk_bltQKE7jRRmceBdaP3cirA`
+        },
+
+      })
+      console.log(response)
+      const data = await response.json()
+      console.log("data: ", data)
+
+      if (data.length === 0) {
+        showMessage({
+          message: `${t("logo.error1")}${serviceName}, ${t("logo.errorpart1")}. `,
+          type: "danger",
+          duration: 5000,
+          style: { bottom: 60 }
+        })
+        setLogoImage({
+          logo: "",
+          name: ""
+        })
+        return null;
+      }
+
+      if (data.length > 0) {
+        setLogoImage({
+          logo: data[0].logo_url,
+          name: data[0].name
+        })
+
+      }
+      console.log("null found")
+      return null;
+    } catch (err: any) {
+      console.log("error: : ", err)
+      showMessage({
+        message: `${t("logo.error1")}${serviceName}, ${t("logo.errorpart2")}.`,
+        type: "danger",
+        duration: 5000,
+        style: { bottom: 60 }
+      })
+      throw err
+
+    }
 
   }
 
-  return { logoImage, FindLogo, setLogoHandler}
-  };
+  return { logoImage, FindLogo, setLogoHandler }
+};
 
 
 
 export default useServiceHook
 
-  

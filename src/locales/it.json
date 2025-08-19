@@ -353,5 +353,22 @@
   "feedtype": "Tipo di feedback",
   "subfor": "Abbonamento per",
   "close": "Chiudi"
-}
+}, "extra2": {
+      "emptyText": "Aggiungi un abbonamento per visualizzare il grafico"
+    },
+    
+"paywall": {
+      "title": "Analisi Premium", 
+      "subtitle": "Ottieni approfondimenti dettagliati sulle tue abitudini di spesa, monitora le tendenze e prendi decisioni finanziarie più intelligenti.", 
+      "advantage1": "Dettaglio spese approfondito", 
+      "advantage2": "Analisi delle tendenze mensili", 
+      "advantage3": "Approfondimenti e consigli avanzati (disponibili a breve)",
+      "buttontitle": "Sblocca le analisi", 
+      "paywall guarantee": "Annulla in qualsiasi momento • Prova gratuita di 7 giorni"
+    }, 
+    "logo": {
+      "error1": "Impossibile trovare l'immagine del logo del servizio: ",
+      "errorpart2": "controlla la connessione internet.",
+      "errorpart1": "verrà utilizzata un'immagine predefinita"
+    }
 }

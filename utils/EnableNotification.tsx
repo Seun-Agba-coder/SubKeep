@@ -63,13 +63,11 @@ export async function scheduleReminder(
    
 
     const notifyDate = getDateWithCurrentTime(triggerDate.toDateString());
-    console.log("NOTIFY DATE WITH PROPER TIMING: ", notifyDate)
 
 
     
     const today = dayjs().startOf('day');
-    console.log("today: ", today)
-
+   
    if (notifyDate.isSameOrAfter(today, 'day')) {
 
     try {
@@ -101,7 +99,6 @@ export async function scheduleReminder(
         return null;
       }
 }else {
-    console.log("null")
     return null
 }
 }
@@ -113,7 +110,6 @@ export async function scheduleTrialNotification(
 ): Promise<string | null> {
     if (!trialEndOn) return null;
    try{
-    console.log("tried ")
     return await scheduleReminder(
         new Date(trialEndOn),
         '⏳ Free Trial Ending Soon',

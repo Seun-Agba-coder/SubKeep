@@ -12,6 +12,12 @@ interface SubHorizontalItemProps {
 }
 
 const SubHorizontalItem = ({ item, theme }: SubHorizontalItemProps) => {
+    if (item.billingperiodtime === "One Time") {
+        return (
+            <>
+            </>
+        )
+    }
     
     const { t} = useAppTranslation()
 
@@ -47,10 +53,25 @@ const SubHorizontalItem = ({ item, theme }: SubHorizontalItemProps) => {
         )
     }   
 
+    let showLogo = null;
+    
+    if (item?.platformname.toLowerCase().trim() === "subkeep") {
+        showLogo = <Image source={require("../../assets/AppImages/subkeep.png")} style={[styles.image, ]} />;
+    }  else if (item?.iconurl === "null") {         
+        showLogo = (
+         <InitialAvatar name={item.platformname} size={30}  />
+        );
+    }
+ else if (item?.platformname) {
+        showLogo = <Image source={{ uri: item.iconurl }} style={[styles.image]} />;
+    }
+ 
+ 
+
     return (
         <Pressable style={[styles.container, {backgroundColor: theme.secondaryColor}]} onPress={() => goToDescription()} android_ripple={{color:'rgba(255, 255, 255, 0.96)'}}>
             <View style={styles.rowContainer}>
-                {item.iconurl !== 'null'? <Image source={{uri: item.iconurl}} style={styles.image}/> : <InitialAvatar name={item.platformname} size={30}  />}
+                {showLogo}
                 <View>
                     <Text style={[styles.title, { color: theme.tetiaryText }]}>{item.symbol}{item.price}</Text>
                     <Text style={[styles.subtitle, {color: theme.secondaryText}]}>{t('addsub.notificationscreen.dropdown.' + item.billingperiodtime.toLowerCase())}</Text>
@@ -91,7 +112,7 @@ const styles = StyleSheet.create({
     },
     rowContainer: {
         flexDirection: 'row',
-        gap: 10
+        gap: "4%"
     },
     subtitle: {
         fontSize: 13,

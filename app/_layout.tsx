@@ -154,8 +154,17 @@ function SlotContainer() {
           const billingrecurringlist = JSON.parse(sub.billingrecurringlist)
           if (!billingrecurringlist) continue;
           const listLastItem = billingrecurringlist[billingrecurringlist.length -1]
+
+          const originalDate = dayjs(listLastItem.expirydate);
+          const currentYear = dayjs().year(); // Gets current year (2025)
+          const updatedDate = originalDate.year(currentYear);
+
+          const updatedlistlastItem = {...listLastItem, expirydate: updatedDate}
+          console.log("Updated list Last Item : ", updatedlistlastItem)
+         
           if (dayjs().isAfter(dayjs(listLastItem.expirydate))) {
-           const newScheduledNotifications =  await scheduleRecurringNotificationsUpdate(sub, listLastItem)
+           const newScheduledNotifications =  await scheduleRecurringNotificationsUpdate(sub,  updatedlistlastItem.expirydate)
+
            await updateNotification(db, sub.id, newScheduledNotifications)
           }
 
@@ -219,9 +228,14 @@ function SlotContainer() {
  
   return (
     <View style={{ flex: 1}} onLayout={onLayoutRootView}>
+      <View style={{backgroundColor: "rgba(255, 255, 255, 0.8)"}}>
+
+   
       <StatusBar 
               style={colorScheme === 'dark' ? 'light' : 'dark'} 
+             
              />
+                </View>
       <Slot />
     </View>
   );
@@ -235,7 +249,7 @@ export default function RootLayout() {
           <SafeAreaProvider>
             <SafeAreaView style={{ flex: 1 }}>
             <FlashMessage position="bottom" />
-            <SQLiteProvider databaseName="subTrackers42.db" onInit={createDbIfNeeded}>
+            <SQLiteProvider databaseName="subTrackers46.db" onInit={createDbIfNeeded}>
               <SlotContainer/>
             </SQLiteProvider>
             
